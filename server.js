@@ -61,7 +61,16 @@ app.get('/', (req, res) => {
                         const div = document.createElement('div');
                         div.className = 'list-container';
                         div.innerHTML = \`
-                            <div class="list-header" onclick="toggleList('${key}')">
+app.post('/lists/:listKey/items', (req, res) => {  // Cambia :key → :listKey
+    const listKey = req.params.listKey;  // Ahora definido
+    if (customLists[listKey]) {
+        customLists[listKey].items.push({ name: req.body.name || 'Nuevo ítem' });
+        res.json({ success: true });
+    } else {
+        res.status(404).json({ error: 'Lista no encontrada' });
+    }
+});
+
                                 📁 \${list.name} (\${list.items.length})
                             </div>
                             <div id="\${key}" class="list-items">
