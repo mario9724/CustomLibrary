@@ -61,18 +61,13 @@ const L = {
         msgBackup: '¡Backup listo!',
         msgImported: '¡Importado!',
         msgCopied: '¡Copiado!',
-        userSet: '¡Usuario establecido!',
-        selectLang: 'ES'
-    }
-};
-
-function getUser(req) {
-    return req.cookies.username || req.query.user || 'anon';
-}
-
-app.use((req, res, next) => {
-    req.user = getUser(req);
-    next();
+        function getUser(req) {
+  let username = 'anon';
+  
+  // Parse cookies manualmente (sin cookie-parser)
+  if (req.headers.cookie) {
+    const cookies = {};
+    req
 });
 
 app.get('/', (req, res) => {
