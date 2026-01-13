@@ -22,10 +22,9 @@ async function initDB() {
   } catch (e) {
     db = new JSONFile(DATA_PATH, { defaultData });
     await db.read();
-  }
-}
-
-await initDB();
+(async () => {
+  await initDB();
+})();
 
 async function getUserData(userId) {
   const uid = userId || 'default';
