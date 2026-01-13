@@ -31,8 +31,6 @@ app.use((req, res, next) => {
   next();
 });
 
-// ==================== STREMIO ADDON ====================
-
 app.get('/manifest.json', (req, res) => {
   res.json({
     id: 'com.customlibrary.addon',
@@ -80,8 +78,6 @@ app.get('/meta/:type/:id.json', (req, res) => {
 app.get('/stream/:type/:id.json', (req, res) => {
   res.json({ streams: [] });
 });
-
-// ==================== API WEB ====================
 
 app.post('/api/auth/login', (req, res) => {
   const { username, password } = req.body;
@@ -222,12 +218,10 @@ app.get('/api/lists/:listId/export', (req, res) => {
   res.json(list);
 });
 
-// ==================== WEB PAGE ====================
-
 app.get('/', (req, res) => {
   const isLoggedIn = req.user.username !== 'anon';
 
-  res.send(`
+  let html = `
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -339,8 +333,10 @@ app.get('/', (req, res) => {
       <code id="manifest-url">https://customlibrary.onrender.com/manifest.json</code>
       <button class="copy-btn" onclick="copyManifest()">📋 Copiar URL</button>
     </div>
+  `;
 
-    ${isLoggedIn ? `
+  if (isLoggedIn) {
+    html += `
     <div class="user-bar">
       <div>
         <strong>👤 ${req.user.username}</strong>
@@ -379,7 +375,9 @@ app.get('/', (req, res) => {
       <input type="text" id="itemPoster" placeholder="URL de poster (opcional)">
       <button class="btn" onclick="addItem()">Añadir Item</button>
     </div>
-    ` : `
+    `;
+  } else {
+    html += `
     <div class="login-form">
       <h2>Iniciar Sesión</h2>
       <input type="text" id="loginUsername" placeholder="Usuario">
@@ -387,7 +385,10 @@ app.get('/', (req, res) => {
       <button class="btn" onclick="login()" style="width: 100%;">Entrar</button>
       <p style="opacity: 0.7; margin-top: 15px; font-size: 0.9em;">No tienes cuenta? Se crea automáticamente.</p>
     </div>
-    `}
+    `;
+  }
+
+  html += `
   </div>
 
   <script>
@@ -476,7 +477,6 @@ app.get('/', (req, res) => {
 
     function deleteList(listId) {
       if (confirm('¿Eliminar esta lista?')) {
-        // Recargar listas (simulado)
         loadLists();
       }
     }
@@ -489,7 +489,7 @@ app.get('/', (req, res) => {
 
       if (!listId || !id || !name) return alert('Rellena los campos requeridos');
 
-      fetch(`/api/lists/${listId}/add`, {
+      fetch('/api/lists/' + listId + '/add', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({id, name, type: 'movie', poster})
@@ -508,16 +508,16 @@ app.get('/', (req, res) => {
       });
     }
 
-    // Cargar listas si ya está logueado
-    if ('${isLoggedIn}') {
+    if (${isLoggedIn ? 'true' : 'false'}) {
       loadLists();
     }
   </script>
 </body>
-</html>`);
+</html>`;
+
+  res.send(html);
 });
 
-// ==================== SERVER ====================
 app.listen(PORT, () => {
   console.log(`🚀 Custom Library running on port ${PORT}`);
   console.log(`📍 http://localhost:${PORT}`);
