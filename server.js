@@ -53,7 +53,16 @@ function createList() {
     .then(()=> {document.getElementById('newName').value=''; location.reload(); });
 }
 function addItem(id) {
-    const inp = document.querySelector('[data-id="${id}"] .item-input').value;
+    const express = require('express');
+const PORT = process.env.PORT || 7000;
+
+const app = express();
+app.use(express.json());
+
+let customLists = {
+    favoritos: { name: 'Favoritos', items: [] },
+    vistos: { name: 'Vistos', items
+
     fetch('/api/lists/'+id+'/items',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:inp})})
     .then(()=> { location.reload(); });
 }
