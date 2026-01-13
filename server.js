@@ -457,8 +457,7 @@ app.get('/', (req, res) => {
       .then(data => {
         const html = data.lists.length > 0 
           ? data.lists.map(l => 
-              `<div class="list-item">
-                <div>
+`<div class="list-item">${item.name}</div>`
                   <strong>${l.name}</strong> 
                   <span style="opacity: 0.6;">(${l.type}, ${l.metas.length} items)</span>
                 </div>
