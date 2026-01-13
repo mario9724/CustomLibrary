@@ -1,550 +1,479 @@
-const express = require('express');
+# Server.js const express = require('express');
 const crypto = require('crypto');
-const PORT = process.env.PORT || 10000; // ← CAMBIA 7000 por 10000
-
+const PORT = process.env.PORT || 10000;
 
 const app = express();
 app.use(express.json({limit: '10mb'}));
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({extended: true, limit: '10mb'}));
+app.use(express.static('public'));
 
-// Datos persistentes en memoria
-let dataStore = { users: {} };
-let lang = 'en';
+// Datos persistentes
+let dataStore = {users: {}, sessions: {}, lists: {}};
 
-const L = {
-    en: {
-        title: 'Custom Library',
-        lists: 'Your Lists',
-        newList: 'New List',
-        namePlh: 'List name',
-        create: 'Create',
-        up: '↑',
-        down: '↓',
-        delete: 'Delete',
-        backup: 'Backup',
-        restore: 'Restore',
-        share: 'Share Selected',
-        install: 'Install Stremio',
-        copyUrl: 'Copy URL',
-        openStremio: 'Open Stremio',
-        setUser: 'Set Username',
-        userPlh: 'Enter your username',
-        msgCreated: 'List created!',
-        msgRenamed: 'Renamed!',
-        msgDeleted: 'Deleted!',
-        msgBackup: 'Backup ready!',
-        msgImported: 'Imported OK!',
-        msgCopied: 'Copied!',
-        userSet: 'Username set!',
-        selectLang: 'EN'
-    },
-    es: {
-        title: 'Biblioteca Personalizada',
-        lists: 'Tus Listas',
-        newList: 'Nueva Lista',
-        namePlh: 'Nombre lista',
-        create: 'Crear',
-        up: '↑',
-        down: '↓',
-        delete: 'Eliminar',
-        backup: 'Backup',
-        restore: 'Restaurar',
-        share: 'Compartir Seleccionadas',
-        install: 'Instalar Stremio',
-        copyUrl: 'Copiar URL',
-        openStremio: 'Abrir Stremio',
-        setUser: 'Establecer Usuario',
-        userPlh: 'Introduce tu usuario',
-        msgCreated: '¡Lista creada!',
-        msgRenamed: '¡Renombrada!',
-        msgDeleted: '¡Eliminada!',
-        msgBackup: '¡Backup listo!',
-        msgImported: '¡Importado!',
-        msgCopied: '¡Copiado!',
-        function getUser(req) {
+// ==================== MIDDLEWARE ====================
+function getUser(req) {
   let username = 'anon';
+  let sessionId = crypto.randomBytes(8).toString('hex');
   
-  // Parse cookies manualmente (sin cookie-parser)
   if (req.headers.cookie) {
     const cookies = {};
-    req
+    req.headers.cookie.split(';').forEach(c => {
+      const [name, value] = c.trim().split('=');
+      if (name && value) cookies[name] = decodeURIComponent(value);
+    });
+    username = cookies.user || 'anon';
+    sessionId = cookies.session || sessionId;
+  }
+  
+  return { username, sessionId };
+}
+
+app.use((req, res, next) => {
+  req.user = getUser(req);
+  next();
 });
+
+// ==================== STREMIO ADDON ====================
+
+// Manifest
+app.get('/manifest.json', (req, res) => {
+  res.json({
+    id: 'com.customlibrary.addon',
+    version: '1.0.0',
+    name: 'Custom Library',
+    description: 'Crea y gestiona tus listas personalizadas',
+    types: ['movie', 'series', 'sports'],
+    catalogs: [],
+    resources: ['catalog', 'meta', 'stream'],
+    idPrefixes: ['tt', 'custom_'],
+    contactEmail: 'mario9724@gmail.com'
+  });
+});
+
+// Catalogs - Retorna listas del usuario
+app.get('/catalog/:type/:id.json', (req, res) => {
+  const { type, id } = req.params;
+  const username = req.user.username;
+  
+  const userList = dataStore.lists[username]?.[id];
+  if (userList && userList.type === type) {
+    return res.json({ metas: userList.metas || [] });
+  }
+  
+  res.json({ metas: [] });
+});
+
+// Meta (info de película/serie)
+app.get('/meta/:type/:id.json', (req, res) => {
+  const { type, id } = req.params;
+  
+  res.json({
+    meta: {
+      id,
+      type,
+      name: `Item ${id}`,
+      poster: 'https://via.placeholder.com/342x513?text=' + id,
+      posterShape: 'portrait',
+      description: 'Item de tu librería personalizada',
+      imdbRating: 7.5,
+      genre: ['Personal'],
+      year: 2024
+    }
+  });
+});
+
+// Streams
+app.get('/stream/:type/:id.json', (req, res) => {
+  res.json({ streams: [] });
+});
+
+// ==================== API WEB ====================
+
+// Login
+app.post('/api/auth/login', (req, res) => {
+  const { username, password } = req.body;
+  
+  if (!username || !password) {
+    return res.status(400).json({error: 'Usuario/contraseña requeridos'});
+  }
+  
+  if (!dataStore.users[username]) {
+    dataStore.users[username] = {
+      username,
+      createdAt: new Date()
+    };
+  }
+  
+  const sessionId = crypto.randomBytes(16).toString('hex');
+  dataStore.sessions[sessionId] = {username, createdAt: new Date()};
+  
+  res.setHeader('Set-Cookie', [
+    `user=${username}; Path=/; Max-Age=2592000`,
+    `session=${sessionId}; Path=/; Max-Age=2592000`
+  ]);
+  
+  res.json({
+    success: true,
+    username,
+    sessionId,
+    message: `¡Bienvenido ${username}!`
+  });
+});
+
+// Crear lista
+app.post('/api/lists/create', (req, res) => {
+  const { listName, description, type } = req.body;
+  const username = req.user.username;
+  
+  if (!listName || !type) {
+    return res.status(400).json({error: 'Nombre y tipo de lista requeridos'});
+  }
+  
+  if (!dataStore.lists[username]) {
+    dataStore.lists[username] = {};
+  }
+  
+  const listId = listName.toLowerCase().replace(/\s+/g, '-') + '-' + Date.now();
+  
+  dataStore.lists[username][listId] = {
+    id: listId,
+    name: listName,
+    type: type,
+    description: description || '',
+    metas: [],
+    createdAt: new Date(),
+    owner: username
+  };
+  
+  res.json({
+    success: true,
+    listId,
+    message: `Lista "${listName}" creada ✅`
+  });
+});
+
+// Añadir item a lista
+app.post('/api/lists/:listId/add', (req, res) => {
+  const { listId } = req.params;
+  const { id, name, type, poster } = req.body;
+  const username = req.user.username;
+  
+  const list = dataStore.lists[username]?.[listId];
+  if (!list) {
+    return res.status(404).json({error: 'Lista no encontrada'});
+  }
+  
+  list.metas.push({
+    id: id || 'custom_' + Date.now(),
+    name: name || 'Sin título',
+    type: type || 'movie',
+    poster: poster || 'https://via.placeholder.com/342x513?text=' + name
+  });
+  
+  res.json({
+    success: true,
+    message: `"${name}" añadido ✅`,
+    totalItems: list.metas.length
+  });
+});
+
+// Obtener listas
+app.get('/api/lists', (req, res) => {
+  const username = req.user.username;
+  const userLists = dataStore.lists[username] || {};
+  
+  res.json({
+    user: username,
+    lists: Object.values(userLists),
+    total: Object.keys(userLists).length
+  });
+});
+
+// Eliminar item
+app.delete('/api/lists/:listId/item/:itemId', (req, res) => {
+  const { listId, itemId } = req.params;
+  const username = req.user.username;
+  
+  const list = dataStore.lists[username]?.[listId];
+  if (!list) {
+    return res.status(404).json({error: 'Lista no encontrada'});
+  }
+  
+  list.metas = list.metas.filter(m => m.id !== itemId);
+  
+  res.json({
+    success: true,
+    message: 'Item eliminado ✅'
+  });
+});
+
+// Exportar lista
+app.get('/api/lists/:listId/export', (req, res) => {
+  const { listId } = req.params;
+  const username = req.user.username;
+  const list = dataStore.lists[username]?.[listId];
+  
+  if (!list) {
+    return res.status(404).json({error: 'Lista no encontrada'});
+  }
+  
+  res.setHeader('Content-Disposition', `attachment; filename="${list.name}.json"`);
+  res.setHeader('Content-Type', 'application/json');
+  res.json(list);
+});
+
+// ==================== WEB PAGE ====================
 
 app.get('/', (req, res) => {
-    const user = req.user;
-    const t = L[lang];
-
-    if (user === 'anon') {
-        return res.send(getSetupHTML(t));
-    }
-
-    if (!dataStore.users[user]) {
-        dataStore.users[user] = { lists: {} };
-    }
-
-    res.cookie('username', user, { maxAge: 365 * 24 * 60 * 60 * 1000 });
-    res.send(getMainHTML(t, user));
-});
-
-function getSetupHTML(t) {
-    return `
-<!DOCTYPE html>
-<html>
-<head>
-<title>${t.title}</title>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width">
-<style>
-*{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:Arial,sans-serif;background:linear-gradient(135deg,#1a1a1a 0%,#2d1b69 100%);color:white;padding:40px 20px;min-height:100vh;display:flex;align-items:center;justify-content:center;}
-.container{max-width:500px;margin:auto;text-align:center;}
-.logo{width:140px;height:140px;margin:30px auto;display:block;}
-.form-group{margin:25px 0;}
-input{padding:18px;border-radius:12px;border:2px solid #8b5cf6;background:rgba(26,26,26,0.8);color:white;font-size:16px;width:100%;max-width:350px;box-shadow:0 4px 15px rgba(139,92,246,0.2);}
-input:focus{outline:none;border-color:#a78bfa;box-shadow:0 0 20px rgba(139,92,246,0.4);}
-button{padding:18px 30px;border-radius:12px;border:none;font-size:16px;font-weight:bold;cursor:pointer;margin:10px;transition:all 0.3s;box-shadow:0 4px 15px rgba(139,92,246,0.3);}
-.btn-setup{background:#8b5cf6;color:white;width:100%;max-width:350px;}
-.btn-setup:hover{background:#a78bfa;transform:translateY(-2px);}
-h1{font-size:2.2em;margin-bottom:20px;background:linear-gradient(45deg,#8b5cf6,#a78bfa);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.subtitle{font-size:1.1em;margin-bottom:30px;opacity:0.9;}
-</style>
-</head>
-<body>
-<div class="container">
-<svg class="logo" viewBox="0 0 200 200" fill="#8b5cf6">
-  <rect x="45" y="130" width="35" height="55" rx="4" transform="rotate(-8 62.5 157.5)"/>
-  <rect x="55" y="110" width="35" height="55" rx="4" transform="rotate(-3 72.5 137.5)"/>
-  <rect x="65" y="90" width="35" height="55" rx="4"/>
-  <rect x="75" y="70" width="35" height="55" rx="4"/>
-</svg>
-<h1>${t.title}</h1>
-<p class="subtitle">${t.userPlh}</p>
-<div class="form-group">
-  <input id="username" placeholder="${t.userPlh}" autocomplete="username">
-</div>
-<button class="btn-setup" onclick="setUsername()">${t.setUser}</button>
-</div>
-<script>
-function setUsername() {
-  const username = document.getElementById("username").value.trim();
-  if (!username) {
-    alert("${t.userPlh}");
-    return;
-  }
-  window.location.href = "/?user=" + encodeURIComponent(username);
-}
-document.getElementById("username").addEventListener("keypress", function(e) {
-  if (e.key === "Enter") setUsername();
-});
-</script>
-</body>
-</html>`;
-}
-
-function getMainHTML(t, user) {
-    const userData = dataStore.users[user] || { lists: {} };
-    const lists = Object.entries(userData.lists)
-        .sort((a, b) => a[1].order - b[1].order);
-
-    let listsHTML = '';
-    lists.forEach(([id, list]) => {
-        const count = Array.isArray(list.items) ? list.items.length : 0;
-        listsHTML += `
-<div class="list-item" data-id="${id}" draggable="true">
-  <h3 contenteditable="true" onblur="rename('${id}', this.textContent.trim())">${list.name} (${count})</h3>
-  <div class="actions">
-    <button onclick="moveUp('${id}')">${t.up}</button>
-    <button onclick="moveDown('${id}')">${t.down}</button>
-    <button class="delete-btn" onclick="removeList('${id}')">${t.delete}</button>
-    <input type="checkbox" class="share-check">
-  </div>
-</div>`;
-    });
-
-    const host = process.env.RENDER_EXTERNAL_HOSTNAME || 'localhost:' + PORT;
-    const manifestUrl = `https://${host}/manifest.json?user=${encodeURIComponent(user)}`;
-    const stremioUrl = `stremio://catalog/?url=${encodeURIComponent(manifestUrl)}&preload`;
-    const langClassEN = lang === 'en' ? 'active' : '';
-    const langClassES = lang === 'es' ? 'active' : '';
-
-    return `
-<!DOCTYPE html>
-<html>
-<head>
-<title>${t.title}</title>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width">
-<style>
-*{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:Arial,sans-serif;background:linear-gradient(135deg,#1a1a1a 0%,#2d1b69 100%);color:white;padding:30px;min-height:100vh;}
-.container{max-width:1000px;margin:auto;}
-.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px;flex-wrap:wrap;gap:15px;}
-.logo{width:70px;height:70px;display:block;}
-h1{color:#8b5cf6;font-size:2em;margin:0;}
-.lang{display:flex;gap:10px;}
-.lang button{padding:10px 15px;background:rgba(26,26,26,0.8);border:2px solid #8b5cf6;color:#8b5cf6;cursor:pointer;border-radius:8px;font-weight:bold;transition:all 0.3s;}
-.lang .active{background:#8b5cf6;color:black;}
-.change-user{padding:12px 20px;background:#6b7280;color:white;cursor:pointer;border-radius:8px;font-weight:bold;transition:all 0.3s;font-size:14px;}
-.change-user:hover{background:#4b5563;}
-.new-list{display:flex;gap:15px;margin:30px 0;max-width:500px;align-items:center;}
-.new-list input{flex:1;padding:15px;background:rgba(26,26,26,0.8);border:2px solid #8b5cf6;border-radius:10px;color:white;font-size:16px;}
-.new-list button{padding:15px 30px;background:#8b5cf6;color:black;border:none;border-radius:10px;font-size:16px;font-weight:bold;cursor:pointer;box-shadow:0 4px 15px rgba(139,92,246,0.3);transition:all 0.3s;}
-.new-list button:hover{background:#a78bfa;transform:translateY(-2px);}
-h2{color:#8b5cf6;margin:30px 0 20px 0;font-size:1.8em;}
-.lists{display:flex;flex-direction:column;gap:20px;}
-.list-item{background:rgba(26,26,26,0.8);padding:25px;border-radius:15px;border-left:5px solid #8b5cf6;box-shadow:0 8px 25px rgba(139,92,246,0.2);cursor:move;transition:all 0.3s;}
-.list-item:hover{transform:translateY(-3px);box-shadow:0 12px 35px rgba(139,92,246,0.3);}
-.list-item h3{color:#8b5cf6;margin-bottom:15px;font-size:20px;}
-.list-item h3:focus{outline:none;background:rgba(139,92,246,0.1);padding:5px;border-radius:5px;}
-.actions{display:flex;gap:10px;align-items:center;}
-.actions button{padding:8px 16px;background:#8b5cf6;color:black;border:none;border-radius:6px;cursor:pointer;font-size:14px;font-weight:bold;transition:all 0.3s;}
-.actions button:hover{background:#a78bfa;}
-.delete-btn{background:#ef4444;color:white;}
-.delete-btn:hover{background:#dc2626;}
-.share-section{margin:30px 0;text-align:center;}
-.share-section button{padding:15px 40px;background:#4ade80;color:black;border:none;border-radius:10px;font-size:16px;font-weight:bold;cursor:pointer;box-shadow:0 4px 15px rgba(74,222,128,0.3);transition:all 0.3s;}
-.share-section button:hover{background:#6ee7b7;transform:translateY(-2px);}
-.backup-section{display:flex;gap:15px;justify-content:center;margin:30px 0;align-items:center;}
-.backup-section button{padding:15px 25px;background:#10b981;color:white;border:none;border-radius:10px;font-weight:bold;cursor:pointer;transition:all 0.3s;}
-.backup-section button:hover{background:#059669;transform:translateY(-2px);}
-.backup-section input[type=file]{padding:15px;background:rgba(26,26,26,0.8);border:2px solid #8b5cf6;color:white;border-radius:10px;cursor:pointer;}
-.install-section{background:rgba(26,26,26,0.6);padding:30px;border-radius:15px;margin:30px 0;text-align:center;box-shadow:0 8px 25px rgba(0,0,0,0.3);}
-.install-section p{font-size:16px;margin-bottom:20px;word-break:break-all;background:rgba(139,92,246,0.1);padding:15px;border-radius:8px;}
-.install-section button{padding:15px 25px;margin:8px;font-size:16px;font-weight:bold;border-radius:10px;border:none;cursor:pointer;transition:all 0.3s;box-shadow:0 4px 15px rgba(139,92,246,0.3);}
-.copy-btn{background:#3b82f6;color:white;}
-.copy-btn:hover{background:#2563eb;}
-.stremio-btn{background:#8b5cf6;color:black;}
-.stremio-btn:hover{background:#a78bfa;}
-.install-btn{background:#10b981;color:black;}
-.install-btn:hover{background:#059669;}
-.message{padding:20px;margin:20px 0;border-radius:10px;font-weight:bold;text-align:center;}
-.success{background:#10b981;}
-.error{background:#ef4444;}
-@media(max-width:768px){
-  .container{padding:0 20px;}
-  .header{flex-direction:column;text-align:center;}
-  .new-list{flex-direction:column;}
-  .backup-section{flex-direction:column;}
-  .actions{flex-wrap:wrap;}
-}
-</style>
-</head>
-<body>
-<div class="container">
-<svg class="logo" viewBox="0 0 200 200" fill="#8b5cf6">
-  <rect x="45" y="130" width="35" height="55" rx="4" transform="rotate(-8 62.5 157.5)"/>
-  <rect x="55" y="110" width="35" height="55" rx="4" transform="rotate(-3 72.5 137.5)"/>
-  <rect x="65" y="90" width="35" height="55" rx="4"/>
-  <rect x="75" y="70" width="35" height="55" rx="4"/>
-</svg>
-<div class="header">
-  <h1>${t.title} - ${user}</h1>
-  <div style="display:flex;gap:15px;align-items:center;">
-    <div class="lang">
-      <button class="${langClassEN}" onclick="setLang('en')">EN</button>
-      <button class="${langClassES}" onclick="setLang('es')">ES</button>
-    </div>
-    <button class="change-user" onclick="changeUser()">${t.setUser}</button>
-  </div>
-</div>
-<div class="new-list">
-  <input id="newName" placeholder="${t.namePlh}">
-  <button onclick="createList()">${t.create}</button>
-</div>
-<h2>${t.lists}</h2>
-<div id="lists">${listsHTML}</div>
-<div class="share-section">
-  <button onclick="shareSelected()">${t.share}</button>
-</div>
-<div class="backup-section">
-  <button onclick="backup()">${t.backup}</button>
-  <input type="file" id="importFile" accept=".json" onchange="importFile(event)">
-  <button onclick="document.getElementById('importFile').click()">${t.restore}</button>
-</div>
-<div class="install-section">
-  <p>${manifestUrl}</p>
-  <button class="copy-btn" onclick="copyUrl('${manifestUrl}')">${t.copyUrl}</button>
-  <button class="stremio-btn" onclick="openStremio('${stremioUrl}')">${t.openStremio}</button>
-  <button class="install-btn" onclick="window.location='${stremioUrl}'">${t.install}</button>
-</div>
-<div id="message"></div>
-</div>
-<script>
-let dragId = null;
-document.addEventListener('DOMContentLoaded', function() {
-  const lists = document.querySelectorAll('.list-item');
-  lists.forEach(el => {
-    el.addEventListener('dragstart', e => { dragId = e.target.dataset.id; });
-    el.addEventListener('dragover', e => e.preventDefault());
-    el.addEventListener('drop', e => {
-      const target = e.target.closest('.list-item');
-      if (!target) return;
-      if (dragId && dragId !== target.dataset.id) {
-        moveList(dragId, target.dataset.id);
-      }
-      dragId = null;
-    });
-  });
-});
-
-function showMsg(text, isError) {
-  const msgDiv = document.getElementById('message');
-  const cls = isError ? 'error' : 'success';
-  msgDiv.innerHTML = '<div class="message ' + cls + '">' + text + '</div>';
-  setTimeout(() => { msgDiv.innerHTML = ''; }, 4000);
-}
-
-async function api(path, body) {
-  const resp = await fetch('/api' + path, {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify(body || {})
-  });
-  return resp.json();
-}
-
-async function createList() {
-  const name = document.getElementById('newName').value.trim();
-  if (!name) return showMsg('Enter list name', true);
-  await api('/lists', {name});
-  document.getElementById('newName').value = '';
-  location.reload();
-}
-
-async function rename(id, newName) {
-  if (!newName.trim()) return;
-  await api('/lists/' + id + '/rename', {name: newName});
-  showMsg('${t.msgRenamed}', false);
-}
-
-async function moveUp(id) {
-  await api('/lists/' + id + '/move', {dir: -1});
-  location.reload();
-}
-
-async function moveDown(id) {
-  await api('/lists/' + id + '/move', {dir: 1});
-  location.reload();
-}
-
-async function moveList(id1, id2) {
-  await api('/lists/reorder', {from: id1, to: id2});
-  location.reload();
-}
-
-async function removeList(id) {
-  if (!confirm('Delete this list?')) return;
-  await fetch('/api/lists/' + id, {method: 'DELETE'});
-  location.reload();
-}
-
-function backup() {
-  fetch('/api/backup', {method: 'POST'})
-    .then(r => r.json())
-    .then(data => {
-      const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'lists-backup.json';
-      a.click();
-      URL.revokeObjectURL(url);
-      showMsg('${t.msgBackup}', false);
-    });
-}
-
-async function importFile(event) {
-  const file = event.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = async e => {
-    try {
-      const data = JSON.parse(e.target.result);
-      await api('/import', data);
-      showMsg('${t.msgImported}', false);
-      location.reload();
-    } catch (err) {
-      showMsg('Import error: ' + err.message, true);
-    }
-  };
-  reader.readAsText(file);
-}
-
-async function shareSelected() {
-  const selected = Array.from(document.querySelectorAll('.share-check:checked'))
-    .map(cb => cb.closest('.list-item').dataset.id);
-  if (selected.length === 0) return showMsg('Select lists to share', true);
-  showMsg('Share functionality coming soon!', false);
-}
-
-async function copyUrl(url) {
-  try {
-    await navigator.clipboard.writeText(url);
-    showMsg('${t.msgCopied}', false);
-  } catch (e) {
-    const textArea = document.createElement('textarea');
-    textArea.value = url;
-    document.body.appendChild(textArea);
-    textArea.select();
-    document.execCommand('copy');
-    document.body.removeChild(textArea);
-    showMsg('${t.msgCopied}', false);
-  }
-}
-
-function openStremio(url) {
-  window.location = url;
-}
-
-function changeUser() {
-  document.cookie = 'username=; Max-Age=0; path=/';
-  window.location = '/';
-}
-
-function setLang(l) {
-  fetch('/api/lang', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({lang: l})
-  }).then(() => location.reload());
-}
-</script>
-</body>
-</html>`;
-}
-
-// API mínima
-
-app.post('/api/lang', (req, res) => {
-    if (req.body.lang && ['en', 'es'].includes(req.body.lang)) {
-        lang = req.body.lang;
-    }
-    res.json({ ok: 1 });
-});
-
-app.post('/api/lists', (req, res) => {
-    const user = req.user;
-    if (!dataStore.users[user]) dataStore.users[user] = { lists: {} };
-    const name = (req.body.name || '').trim();
-    if (!name) return res.status(400).json({ error: 'List name required' });
-    const idBase = name.toLowerCase().replace(/[^a-z0-9]/g, '-').substring(0, 50) || 'list';
-    let id = idBase;
-    let idx = 1;
-    while (dataStore.users[user].lists[id]) {
-        id = idBase + '-' + idx++;
-    }
-    const order = Object.keys(dataStore.users[user].lists).length;
-    dataStore.users[user].lists[id] = { name, items: [], order };
-    res.json({ ok: 1 });
-});
-
-app.post('/api/lists/:id/rename', (req, res) => {
-    const user = req.user;
-    const lists = dataStore.users[user]?.lists;
-    if (!lists || !lists[req.params.id]) return res.status(404).json({ error: 'Not found' });
-    const name = (req.body.name || '').trim();
-    if (!name) return res.status(400).json({ error: 'Name required' });
-    lists[req.params.id].name = name;
-    res.json({ ok: 1 });
-});
-
-app.post('/api/lists/:id/move', (req, res) => {
-    const user = req.user;
-    const lists = dataStore.users[user]?.lists;
-    if (!lists || !lists[req.params.id]) return res.status(404).json({ error: 'Not found' });
-    const dir = parseInt(req.body.dir) || 0;
-    const current = lists[req.params.id].order;
-    const target = current + dir;
-    let swapId = null;
-    for (const [id, l] of Object.entries(lists)) {
-        if (l.order === target) {
-            swapId = id;
-            break;
+  const isLoggedIn = req.user.username !== 'anon';
+  
+  res.send(`
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Custom Library</title>
+      <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+          background: #0a0e27;
+          color: #fff;
+          min-height: 100vh;
         }
-    }
-    if (swapId) {
-        const tmp = lists[swapId].order;
-        lists[swapId].order = lists[req.params.id].order;
-        lists[req.params.id].order = tmp;
-    }
-    res.json({ ok: 1 });
-});
-
-app.post('/api/lists/reorder', (req, res) => {
-    const user = req.user;
-    const lists = dataStore.users[user]?.lists;
-    if (!lists) return res.status(400).json({ error: 'No lists' });
-    const { from, to } = req.body;
-    if (!lists[from] || !lists[to]) return res.status(400).json({ error: 'Invalid ids' });
-    const a = lists[from].order;
-    const b = lists[to].order;
-    for (const id in lists) {
-        if (lists[id].order === a) lists[id].order = b;
-        else if (lists[id].order === b) lists[id].order = a;
-    }
-    res.json({ ok: 1 });
-});
-
-app.delete('/api/lists/:id', (req, res) => {
-    const user = req.user;
-    const lists = dataStore.users[user]?.lists;
-    if (!lists || !lists[req.params.id]) return res.status(404).json({ error: 'Not found' });
-    delete lists[req.params.id];
-    res.json({ ok: 1 });
-});
-
-app.post('/api/backup', (req, res) => {
-    const user = req.user;
-    const lists = dataStore.users[user]?.lists || {};
-    res.json({ lists });
-});
-
-app.post('/api/import', (req, res) => {
-    const user = req.user;
-    if (!dataStore.users[user]) dataStore.users[user] = { lists: {} };
-    if (req.body && req.body.lists && typeof req.body.lists === 'object') {
-        const existing = dataStore.users[user].lists;
-        for (const [id, list] of Object.entries(req.body.lists)) {
-            if (!existing[id]) existing[id] = list;
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        header { 
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+          padding: 40px 20px; 
+          text-align: center; 
+          border-radius: 10px; 
+          margin-bottom: 30px; 
         }
-    }
-    res.json({ ok: 1 });
+        h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .user-bar {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 30px;
+          padding: 15px;
+          background: #1a1f3a;
+          border-radius: 8px;
+        }
+        .btn { 
+          display: inline-block; 
+          padding: 12px 24px; 
+          background: #667eea; 
+          color: white; 
+          text-decoration: none; 
+          border-radius: 5px; 
+          border: none; 
+          cursor: pointer; 
+          font-size: 1em; 
+          transition: all 0.3s; 
+        }
+        .btn:hover { background: #764ba2; transform: translateY(-2px); }
+        .btn-small { padding: 8px 16px; font-size: 0.9em; }
+        .btn-danger { background: #e74c3c; }
+        .btn-danger:hover { background: #c0392b; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px; }
+        .card { 
+          background: #1a1f3a; 
+          padding: 20px; 
+          border-radius: 10px; 
+          border-left: 4px solid #667eea;
+        }
+        .card h3 { color: #667eea; margin-bottom: 15px; }
+        input, textarea, select { 
+          width: 100%; 
+          padding: 10px; 
+          margin: 8px 0; 
+          background: #2a2f4a; 
+          color: white; 
+          border: 1px solid #444; 
+          border-radius: 5px; 
+          font-family: inherit; 
+        }
+        input:focus, textarea:focus { outline: none; border-color: #667eea; box-shadow: 0 0 10px rgba(102, 126, 234, 0.3); }
+        .list-item {
+          background: #2a2f4a;
+          padding: 12px;
+          border-radius: 5px;
+          margin: 10px 0;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+        .manifest-box {
+          background: #2a2f4a;
+          padding: 20px;
+          border-radius: 10px;
+          border: 2px dashed #667eea;
+          text-align: center;
+          margin-bottom: 30px;
+        }
+        .manifest-box code {
+          background: #0a0e27;
+          padding: 10px;
+          border-radius: 5px;
+          display: block;
+          word-break: break-all;
+          margin: 10px 0;
+          font-family: monospace;
+        }
+        .copy-btn { cursor: pointer; font-size: 0.9em; color: #667eea; }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <header>
+          <h1>📚 Custom Library</h1>
+          <p>Crea y gestiona tus listas personalizadas para Stremio</p>
+        </header>
+        
+        <div class="user-bar">
+          <div>
+            <strong>👤 ${isLoggedIn ? req.user.username : 'Anónimo'}</strong>
+          </div>
+          ${isLoggedIn ? '<a href="#" class="btn btn-small" onclick="logout()">Logout</a>' : ''}
+        </div>
+
+        <div class="manifest-box">
+          <h2>🔗 Instalar en Stremio</h2>
+          <p>Copia esta URL en Addons → Instalar desde URL:</p>
+          <code id="manifest-url">https://customlibrary.onrender.com/manifest.json</code>
+          <button class="copy-btn" onclick="copyManifest()">📋 Copiar URL</button>
+        </div>
+
+        <div class="grid">
+          <!-- Crear Lista -->
+          <div class="card">
+            <h3>➕ Nueva Lista</h3>
+            <input type="text" id="listName" placeholder="Nombre de lista">
+            <select id="listType">
+              <option value="movie">🎬 Película</option>
+              <option value="series">📺 Serie</option>
+              <option value="sports">⚽ Deporte</option>
+            </select>
+            <textarea id="listDesc" placeholder="Descripción (opcional)" style="resize: vertical; min-height: 60px;"></textarea>
+            <button class="btn" onclick="createList()">Crear Lista</button>
+          </div>
+
+          <!-- Mis Listas -->
+          <div class="card">
+            <h3>📋 Mis Listas</h3>
+            <div id="listContainer" style="max-height: 400px; overflow-y: auto;">
+              <p style="opacity: 0.6;">Cargando listas...</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Añadir Item -->
+        <div class="card" style="margin-top: 20px;">
+          <h3>➕ Añadir Item a Lista</h3>
+          <select id="selectList" style="width: 100%; margin-bottom: 10px;">
+            <option value="">Selecciona una lista...</option>
+          </select>
+          <input type="text" id="itemId" placeholder="ID (ej: tt0111161)">
+          <input type="text" id="itemName" placeholder="Título">
+          <input type="text" id="itemPoster" placeholder="URL de poster (opcional)">
+          <button class="btn" onclick="addItem()">Añadir Item</button>
+        </div>
+      </div>
+
+      <script>
+        function copyManifest() {
+          const url = document.getElementById('manifest-url').textContent;
+          navigator.clipboard.writeText(url);
+          alert('¡URL copiada!');
+        }
+
+        function logout() {
+          document.cookie = "user=; Max-Age=0";
+          document.cookie = "session=; Max-Age=0";
+          location.reload();
+        }
+
+        function createList() {
+          const name = document.getElementById('listName').value;
+          const type = document.getElementById('listType').value;
+          const desc = document.getElementById('listDesc').value;
+          
+          if (!name) return alert('Nombre requerido');
+          
+          fetch('/api/lists/create', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({listName: name, type, description: desc})
+          })
+          .then(r => r.json())
+          .then(d => {
+            if (d.success) {
+              alert(d.message);
+              loadLists();
+              document.getElementById('listName').value = '';
+              document.getElementById('listDesc').value = '';
+            }
+          });
+        }
+
+        function loadLists() {
+          fetch('/api/lists')
+          .then(r => r.json())
+          .then(d => {
+            const html = d.lists.length > 0 
+              ? d.lists.map(l => '<div class="list-item"><div><strong>' + l.name + '</strong> <span style="opacity: 0.6;">(' + l.type + ', ' + l.metas.length + ' items)</span></div><button class="btn btn-small btn-danger" onclick="deleteList(\'' + l.id + '\')" style="margin-left: 10px;">🗑️</button></div>').join('')
+              : '<p style="opacity: 0.6;">Sin listas aún</p>';
+            
+            document.getElementById('listContainer').innerHTML = html;
+            
+            const selectHtml = '<option value="">Selecciona una lista...</option>' + 
+              d.lists.map(l => '<option value="' + l.id + '">' + l.name + '</option>').join('');
+            document.getElementById('selectList').innerHTML = selectHtml;
+          });
+        }
+
+        function deleteList(listId) {
+          if (confirm('¿Eliminar esta lista?')) {
+            loadLists();
+          }
+        }
+
+        function addItem() {
+          const listId = document.getElementById('selectList').value;
+          const id = document.getElementById('itemId').value;
+          const name = document.getElementById('itemName').value;
+          const poster = document.getElementById('itemPoster').value;
+          
+          if (!listId || !id || !name) return alert('Rellena los campos requeridos');
+          
+          fetch('/api/lists/' + listId + '/add', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({id, name, type: 'movie', poster})
+          })
+          .then(r => r.json())
+          .then(d => {
+            if (d.success) {
+              alert(d.message);
+              document.getElementById('itemId').value = '';
+              document.getElementById('itemName').value = '';
+              document.getElementById('itemPoster').value = '';
+              loadLists();
+            }
+          });
+        }
+
+        loadLists();
+      </script>
+    </body>
+    </html>
+  `);
 });
 
-// Stremio
-
-app.get('/manifest.json', (req, res) => {
-    const user = req.query.user || 'anon';
-    res.json({
-        id: 'com.customlibrary.' + user,
-        name: 'Custom Library',
-        version: '1.2.0',
-        resources: ['catalog'],
-        types: ['movie', 'series'],
-        catalogs: [{ id: 'lists', name: 'My Lists', type: 'list' }],
-        behaviorHints: { configurable: true }
-    });
-});
-
-app.get('/catalog/lists.json', (req, res) => {
-    const user = req.query.user || 'anon';
-    if (!dataStore.users[user]) return res.json({ metas: [] });
-    const metas = Object.entries(dataStore.users[user].lists)
-        .sort((a, b) => a[1].order - b[1].order)
-        .map(([id, l]) => ({
-            id: 'list:' + id,
-            type: 'list',
-            name: l.name,
-            poster: 'https://via.placeholder.com/300x450/8b5cf6/FFFFFF?text=' +
-                encodeURIComponent(l.name.substring(0, 20))
-        }));
-    res.json({ metas });
-});
-
-app.get('/health', (req, res) => res.send('OK'));
-
-app.use((req, res) => res.status(404).send('Not Found'));
-
+// ==================== SERVER ====================
 app.listen(PORT, () => {
-    console.log('🚀 Custom Library server running on port ' + PORT);
+  console.log(`🚀 Custom Library running on port ${PORT}`);
+  console.log(`📍 http://localhost:${PORT}`);
+  console.log(`📋 Manifest: http://localhost:${PORT}/manifest.json`);
 });
