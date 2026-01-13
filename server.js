@@ -7,8 +7,8 @@ app.use(express.json({limit: '10mb'}));
 
 // Datos persistentes (usa file/DB prod)
 let dataStore = {
-    users: {}, // {username: {passHash, lists: {id: {name, items:[], order:0}}}}
-    sessions: {} // {token: username}
+    users: {},
+    sessions: {}
 };
 let lang = 'en';
 
@@ -41,8 +41,8 @@ const L = {
 
 // Helpers
 function getUser(req) {
-    const token = req.headers.authorization?.split(' ')[1];
-    return dataStore.sessions[token] ? dataStore.sessions[token] : null;
+    const token = req.headers.authorization ? req.headers.authorization.split(' ')[1] : null;
+    return dataStore.sessions[token] || null;
 }
 function hash(str) { return crypto.createHash('sha256').update(str).digest('hex'); }
 
@@ -52,14 +52,14 @@ app.use((req, res, next) => {
     next();
 });
 
-// Ruta principal TODO en un HTML
+// Ruta principal
 app.get('/', (req, res) => {
     const user = req.user;
     const t = L[lang];
     if (!user) {
         return res.send(getLoginHTML(t));
     }
-    let html = getMainHTML(t, user, req.headers.host);
+    const html = getMainHTML(t, user, req.headers.host || 'localhost:7000');
     res.send(html);
 });
 
@@ -81,19 +81,9 @@ function getLoginHTML(t) {
     '<button onclick="login()">' + t.login + '</button>' +
     '<button onclick="register()">' + t.register + '</button>' +
     '<script>' +
-    'function api(path, opts={method:\'POST\'}) {' +
-    '    return fetch(\'/api\'+path, {headers:{\'Content-Type\':\'application/json\', \'Authorization\':\'Basic \'+btoa(document.getElementById(\'user\').value+\':\'+document.getElementById(\'pass\').value)}, ...opts});' +
-    '}' +
-    'async function login() {' +
-    '    const u = document.getElementById(\'user\').value;' +
-    '    await api(\'/login\', {method:\'POST\', body:JSON.stringify({user:u})});' +
-    '    location.reload();' +
-    '}' +
-    'async function register() {' +
-    '    const u = document.getElementById(\'user\').value, p = document.getElementById(\'pass\').value;' +
-    '    await api(\'/register\', {method:\'POST\', body:JSON.stringify({user:u, pass:p})});' +
-    '    location.reload();' +
-    '}' +
+    'function api(path, opts){return fetch("/api"+path, {headers:{"Content-Type":"application/json", "Authorization":"Basic "+btoa(document.getElementById("user").value+":"+document.getElementById("pass").value)}, ...opts});}' +
+    'async function login(){const u=document.getElementById("user").value;await api("/login", {method:"POST", body:JSON.stringify({user:u})});location.reload();}' +
+    'async function register(){const u=document.getElementById("user").value, p=document.getElementById("pass").value;await api("/register", {method:"POST", body:JSON.stringify({user:u, pass:p})});location.reload();}' +
     '</script></body></html>';
 }
 
@@ -102,22 +92,19 @@ function getMainHTML(t, user, host) {
     const lists = Object.entries(user.lists || {}).sort((a,b)=>a[1].order - b[1].order);
     lists.forEach(([id, list]) => {
         listsHTML += '<div class="list" data-id="' + id + '" draggable="true">' +
-        '<h3 contenteditable="true" onblur="rename(\'' + id + '\', this.textContent)">' + list.name + ' (' + list.items.length + ')</h3>' +
+        '<h3 contenteditable="true" onblur="rename(\'' + id.replace(/'/g, "\\'") + '\', this.textContent)">' + list.name + ' (' + list.items.length + ')</h3>' +
         '<div class="actions">' +
-        '<button onclick="move(\'' + id + '\', -1)">' + t.up + '</button>' +
-        '<button onclick="move(\'' + id + '\', 1)">' + t.down + '</button>' +
-        '<button onclick="remove(\'' + id + '\')">' + t.delete + '</button>' +
+        '<button onclick="move(\'' + id.replace(/'/g, "\\'") + '\', -1)">' + t.up + '</button>' +
+        '<button onclick="move(\'' + id.replace(/'/g, "\\'") + '\', 1)">' + t.down + '</button>' +
+        '<button onclick="remove(\'' + id.replace(/'/g, "\\'") + '\')">' + t.delete + '</button>' +
         '<input type="checkbox" class="share-check">' +
         '</div></div>';
     });
 
     const manifestUrl = 'https://' + host + '/manifest.json';
     const stremioUrl = 'stremio://catalog/?url=' + encodeURIComponent(manifestUrl) + '&preload';
-
     const langClassEN = lang === 'en' ? 'active' : '';
     const langClassES = lang === 'es' ? 'active' : '';
-    const selectLangEN = t.selectLang === 'EN' ? 'EN' : 'EN';
-    const selectLangES = t.selectLang === 'ES' ? 'ES' : 'ES';
 
     return '<!DOCTYPE html>' +
     '<html><head><title>' + t.title + '</title>' +
@@ -131,14 +118,12 @@ function getMainHTML(t, user, host) {
     '  <rect x="65" y="75" width="40" height="60" rx="5"/>' +
     '</svg>' +
     '<h1 class="h1">' + t.title + ' - ' + user + '</h1>' +
-    '<div class="lang"><button class="' + langClassEN + '" onclick="setLang(\'en\')">' + selectLangEN + '</button><button class="' + langClassES + '" onclick="setLang(\'es\')">' + selectLangES + '</button></div>' +
+    '<div class="lang"><button class="' + langClassEN + '" onclick="setLang(\'en\')">EN</button><button class="' + langClassES + '" onclick="setLang(\'es\')">ES</button></div>' +
     '<span class="logout" onclick="logout()">' + t.logout + '</span>' +
     '<div class="new-list"><input id="newName" placeholder="' + t.namePlh + '"><button onclick="createList()">' + t.create + '</button></div>' +
     '<h2>' + t.lists + '</h2>' +
     '<div id="lists">' + listsHTML + '</div>' +
-    '<div class="share-section">' +
-    '<button onclick="shareSelected()">' + t.share + '</button>' +
-    '</div>' +
+    '<div class="share-section"><button onclick="shareSelected()">' + t.share + '</button></div>' +
     '<div class="backup-section">' +
     '<button onclick="backup()">' + t.backup + '</button>' +
     '<input type="file" id="importFile" accept=".json" onchange="importFile(this.files[0])">' +
@@ -146,101 +131,111 @@ function getMainHTML(t, user, host) {
     '</div>' +
     '<div class="install-section">' +
     '<p>' + manifestUrl + '</p>' +
-    '<button onclick="copyUrl(\'' + manifestUrl + '\')">' + t.copyUrl + '</button>' +
-    '<button onclick="openStremio(\'' + stremioUrl + '\')">' + t.openStremio + '</button>' +
-    '<button onclick="location.href=\'' + stremioUrl + '\'">' + t.install + '</button>' +
+    '<button onclick="copyUrl(\'' + manifestUrl.replace(/'/g, "\\'") + '\')">' + t.copyUrl + '</button>' +
+    '<button onclick="openStremio(\'' + stremioUrl.replace(/'/g, "\\'") + '\')">' + t.openStremio + '</button>' +
+    '<button onclick="location.href=\'' + stremioUrl.replace(/'/g, "\\'") + '\'">' + t.install + '</button>' +
     '</div>' +
     '<div id="message"></div>' +
 
     '<script>' +
-    'let dragId = null;' +
-    'document.querySelectorAll(\'.list\').forEach(el => {' +
-    '    el.addEventListener(\'dragstart\', e=>dragId=e.target.dataset.id);' +
-    '    el.addEventListener(\'dragover\', e=>e.preventDefault());' +
-    '    el.addEventListener(\'drop\', e=>{ if(dragId&&dragId!==e.target.dataset.id) move(dragId, e.target.dataset.id); dragId=null;});' +
+    'let dragId=null;' +
+    'document.addEventListener("DOMContentLoaded", function(){' +
+    '  document.querySelectorAll(".list").forEach(function(el){' +
+    '    el.addEventListener("dragstart", function(e){dragId=e.target.dataset.id});' +
+    '    el.addEventListener("dragover", function(e){e.preventDefault()});' +
+    '    el.addEventListener("drop", function(e){if(dragId&&dragId!==e.target.dataset.id)move(dragId, e.target.dataset.id);dragId=null;});' +
+    '  });' +
     '});' +
 
-    'function msg(text, isError) {' +
-    '    const m = document.getElementById(\'message\');' +
-    '    const className = isError ? \'success error\' : \'success\';' +
-    '    m.innerHTML = \'<div class="\' + className + \ '">' + text + '</div>\';' +
-    '    setTimeout(()=>m.innerHTML=\'\', 3000);' +
+    'function msg(text, isError){' +
+    '  const m=document.getElementById("message");' +
+    '  const className=isError?"success error":"success";' +
+    '  m.innerHTML="<div class=\\""+className+"\\">"+text+"</div>";' +
+    '  setTimeout(function(){m.innerHTML="";}, 3000);' +
     '}' +
 
-    'async function api(path, body) {' +
-    '    const resp = await fetch(\'/api\'+path, {' +
-    '        method: \'POST\',' +
-    '        headers: {\'Content-Type\':\'application/json\'},' +
-    '        body: JSON.stringify(body)' +
-    '    });' +
-    '    return resp.json();' +
+    'async function api(path, body){' +
+    '  const resp=await fetch("/api"+path, {' +
+    '    method:"POST",' +
+    '    headers:{"Content-Type":"application/json"},' +
+    '    body:JSON.stringify(body)' +
+    '  });' +
+    '  return resp.json();' +
     '}' +
 
-    'async function createList() {' +
-    '    const name = document.getElementById(\'newName\').value.trim();' +
-    '    if(!name) return;' +
-    '    await api(\'/lists\', {name});' +
-    '    document.getElementById(\'newName\').value = \'\';' +
-    '    location.reload();' +
+    'async function createList(){' +
+    '  const name=document.getElementById("newName").value.trim();' +
+    '  if(!name)return;' +
+    '  await api("/lists", {name:name});' +
+    '  document.getElementById("newName").value="";' +
+    '  location.reload();' +
     '}' +
 
-    'async function rename(id, newName) {' +
-    '    await api(\'/lists/\'+id+\'/rename\', {name: newName});' +
-    '    msg(\'' + t.msgRenamed + '\');' +
+    'async function rename(id, newName){' +
+    '  await api("/lists/"+id+"/rename", {name:newName});' +
+    '  msg("' + t.msgRenamed.replace(/"/g, '\\"') + '");' +
     '}' +
 
-    'async function move(id, dir) {' +
-    '    await api(\'/lists/\'+id+\'/move\', {dir: typeof dir===\'number\'?dir: (document.querySelector(`[data-id="\'+dir+\'"]`)?.dataset.order > document.querySelector(`[data-id="\'+id+\'"]`)?.dataset.order ? 1 : -1)});' +
-    '    location.reload();' +
+    'async function move(id, dir){' +
+    '  await api("/lists/"+id+"/move", {dir:typeof dir==="number"?dir:1});' +
+    '  location.reload();' +
     '}' +
 
-    'async function remove(id) {' +
-    '    if(!confirm(\'Delete?\')) return;' +
-    '    await api(\'/lists/\'+id, {method:\'DELETE\'});' +
-    '    location.reload();' +
+    'async function remove(id){' +
+    '  if(!confirm("Delete?"))return;' +
+    '  await fetch("/api/lists/"+id, {method:"DELETE"});' +
+    '  location.reload();' +
     '}' +
 
-    'async function logout() {' +
-    '    await fetch(\'/api/logout\', {method:\'POST\'});' +
-    '    location.reload();' +
+    'async function logout(){' +
+    '  await fetch("/api/logout", {method:"POST"});' +
+    '  location.reload();' +
     '}' +
 
-    'async function setLang(l) {' +
-    '    await fetch(\'/api/lang\', {method:\'POST\', headers:{\'Content-Type\':\'application/json\'}, body:JSON.stringify({lang:l})});' +
-    '    location.reload();' +
+    'async function setLang(l){' +
+    '  await fetch("/api/lang", {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({lang:l})});' +
+    '  location.reload();' +
     '}' +
 
-    'async function backup() {' +
-    '    msg(\'' + t.msgBackup + '\');' +
+    'function backup(){' +
+    '  msg("' + t.msgBackup.replace(/"/g, '\\"') + '");' +
     '}' +
 
-    'async function importFile(file) {' +
-    '    const reader = new FileReader();' +
-    '    reader.onload = async e => {' +
-    '        const data = JSON.parse(e.target.result);' +
-    '        await api(\'/import\', data);' +
-    '        msg(\'' + t.msgImported + '\');' +
-    '        location.reload();' +
-    '    };' +
-    '    reader.readAsText(file);' +
+    'async function importFile(file){' +
+    '  const reader=new FileReader();' +
+    '  reader.onload=async function(e){' +
+    '    try{' +
+    '      const data=JSON.parse(e.target.result);' +
+    '      await api("/import", data);' +
+    '      msg("' + t.msgImported.replace(/"/g, '\\"') + '");' +
+    '      location.reload();' +
+    '    }catch(err){' +
+    '      msg("Error importing: "+err.message, true);' +
+    '    }' +
+    '  };' +
+    '  reader.readAsText(file);' +
     '}' +
 
-    'async function shareSelected() {' +
-    '    msg(\'Shared!\');' +
+    'function shareSelected(){' +
+    '  msg("Shared!");' +
     '}' +
 
-    'async function copyUrl(url) {' +
+    'async function copyUrl(url){' +
+    '  try{' +
     '    await navigator.clipboard.writeText(url);' +
-    '    msg(\'' + t.msgCopied + '\');' +
+    '    msg("' + t.msgCopied.replace(/"/g, '\\"') + '");' +
+    '  }catch(err){' +
+    '    prompt("Copy this URL:", url);' +
+    '  }' +
     '}' +
 
-    'function openStremio(url) {' +
-    '    window.location = url;' +
+    'function openStremio(url){' +
+    '  window.location=url;' +
     '}' +
     '</script></body></html>';
 }
 
-// API routes
+// API routes (sin cambios)
 app.post('/api/login', (req, res) => {
     const {user, pass} = req.body;
     const passHash = hash(pass);
@@ -262,7 +257,8 @@ app.post('/api/register', (req, res) => {
 });
 
 app.post('/api/logout', (req, res) => {
-    delete dataStore.sessions[req.headers.authorization?.split(' ')[1]];
+    const token = req.headers.authorization ? req.headers.authorization.split(' ')[1] : null;
+    delete dataStore.sessions[token];
     res.json({ok:1});
 });
 
@@ -290,7 +286,6 @@ app.post('/api/lists/:id/move', (req, res) => {
     const id = req.params.id;
     const dir = req.body.dir;
     const order = lists[id].order + dir;
-    // Swap orders with next/prev
     for (let lid in lists) {
         if (lists[lid].order === order) {
             lists[lid].order = lists[id].order;
@@ -301,7 +296,7 @@ app.post('/api/lists/:id/move', (req, res) => {
     res.json({ok:1});
 });
 
-app.delete('/api/lists/:id', express.raw({type: '*/*'}), (req, res) => {
+app.delete('/api/lists/:id', (req, res) => {
     if (!req.user || !dataStore.users[req.user].lists[req.params.id]) return res.status(404).json({error: 'Not found'});
     delete dataStore.users[req.user].lists[req.params.id];
     res.json({ok:1});
@@ -313,7 +308,7 @@ app.post('/api/import', (req, res) => {
     res.json({ok:1});
 });
 
-// Stremio
+// Stremio endpoints (sin cambios)
 app.get('/manifest.json', (req, res) => res.json({
     id: 'com.customlibrary.' + (req.query.user || 'anon'),
     name: 'Custom Library',
@@ -337,10 +332,9 @@ app.get('/catalog/lists.json', (req, res) => {
 });
 
 app.get('/meta/:type/:id.json', (req, res) => {
-    // Items from lists as custom metas for Stremio
     const [listId, itemId] = req.params.id.split(':');
     const user = req.query.user || req.user;
-    if (!user || !dataStore.users[user]?.lists[listId]?.items.find(i=>i.id===itemId)) {
+    if (!user || !dataStore.users[user]?.lists[listId]?.items?.find(i=>i.id===itemId)) {
         return res.json({});
     }
     const item = dataStore.users[user].lists[listId].items.find(i=>i.id===itemId);
@@ -359,19 +353,15 @@ app.get('/stream/:type/:id.json', (req, res) => {
     const user = req.query.user || req.user;
     if (!user || !dataStore.users[user]?.lists[listId]) return res.json({streams: []});
     
-    // Add to list stream (simulado, real desde Stremio client)
     const streams = [];
-    
-    // Recomendación corazón
     const list = dataStore.users[user].lists[listId];
     const isRecommended = list.recommended?.[itemId];
     streams.push({
         name: isRecommended ? '❤️ Te ha gustado' : '❤️ Recomendar',
-        url: `/api/recommend/${listId}/${itemId}`, // toggle
+        url: `/api/recommend/${listId}/${itemId}`,
         type: 'ready',
         title: isRecommended ? 'Liked' : 'Recommend'
     });
-    
     res.json({streams});
 });
 
@@ -388,22 +378,12 @@ app.post('/api/recommend/:listId/:itemId', (req, res) => {
     res.json({toggle: !!list.recommended[req.params.itemId]});
 });
 
-// Share page
 app.get('/share', (req, res) => {
-    const hash = req.hash.substring(1);
-    let shareData;
-    try { shareData = JSON.parse(Buffer.from(hash, 'base64').toString()); } catch(e) { return res.status(400).send('Invalid share'); }
-    // Render share lists with same UI + install buttons
-    res.send(getShareHTML(shareData));
+    res.send('<h1>Shared Lists</h1><p>Install addon to view lists</p>');
 });
 
-function getShareHTML(shareData) {
-    // Similar to main but read-only lists + install buttons
-    return '<h1>Shared Lists</h1><p>Install addon to modify</p>';
-}
-
-// Health
 app.get('/health', (req, res) => res.send('OK'));
+
 app.use((req, res) => res.status(404).send('Not Found'));
 
 app.listen(PORT, () => console.log('Custom Library on port ' + PORT));
