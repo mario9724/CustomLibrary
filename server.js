@@ -2,9 +2,8 @@ const express = require('express');
 const PORT = process.env.PORT || 7000;
 
 const app = express();
-app.use(express.json({ limit: '10mb' }));
-app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
+app.use(express.json({limit: '10mb'}));
+app.use(express.urlencoded({extended: true}));
 
 // Datos persistentes en memoria
 let dataStore = { users: {} };
