@@ -1,6 +1,7 @@
 const express = require('express');
 const crypto = require('crypto');
-const PORT = process.env.PORT || 7000;
+const PORT = process.env.PORT || 10000; // ← CAMBIA 7000 por 10000
+
 
 const app = express();
 app.use(express.json({limit: '10mb'}));
