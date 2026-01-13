@@ -1,17 +1,10 @@
 {
   "name": "stremio-custom-library",
   "version": "1.0.0",
-  "description": "Addon para biblioteca custom por usuario",
-  "main": "server.js",
-  "scripts": {
-    "start": "node server.js"
-  },
+  "scripts": {"start": "node server.js"},
   "dependencies": {
-    "stremio-addon-sdk": "^1.6.10",
     "express": "^4.19.2",
-    "lowdb": "^7.0.1"
-  },
-  "engines": {
-    "node": ">=20"
+    "cors": "^2.8.5",
+    "body-parser": "^1.20.3"
   }
 }
