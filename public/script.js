@@ -1,54 +1,192 @@
 const translations = {
   es: {
-    username: 'Nombre de usuario (obligatorio)',
-    tmdbKey: 'Clave API de TMDB',
-    tmdbHelp: 'Obtén tu clave gratuita en:',
-    searchTitle: 'Buscar y agregar contenido',
-    searchPlaceholder: 'Buscar películas/series...',
-    selectList: 'Selecciona una lista...',
+    welcomeQuestion: '¿Cómo te llamas?',
+    usernamePlaceholder: 'Tu nombre de usuario',
+    tmdbQuestion: '¿Cuál es tu clave API de TMDB?',
+    tmdbPrivacy: 'Solo se usará para mostrarte información en tus búsquedas',
+    tmdbKeyPlaceholder: 'API Key de TMDB',
+    getTmdbKey: 'Consigue tu clave en:',
+    startButton: 'Pasemos a crear tus listas',
     myLists: 'Mis Listas',
     createList: 'Crear Nueva Lista',
     listName: 'Nombre de la lista',
-    listType: 'Tipo (movie, series, anime...)',
-    create: 'Crear Lista',
-    export: '📥 Exportar Todas las Listas',
-    copyUrl: '📋 Copiar URL de Instalación',
-    install: '🚀 Instalar en Stremio',
-    recommended: '{{username}} te recomendó {{listName}}'
+    listType: 'Tipo: movie, series...',
+    create: 'Crear',
+    searchTitle: 'Buscar y agregar contenido',
+    searchPlaceholder: 'Buscar películas/series...',
+    selectList: 'Selecciona lista...',
+    export: 'Exportar',
+    copyUrl: 'Copiar URL',
+    install: 'Instalar',
+    rating: 'Puntuación'
   },
   en: {
-    username: 'Username (required)',
-    tmdbKey: 'TMDB API Key',
-    tmdbHelp: 'Get your free key at:',
-    searchTitle: 'Search and add content',
-    searchPlaceholder: 'Search movies/series...',
-    selectList: 'Select a list...',
+    welcomeQuestion: "What's your name?",
+    usernamePlaceholder: 'Your username',
+    tmdbQuestion: 'What is your TMDB API Key?',
+    tmdbPrivacy: 'It will only be used to show you search information',
+    tmdbKeyPlaceholder: 'TMDB API Key',
+    getTmdbKey: 'Get your key at:',
+    startButton: "Let's create your lists",
     myLists: 'My Lists',
     createList: 'Create New List',
     listName: 'List name',
-    listType: 'Type (movie, series, anime...)',
-    create: 'Create List',
-    export: '📥 Export All Lists',
-    copyUrl: '📋 Copy Install URL',
-    install: '🚀 Install in Stremio',
-    recommended: '{{username}} recommended {{listName}} to you'
+    listType: 'Type: movie, series...',
+    create: 'Create',
+    searchTitle: 'Search and add content',
+    searchPlaceholder: 'Search movies/series...',
+    selectList: 'Select list...',
+    export: 'Export',
+    copyUrl: 'Copy URL',
+    install: 'Install',
+    rating: 'Rating'
   },
   fr: {
-    username: "Nom d'utilisateur (obligatoire)",
-    tmdbKey: 'Clé API TMDB',
-    tmdbHelp: 'Obtenez votre clé gratuite sur:',
-    searchTitle: 'Rechercher et ajouter du contenu',
-    searchPlaceholder: 'Rechercher films/séries...',
-    selectList: 'Sélectionner une liste...',
+    welcomeQuestion: 'Comment tu t\'appelles ?',
+    usernamePlaceholder: 'Ton nom d\'utilisateur',
+    tmdbQuestion: 'Quelle est ta clé API TMDB ?',
+    tmdbPrivacy: 'Elle sera utilisée uniquement pour afficher les informations de recherche',
+    tmdbKeyPlaceholder: 'Clé API TMDB',
+    getTmdbKey: 'Obtenez votre clé sur :',
+    startButton: 'Créons tes listes',
     myLists: 'Mes Listes',
     createList: 'Créer une Nouvelle Liste',
     listName: 'Nom de la liste',
-    listType: 'Type (film, série, anime...)',
-    create: 'Créer la Liste',
-    export: '📥 Exporter Toutes les Listes',
-    copyUrl: "📋 Copier l'URL d'Installation",
-    install: '🚀 Installer dans Stremio',
-    recommended: '{{username}} vous a recommandé {{listName}}'
+    listType: 'Type : film, série...',
+    create: 'Créer',
+    searchTitle: 'Rechercher et ajouter du contenu',
+    searchPlaceholder: 'Rechercher films/séries...',
+    selectList: 'Sélectionner une liste...',
+    export: 'Exporter',
+    copyUrl: 'Copier l\'URL',
+    install: 'Installer',
+    rating: 'Note'
+  },
+  de: {
+    welcomeQuestion: 'Wie heißt du?',
+    usernamePlaceholder: 'Dein Benutzername',
+    tmdbQuestion: 'Was ist dein TMDB API-Schlüssel?',
+    tmdbPrivacy: 'Er wird nur verwendet, um dir Suchinformationen anzuzeigen',
+    tmdbKeyPlaceholder: 'TMDB API-Schlüssel',
+    getTmdbKey: 'Hol dir deinen Schlüssel unter:',
+    startButton: 'Lass uns deine Listen erstellen',
+    myLists: 'Meine Listen',
+    createList: 'Neue Liste erstellen',
+    listName: 'Listenname',
+    listType: 'Typ: Film, Serie...',
+    create: 'Erstellen',
+    searchTitle: 'Suchen und hinzufügen',
+    searchPlaceholder: 'Filme/Serien suchen...',
+    selectList: 'Liste auswählen...',
+    export: 'Exportieren',
+    copyUrl: 'URL kopieren',
+    install: 'Installieren',
+    rating: 'Bewertung'
+  },
+  it: {
+    welcomeQuestion: 'Come ti chiami?',
+    usernamePlaceholder: 'Il tuo nome utente',
+    tmdbQuestion: 'Qual è la tua chiave API TMDB?',
+    tmdbPrivacy: 'Verrà utilizzata solo per mostrarti informazioni di ricerca',
+    tmdbKeyPlaceholder: 'Chiave API TMDB',
+    getTmdbKey: 'Ottieni la tua chiave su:',
+    startButton: 'Creiamo le tue liste',
+    myLists: 'Le Mie Liste',
+    createList: 'Crea Nuova Lista',
+    listName: 'Nome della lista',
+    listType: 'Tipo: film, serie...',
+    create: 'Crea',
+    searchTitle: 'Cerca e aggiungi contenuti',
+    searchPlaceholder: 'Cerca film/serie...',
+    selectList: 'Seleziona lista...',
+    export: 'Esporta',
+    copyUrl: 'Copia URL',
+    install: 'Installa',
+    rating: 'Valutazione'
+  },
+  pt: {
+    welcomeQuestion: 'Qual é o seu nome?',
+    usernamePlaceholder: 'Seu nome de usuário',
+    tmdbQuestion: 'Qual é a sua chave API TMDB?',
+    tmdbPrivacy: 'Será usada apenas para mostrar informações de pesquisa',
+    tmdbKeyPlaceholder: 'Chave API TMDB',
+    getTmdbKey: 'Obtenha sua chave em:',
+    startButton: 'Vamos criar suas listas',
+    myLists: 'Minhas Listas',
+    createList: 'Criar Nova Lista',
+    listName: 'Nome da lista',
+    listType: 'Tipo: filme, série...',
+    create: 'Criar',
+    searchTitle: 'Pesquisar e adicionar conteúdo',
+    searchPlaceholder: 'Pesquisar filmes/séries...',
+    selectList: 'Selecione a lista...',
+    export: 'Exportar',
+    copyUrl: 'Copiar URL',
+    install: 'Instalar',
+    rating: 'Avaliação'
+  },
+  ru: {
+    welcomeQuestion: 'Как тебя зовут?',
+    usernamePlaceholder: 'Твое имя пользователя',
+    tmdbQuestion: 'Какой у тебя API ключ TMDB?',
+    tmdbPrivacy: 'Он будет использован только для отображения информации поиска',
+    tmdbKeyPlaceholder: 'API ключ TMDB',
+    getTmdbKey: 'Получи свой ключ на:',
+    startButton: 'Давай создадим твои списки',
+    myLists: 'Мои Списки',
+    createList: 'Создать Новый Список',
+    listName: 'Название списка',
+    listType: 'Тип: фильм, сериал...',
+    create: 'Создать',
+    searchTitle: 'Поиск и добавление контента',
+    searchPlaceholder: 'Искать фильмы/сериалы...',
+    selectList: 'Выбрать список...',
+    export: 'Экспорт',
+    copyUrl: 'Копировать URL',
+    install: 'Установить',
+    rating: 'Рейтинг'
+  },
+  ja: {
+    welcomeQuestion: 'お名前は？',
+    usernamePlaceholder: 'ユーザー名',
+    tmdbQuestion: 'TMDB APIキーは？',
+    tmdbPrivacy: '検索情報の表示にのみ使用されます',
+    tmdbKeyPlaceholder: 'TMDB APIキー',
+    getTmdbKey: 'キーの取得はこちら:',
+    startButton: 'リストを作成しましょう',
+    myLists: 'マイリスト',
+    createList: '新しいリストを作成',
+    listName: 'リスト名',
+    listType: 'タイプ：映画、シリーズ...',
+    create: '作成',
+    searchTitle: 'コンテンツを検索して追加',
+    searchPlaceholder: '映画/シリーズを検索...',
+    selectList: 'リストを選択...',
+    export: 'エクスポート',
+    copyUrl: 'URLをコピー',
+    install: 'インストール',
+    rating: '評価'
+  },
+  zh: {
+    welcomeQuestion: '你叫什么名字？',
+    usernamePlaceholder: '你的用户名',
+    tmdbQuestion: '你的TMDB API密钥是什么？',
+    tmdbPrivacy: '仅用于显示搜索信息',
+    tmdbKeyPlaceholder: 'TMDB API密钥',
+    getTmdbKey: '获取密钥：',
+    startButton: '让我们创建你的列表',
+    myLists: '我的列表',
+    createList: '创建新列表',
+    listName: '列表名称',
+    listType: '类型：电影，系列...',
+    create: '创建',
+    searchTitle: '搜索并添加内容',
+    searchPlaceholder: '搜索电影/系列...',
+    selectList: '选择列表...',
+    export: '导出',
+    copyUrl: '复制URL',
+    install: '安装',
+    rating: '评分'
   }
 };
 
@@ -56,9 +194,44 @@ let currentLang = 'es';
 let currentUsername = '';
 let currentTmdbKey = '';
 
-// Cambio de idioma
+// Welcome screen logic
+const welcomeUsername = document.getElementById('welcomeUsername');
+const welcomeTmdbKey = document.getElementById('welcomeTmdbKey');
+const startBtn = document.getElementById('startBtn');
+
+function checkWelcomeForm() {
+  const hasUsername = welcomeUsername.value.trim().length > 0;
+  const hasTmdbKey = welcomeTmdbKey.value.trim().length > 0;
+  startBtn.disabled = !(hasUsername && hasTmdbKey);
+}
+
+welcomeUsername.addEventListener('input', checkWelcomeForm);
+welcomeTmdbKey.addEventListener('input', checkWelcomeForm);
+
+startBtn.addEventListener('click', () => {
+  currentUsername = welcomeUsername.value.trim();
+  currentTmdbKey = welcomeTmdbKey.value.trim();
+  
+  localStorage.setItem('username', currentUsername);
+  localStorage.setItem('tmdbKey', currentTmdbKey);
+  
+  document.getElementById('displayUsername').textContent = currentUsername;
+  document.getElementById('welcomeScreen').classList.remove('active');
+  document.getElementById('mainScreen').classList.add('active');
+  
+  loadLists(currentUsername);
+});
+
+// Language switchers
 document.getElementById('langSelect').addEventListener('change', (e) => {
   currentLang = e.target.value;
+  document.getElementById('langSelectMain').value = currentLang;
+  updateUI();
+});
+
+document.getElementById('langSelectMain').addEventListener('change', (e) => {
+  currentLang = e.target.value;
+  document.getElementById('langSelect').value = currentLang;
   updateUI();
 });
 
@@ -74,32 +247,15 @@ function updateUI() {
     const key = el.getAttribute('data-i18n-placeholder');
     if (t[key]) el.placeholder = t[key];
   });
+
+  // Update select options dynamically
+  const targetList = document.getElementById('targetList');
+  if (targetList.options.length > 0) {
+    targetList.options[0].text = t.selectList;
+  }
 }
 
-// Validar usuario
-document.getElementById('username').addEventListener('blur', (e) => {
-  const username = e.target.value.trim();
-  if (username) {
-    currentUsername = username;
-    localStorage.setItem('username', username);
-    document.getElementById('tmdbSection').style.display = 'block';
-    document.getElementById('listsSection').style.display = 'block';
-    document.getElementById('bottomActions').style.display = 'block';
-    loadLists(username);
-  }
-});
-
-// Validar TMDB Key
-document.getElementById('tmdbKey').addEventListener('blur', (e) => {
-  const key = e.target.value.trim();
-  if (key) {
-    currentTmdbKey = key;
-    localStorage.setItem('tmdbKey', key);
-    document.getElementById('searchSection').style.display = 'block';
-  }
-});
-
-// Crear lista
+// Create list
 document.getElementById('newListForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   const name = document.getElementById('listName').value.trim();
@@ -119,7 +275,7 @@ document.getElementById('newListForm').addEventListener('submit', async (e) => {
   }
 });
 
-// ✅ FUNCIÓN CLAVE: ID óptimo para AIO Metadata
+// Get IMDb ID
 async function getOptimalId(tmdbId, mediaType) {
   try {
     if (!currentTmdbKey) return `tmdb:${tmdbId}`;
@@ -134,8 +290,8 @@ async function getOptimalId(tmdbId, mediaType) {
   }
 }
 
-// ✅ AÑADIR ITEM con ID correcto
-async function addToList(tmdbId, mediaType, title, poster) {
+// Add to list
+async function addToList(tmdbId, mediaType, title, poster, overview, rating) {
   const listId = document.getElementById('targetList').value;
   if (!listId) return alert('Selecciona una lista primero');
 
@@ -146,20 +302,15 @@ async function addToList(tmdbId, mediaType, title, poster) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ 
       username: currentUsername, 
-      item: { 
-        tmdbId, 
-        imdbId: optimalId,  // ← ID perfecto para AIO Metadata
-        mediaType, 
-        title 
-      } 
+      item: { tmdbId, imdbId: optimalId, mediaType, title, poster, overview, rating } 
     })
   });
   
-  alert('¡Añadido! AIO Metadata cargará automáticamente');
+  alert('¡Añadido correctamente!');
   loadLists(currentUsername);
 }
 
-// Cargar listas
+// Load lists
 async function loadLists(username) {
   const res = await fetch(`/api/lists?username=${username}`);
   const lists = await res.json();
@@ -182,22 +333,20 @@ async function loadLists(username) {
     </div>
   `).join('');
   
-  document.getElementById('targetList').innerHTML = 
-    '<option value="">Selecciona lista...</option>' +
+  const targetList = document.getElementById('targetList');
+  const t = translations[currentLang] || translations.es;
+  targetList.innerHTML = 
+    `<option value="">${t.selectList}</option>` +
     lists.map(l => `<option value="${l.id}">${l.name}</option>`).join('');
 }
 
-// Resto de funciones (shareList, deleteList, etc.) igual que antes...
 async function shareList(id, name) {
-  const t = translations[currentLang] || translations.es;
-  const text = t.recommended.replace('{{username}}', currentUsername).replace('{{listName}}', name);
   const url = `${window.location.origin}/manifest.json?username=${currentUsername}`;
-  
   if (navigator.share) {
-    await navigator.share({ title: text, text, url });
+    await navigator.share({ title: name, text: `${currentUsername} te recomienda ${name}`, url });
   } else {
-    navigator.clipboard.writeText(`${text}\n${url}`);
-    alert('¡Enlace copiado!');
+    navigator.clipboard.writeText(url);
+    alert('¡URL copiada!');
   }
 }
 
@@ -217,7 +366,7 @@ async function moveList(id, currentIndex, direction) {
   loadLists(currentUsername);
 }
 
-// Botones export/install (igual que antes)
+// Export/Install buttons
 document.getElementById('exportBtn').addEventListener('click', async () => {
   const res = await fetch(`/api/lists?username=${currentUsername}`);
   const lists = await res.json();
@@ -232,7 +381,7 @@ document.getElementById('exportBtn').addEventListener('click', async () => {
 document.getElementById('copyInstallBtn').addEventListener('click', () => {
   const url = `${window.location.origin}/manifest.json?username=${currentUsername}`;
   navigator.clipboard.writeText(url);
-  alert('¡URL copiada! Pégala en Stremio');
+  alert('¡URL copiada!');
 });
 
 document.getElementById('installBtn').addEventListener('click', () => {
@@ -240,7 +389,7 @@ document.getElementById('installBtn').addEventListener('click', () => {
   window.open(url, '_blank');
 });
 
-// Búsqueda TMDB
+// TMDB Search
 let searchTimeout;
 document.getElementById('searchInput').addEventListener('input', (e) => {
   clearTimeout(searchTimeout);
@@ -248,41 +397,44 @@ document.getElementById('searchInput').addEventListener('input', (e) => {
     const q = e.target.value.trim();
     if (q.length < 3 || !currentTmdbKey) return;
     
-    const res = await fetch(`/api/tmdb/search?q=${q}&key=${currentTmdbKey}&lang=${currentLang}`);
+    const langMap = { es: 'es-ES', en: 'en-US', fr: 'fr-FR', de: 'de-DE', it: 'it-IT', pt: 'pt-PT', ru: 'ru-RU', ja: 'ja-JP', zh: 'zh-CN' };
+    const res = await fetch(`/api/tmdb/search?q=${q}&key=${currentTmdbKey}&lang=${langMap[currentLang] || 'en-US'}`);
     const data = await res.json();
     
+    const t = translations[currentLang] || translations.es;
     document.getElementById('searchResults').innerHTML = (data.results || []).slice(0, 12).map(item => {
       const title = item.title || item.name;
       const mediaType = item.media_type || 'movie';
+      const overview = item.overview || 'No hay sinopsis disponible';
+      const rating = item.vote_average ? `⭐ ${item.vote_average.toFixed(1)}` : '';
+      
       return `
-        <div class="search-item" onclick="addToList('${item.id}', '${mediaType}', '${title.replace(/'/g, "\\'")}', '${item.poster_path || ''}')">
-          <img src="https://image.tmdb.org/t/p/w200${item.poster_path || ''}" alt="${title}" onerror="this.src='image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMzMzIi8+PC9zdmc+'">
-          <strong>${title}</strong>
-          <small>${mediaType.toUpperCase()}</small>
+        <div class="search-item" onclick='addToList(${item.id}, "${mediaType}", "${title.replace(/'/g, "\\'")}", "${item.poster_path || ''}", "${overview.replace(/'/g, "\\'")}", "${rating}")'>
+          <img src="https://image.tmdb.org/t/p/w200${item.poster_path || ''}" alt="${title}" onerror="this.src='image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'80\' height=\'120\'%3E%3Crect fill=\'%23333\' width=\'80\' height=\'120\'/%3E%3C/svg%3E'">
+          <div class="search-item-info">
+            <strong>${title}</strong>
+            <small>${mediaType.toUpperCase()}</small>
+            ${rating ? `<div class="rating">${rating}</div>` : ''}
+            <div class="overview">${overview}</div>
+          </div>
         </div>
       `;
     }).join('');
   }, 600);
 });
 
-// Cargar datos guardados
+// Load saved data
 window.addEventListener('DOMContentLoaded', () => {
   const savedUsername = localStorage.getItem('username');
   const savedKey = localStorage.getItem('tmdbKey');
   
-  if (savedUsername) {
-    document.getElementById('username').value = savedUsername;
+  if (savedUsername && savedKey) {
     currentUsername = savedUsername;
-    document.getElementById('tmdbSection').style.display = 'block';
-    document.getElementById('listsSection').style.display = 'block';
-    document.getElementById('bottomActions').style.display = 'block';
-    loadLists(savedUsername);
-  }
-  
-  if (savedKey) {
-    document.getElementById('tmdbKey').value = savedKey;
     currentTmdbKey = savedKey;
-    document.getElementById('searchSection').style.display = 'block';
+    document.getElementById('displayUsername').textContent = currentUsername;
+    document.getElementById('welcomeScreen').classList.remove('active');
+    document.getElementById('mainScreen').classList.add('active');
+    loadLists(currentUsername);
   }
   
   updateUI();
