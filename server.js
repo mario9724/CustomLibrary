@@ -15,10 +15,10 @@ const pool = new Pool({
 
 async function initDB() {
   try {
+    // Crear tabla users primero (sin constraints estrictos)
     await pool.query(`
       CREATE TABLE IF NOT EXISTS users (
         username VARCHAR(255) PRIMARY KEY,
-        pin VARCHAR(4) NOT NULL,
         addon_name VARCHAR(255) DEFAULT 'CustomLibrary',
         tmdb_key VARCHAR(255),
         language VARCHAR(10) DEFAULT 'en',
@@ -26,6 +26,38 @@ async function initDB() {
       );
     `);
     
+    // Migrar columnas nuevas de forma segura
+    const migrations = [
+      { column: 'pin', type: 'VARCHAR(4)', default: null },
+      { column: 'theme', type: 'VARCHAR(20)', default: "'dark'" },
+      { column: 'streaming_services', type: 'TEXT[]', default: "'{}'::TEXT[]" }
+    ];
+    
+    for (const migration of migrations) {
+      try {
+        const exists = await pool.query(`
+          SELECT column_name FROM information_schema.columns 
+          WHERE table_name='users' AND column_name='${migration.column}'
+        `);
+        
+        if (exists.rows.length === 0) {
+          console.log(`➕ Adding column ${migration.column}`);
+          await pool.query(`ALTER TABLE users ADD COLUMN ${migration.column} ${migration.type} ${migration.default ? `DEFAULT ${migration.default}` : ''}`);
+        }
+      } catch (err) {
+        console.log(`⚠️  Column ${migration.column} might already exist`);
+      }
+    }
+    
+    // Asegurar que PIN existe y tiene valores
+    try {
+      await pool.query(`UPDATE users SET pin = '0000' WHERE pin IS NULL`);
+      await pool.query(`ALTER TABLE users ALTER COLUMN pin SET NOT NULL`);
+    } catch (err) {
+      console.log('⚠️  PIN constraint already set or column does not exist yet');
+    }
+    
+    // Resto de tablas
     await pool.query(`
       CREATE TABLE IF NOT EXISTS user_friends (
         username VARCHAR(255) REFERENCES users(username) ON DELETE CASCADE,
@@ -45,20 +77,30 @@ async function initDB() {
       );
     `);
     
-    try {
-      await pool.query(`ALTER TABLE lists ADD COLUMN IF NOT EXISTS owner VARCHAR(255);`);
-      const hasUsername = await pool.query(`
-        SELECT column_name FROM information_schema.columns 
-        WHERE table_name='lists' AND column_name='username'
-      `);
-      if (hasUsername.rows.length > 0) {
-        await pool.query(`UPDATE lists SET owner = username WHERE owner IS NULL;`);
-        await pool.query(`ALTER TABLE lists DROP COLUMN IF EXISTS username;`);
+    // Migrar columnas de lists
+    const listMigrations = [
+      { column: 'owner', type: 'VARCHAR(255)', default: null },
+      { column: 'pin', type: 'VARCHAR(6)', default: null },
+      { column: 'is_collaborative', type: 'BOOLEAN', default: 'false' }
+    ];
+    
+    for (const migration of listMigrations) {
+      try {
+        const exists = await pool.query(`
+          SELECT column_name FROM information_schema.columns 
+          WHERE table_name='lists' AND column_name='${migration.column}'
+        `);
+        
+        if (exists.rows.length === 0) {
+          console.log(`➕ Adding lists.${migration.column}`);
+          await pool.query(`ALTER TABLE lists ADD COLUMN ${migration.column} ${migration.type} ${migration.default ? `DEFAULT ${migration.default}` : ''}`);
+        }
+      } catch (err) {
+        console.log(`⚠️  Column lists.${migration.column} might already exist`);
       }
-    } catch (err) {}
+    }
     
-    await pool.query(`ALTER TABLE lists ADD COLUMN IF NOT EXISTS pin VARCHAR(6);`);
-    
+    // Generar PINs para listas sin PIN
     const listsWithoutPin = await pool.query(`SELECT id FROM lists WHERE pin IS NULL`);
     for (const list of listsWithoutPin.rows) {
       let pinGenerated = false;
@@ -74,10 +116,14 @@ async function initDB() {
       }
     }
     
+    // Constraint único de PIN
     try {
       await pool.query(`ALTER TABLE lists ADD CONSTRAINT lists_pin_key UNIQUE (pin);`);
-    } catch (err) {}
+    } catch (err) {
+      console.log('⚠️  PIN unique constraint already exists');
+    }
     
+    // Foreign key de owner
     try {
       await pool.query(`
         DO $$ 
@@ -91,7 +137,9 @@ async function initDB() {
           END IF;
         END $$;
       `);
-    } catch (err) {}
+    } catch (err) {
+      console.log('⚠️  Foreign key constraint already exists');
+    }
     
     await pool.query(`
       CREATE TABLE IF NOT EXISTS list_collaborators (
@@ -118,6 +166,56 @@ async function initDB() {
       );
     `);
     
+    // Migrar columnas de list_items
+    const itemMigrations = [
+      { column: 'release_date', type: 'DATE', default: null },
+      { column: 'runtime', type: 'INTEGER', default: null },
+      { column: 'genres', type: 'TEXT[]', default: null },
+      { column: 'director', type: 'VARCHAR(255)', default: null },
+      { column: 'cast', type: 'TEXT[]', default: null }
+    ];
+    
+    for (const migration of itemMigrations) {
+      try {
+        const exists = await pool.query(`
+          SELECT column_name FROM information_schema.columns 
+          WHERE table_name='list_items' AND column_name='${migration.column}'
+        `);
+        
+        if (exists.rows.length === 0) {
+          console.log(`➕ Adding list_items.${migration.column}`);
+          await pool.query(`ALTER TABLE list_items ADD COLUMN ${migration.column} ${migration.type} ${migration.default ? `DEFAULT ${migration.default}` : ''}`);
+        }
+      } catch (err) {
+        console.log(`⚠️  Column list_items.${migration.column} might already exist`);
+      }
+    }
+    
+    // NUEVAS TABLAS
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS item_tags (
+        id UUID PRIMARY KEY,
+        item_id UUID REFERENCES list_items(id) ON DELETE CASCADE,
+        username VARCHAR(255),
+        tag VARCHAR(100),
+        created_at TIMESTAMP DEFAULT NOW(),
+        UNIQUE(item_id, username, tag)
+      );
+    `);
+    
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS item_notes (
+        id UUID PRIMARY KEY,
+        item_id UUID REFERENCES list_items(id) ON DELETE CASCADE,
+        username VARCHAR(255),
+        note TEXT,
+        is_private BOOLEAN DEFAULT true,
+        created_at TIMESTAMP DEFAULT NOW(),
+        updated_at TIMESTAMP DEFAULT NOW(),
+        UNIQUE(item_id, username)
+      );
+    `);
+    
     await pool.query(`
       CREATE TABLE IF NOT EXISTS item_ratings (
         id UUID PRIMARY KEY,
@@ -130,6 +228,61 @@ async function initDB() {
       );
     `);
     
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS list_votes (
+        id UUID PRIMARY KEY,
+        list_id UUID REFERENCES lists(id) ON DELETE CASCADE,
+        item_id UUID REFERENCES list_items(id) ON DELETE CASCADE,
+        username VARCHAR(255),
+        vote INTEGER CHECK (vote IN (-1, 1)),
+        created_at TIMESTAMP DEFAULT NOW(),
+        UNIQUE(list_id, item_id, username)
+      );
+    `);
+    
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS list_comments (
+        id UUID PRIMARY KEY,
+        list_id UUID REFERENCES lists(id) ON DELETE CASCADE,
+        item_id UUID REFERENCES list_items(id) ON DELETE CASCADE,
+        username VARCHAR(255),
+        comment TEXT,
+        created_at TIMESTAMP DEFAULT NOW()
+      );
+    `);
+    
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS user_achievements (
+        id UUID PRIMARY KEY,
+        username VARCHAR(255),
+        achievement_key VARCHAR(100),
+        earned_at TIMESTAMP DEFAULT NOW(),
+        UNIQUE(username, achievement_key)
+      );
+    `);
+    
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS activity_feed (
+        id UUID PRIMARY KEY,
+        username VARCHAR(255),
+        action_type VARCHAR(50),
+        target_type VARCHAR(50),
+        target_id UUID,
+        metadata JSONB,
+        created_at TIMESTAMP DEFAULT NOW()
+      );
+    `);
+    
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS watched_items (
+        id UUID PRIMARY KEY,
+        username VARCHAR(255),
+        item_id UUID REFERENCES list_items(id) ON DELETE CASCADE,
+        watched_at TIMESTAMP DEFAULT NOW(),
+        UNIQUE(username, item_id)
+      );
+    `);
+    
     console.log('✅ Database initialized and migrated successfully');
   } catch (err) {
     console.error('❌ Database init error:', err);
@@ -138,18 +291,11 @@ async function initDB() {
 
 initDB();
 
-function generatePIN() {
-  return Math.floor(100000 + Math.random() * 900000).toString();
-}
-
-function generateUserPIN() {
-  return Math.floor(1000 + Math.random() * 9000).toString();
-}
-
+// ============ AUTH ENDPOINTS ============
 app.post('/api/auth/check-user', async (req, res) => {
   const { username } = req.body;
   try {
-    const result = await pool.query('SELECT username, addon_name, language FROM users WHERE username = $1', [username]);
+    const result = await pool.query('SELECT username, addon_name, language, theme FROM users WHERE username = $1', [username]);
     if (result.rows.length > 0) {
       res.json({ exists: true, user: result.rows[0] });
     } else {
@@ -163,7 +309,7 @@ app.post('/api/auth/check-user', async (req, res) => {
 app.post('/api/auth/login', async (req, res) => {
   const { username, pin } = req.body;
   try {
-    const result = await pool.query('SELECT username, addon_name, tmdb_key, language FROM users WHERE username = $1 AND pin = $2', [username, pin]);
+    const result = await pool.query('SELECT username, addon_name, tmdb_key, language, theme FROM users WHERE username = $1 AND pin = $2', [username, pin]);
     if (result.rows.length > 0) {
       res.json({ success: true, user: result.rows[0] });
     } else {
@@ -187,6 +333,18 @@ app.post('/api/auth/register', async (req, res) => {
   }
 });
 
+app.put('/api/users/:username/theme', async (req, res) => {
+  const { username } = req.params;
+  const { theme } = req.body;
+  try {
+    await pool.query('UPDATE users SET theme = $1 WHERE username = $2', [theme, username]);
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ============ TMDB & SEARCH ============
 app.get('/api/tmdb/search', async (req, res) => {
   const { q, key, lang = 'es-ES' } = req.query;
   try {
@@ -198,6 +356,31 @@ app.get('/api/tmdb/search', async (req, res) => {
   }
 });
 
+app.get('/api/tmdb/recommendations/:tmdbId', async (req, res) => {
+  const { tmdbId } = req.params;
+  const { key, type = 'movie', lang = 'es-ES' } = req.query;
+  try {
+    const url = `https://api.themoviedb.org/3/${type}/${tmdbId}/recommendations?api_key=${key}&language=${lang}`;
+    const response = await fetch(url);
+    res.json(await response.json());
+  } catch (e) {
+    res.status(500).json({ error: 'TMDB request failed' });
+  }
+});
+
+app.get('/api/tmdb/details/:tmdbId', async (req, res) => {
+  const { tmdbId } = req.params;
+  const { key, type = 'movie', lang = 'es-ES' } = req.query;
+  try {
+    const url = `https://api.themoviedb.org/3/${type}/${tmdbId}?api_key=${key}&language=${lang}&append_to_response=credits`;
+    const response = await fetch(url);
+    res.json(await response.json());
+  } catch (e) {
+    res.status(500).json({ error: 'TMDB request failed' });
+  }
+});
+
+// ============ FRIENDS ============
 app.get('/api/friends', async (req, res) => {
   const { username } = req.query;
   try {
@@ -240,6 +423,7 @@ app.delete('/api/friends/:friendUsername', async (req, res) => {
   }
 });
 
+// ============ LISTS ============
 app.get('/api/lists', async (req, res) => {
   const { username } = req.query;
   try {
@@ -260,7 +444,6 @@ app.get('/api/lists', async (req, res) => {
     
     res.json(lists);
   } catch (err) {
-    console.error('Error loading lists:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -281,21 +464,35 @@ app.get('/api/lists/:id', async (req, res) => {
       [id]
     );
     
-    const itemsWithRatings = await Promise.all(itemsResult.rows.map(async (item) => {
-      const ratingsResult = await pool.query(
-        'SELECT * FROM item_ratings WHERE item_id = $1 ORDER BY created_at DESC',
-        [item.id]
-      );
+    const itemsWithExtras = await Promise.all(itemsResult.rows.map(async (item) => {
+      const [ratings, tags, notes, votes, comments] = await Promise.all([
+        pool.query('SELECT * FROM item_ratings WHERE item_id = $1 ORDER BY created_at DESC', [item.id]),
+        pool.query('SELECT * FROM item_tags WHERE item_id = $1 AND username = $2', [item.id, username]),
+        pool.query('SELECT * FROM item_notes WHERE item_id = $1 AND username = $2', [item.id, username]),
+        pool.query('SELECT username, vote FROM list_votes WHERE item_id = $1', [item.id]),
+        pool.query('SELECT * FROM list_comments WHERE item_id = $1 ORDER BY created_at DESC', [item.id])
+      ]);
       
-      const ratings = ratingsResult.rows;
-      const avgRating = ratings.length > 0 
-        ? (ratings.reduce((sum, r) => sum + r.stars, 0) / ratings.length).toFixed(1)
+      const avgRating = ratings.rows.length > 0 
+        ? (ratings.rows.reduce((sum, r) => sum + r.stars, 0) / ratings.rows.length).toFixed(1)
         : null;
       
-      return { ...item, ratings, avgRating };
+      const userVote = votes.rows.find(v => v.username === username)?.vote || 0;
+      const totalVotes = votes.rows.reduce((sum, v) => sum + v.vote, 0);
+      
+      return { 
+        ...item, 
+        ratings: ratings.rows, 
+        avgRating,
+        tags: tags.rows,
+        note: notes.rows[0]?.note || null,
+        userVote,
+        totalVotes,
+        comments: comments.rows
+      };
     }));
     
-    res.json({ ...list, items: itemsWithRatings, isOwner });
+    res.json({ ...list, items: itemsWithExtras, isOwner });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -306,90 +503,44 @@ app.post('/api/lists', async (req, res) => {
   const id = uuidv4();
   
   try {
-    let pin = generatePIN();
+    let pin;
     let pinUnique = false;
     let attempts = 0;
     
     while (!pinUnique && attempts < 10) {
+      pin = Math.floor(100000 + Math.random() * 900000).toString();
       const existing = await pool.query('SELECT id FROM lists WHERE pin = $1', [pin]);
-      if (existing.rows.length === 0) {
-        pinUnique = true;
-      } else {
-        pin = generatePIN();
-        attempts++;
-      }
+      if (existing.rows.length === 0) pinUnique = true;
+      attempts++;
     }
     
     const orderResult = await pool.query('SELECT COALESCE(MAX(list_order), -1) + 1 AS next_order FROM lists WHERE owner = $1', [username]);
     const nextOrder = orderResult.rows[0].next_order;
     
     await pool.query(
-      'INSERT INTO lists (id, owner, name, type, list_order, pin) VALUES ($1, $2, $3, $4, $5, $6)',
-      [id, username, list.name, list.type, nextOrder, pin]
+      'INSERT INTO lists (id, owner, name, type, list_order, pin, is_collaborative) VALUES ($1, $2, $3, $4, $5, $6, $7)',
+      [id, username, list.name, list.type, nextOrder, pin, list.isCollaborative || false]
+    );
+    
+    // Activity feed
+    await pool.query(
+      'INSERT INTO activity_feed (id, username, action_type, target_type, target_id, metadata) VALUES ($1, $2, $3, $4, $5, $6)',
+      [uuidv4(), username, 'create_list', 'list', id, JSON.stringify({ listName: list.name })]
     );
     
     res.json({ id, pin });
   } catch (err) {
-    console.error('Error creating list:', err);
     res.status(500).json({ error: err.message });
   }
 });
 
-app.put('/api/lists/:id', async (req, res) => {
+app.delete('/api/lists/:id', async (req, res) => {
   const { id } = req.params;
-  const { username, list } = req.body;
+  const { username } = req.query;
   
   try {
-    const listResult = await pool.query('SELECT owner FROM lists WHERE id = $1', [id]);
-    if (listResult.rows.length === 0) {
-      return res.status(404).json({ error: 'List not found' });
-    }
-    
-    if (listResult.rows[0].owner !== username) {
-      return res.status(403).json({ error: 'Only owner can edit list' });
-    }
-    
-    await pool.query(
-      'UPDATE lists SET name = $1, type = $2 WHERE id = $3',
-      [list.name, list.type, id]
-    );
-    
+    await pool.query('DELETE FROM lists WHERE id = $1 AND owner = $2', [id, username]);
     res.json({ success: true });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-app.post('/api/lists/:id/reset-pin', async (req, res) => {
-  const { id } = req.params;
-  const { username } = req.body;
-  
-  try {
-    const listResult = await pool.query('SELECT owner FROM lists WHERE id = $1', [id]);
-    if (listResult.rows.length === 0) {
-      return res.status(404).json({ error: 'List not found' });
-    }
-    
-    if (listResult.rows[0].owner !== username) {
-      return res.status(403).json({ error: 'Only owner can reset PIN' });
-    }
-    
-    let pin = generatePIN();
-    let pinUnique = false;
-    let attempts = 0;
-    
-    while (!pinUnique && attempts < 10) {
-      const existing = await pool.query('SELECT id FROM lists WHERE pin = $1 AND id != $2', [pin, id]);
-      if (existing.rows.length === 0) {
-        pinUnique = true;
-      } else {
-        pin = generatePIN();
-        attempts++;
-      }
-    }
-    
-    await pool.query('UPDATE lists SET pin = $1 WHERE id = $2', [pin, id]);
-    res.json({ pin });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -417,18 +568,19 @@ app.post('/api/lists/import-pin', async (req, res) => {
   }
 });
 
-app.delete('/api/lists/:id', async (req, res) => {
+app.put('/api/lists/:id/reorder', async (req, res) => {
   const { id } = req.params;
-  const { username } = req.query;
+  const { username, newOrder } = req.body;
   
   try {
-    await pool.query('DELETE FROM lists WHERE id = $1 AND owner = $2', [id, username]);
+    await pool.query('UPDATE lists SET list_order = $1 WHERE id = $2', [newOrder, id]);
     res.json({ success: true });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
+// ============ LIST ITEMS ============
 app.post('/api/lists/:id/items', async (req, res) => {
   const { id } = req.params;
   const { username, item } = req.body;
@@ -436,9 +588,16 @@ app.post('/api/lists/:id/items', async (req, res) => {
   
   try {
     await pool.query(
-      'INSERT INTO list_items (id, list_id, tmdb_id, imdb_id, media_type, title, poster, overview, rating, added_by) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)',
-      [itemId, id, item.tmdbId, item.imdbId, item.mediaType, item.title, item.poster, item.overview, item.rating, username]
+      'INSERT INTO list_items (id, list_id, tmdb_id, imdb_id, media_type, title, poster, overview, rating, added_by, release_date, runtime, genres, director, cast) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)',
+      [itemId, id, item.tmdbId, item.imdbId, item.mediaType, item.title, item.poster, item.overview, item.rating, username, item.releaseDate, item.runtime, item.genres, item.director, item.cast]
     );
+    
+    // Activity feed
+    await pool.query(
+      'INSERT INTO activity_feed (id, username, action_type, target_type, target_id, metadata) VALUES ($1, $2, $3, $4, $5, $6)',
+      [uuidv4(), username, 'add_item', 'item', itemId, JSON.stringify({ title: item.title, listId: id })]
+    );
+    
     res.json({ success: true });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -466,6 +625,53 @@ app.delete('/api/lists/:listId/items/:itemId', async (req, res) => {
   }
 });
 
+// ============ TAGS ============
+app.post('/api/items/:itemId/tags', async (req, res) => {
+  const { itemId } = req.params;
+  const { username, tag } = req.body;
+  const id = uuidv4();
+  
+  try {
+    await pool.query(
+      'INSERT INTO item_tags (id, item_id, username, tag) VALUES ($1, $2, $3, $4) ON CONFLICT DO NOTHING',
+      [id, itemId, username, tag.toLowerCase()]
+    );
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.delete('/api/items/:itemId/tags/:tag', async (req, res) => {
+  const { itemId, tag } = req.params;
+  const { username } = req.query;
+  
+  try {
+    await pool.query('DELETE FROM item_tags WHERE item_id = $1 AND username = $2 AND tag = $3', [itemId, username, tag]);
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ============ NOTES ============
+app.post('/api/items/:itemId/note', async (req, res) => {
+  const { itemId } = req.params;
+  const { username, note } = req.body;
+  const id = uuidv4();
+  
+  try {
+    await pool.query(
+      'INSERT INTO item_notes (id, item_id, username, note) VALUES ($1, $2, $3, $4) ON CONFLICT (item_id, username) DO UPDATE SET note = $4, updated_at = NOW()',
+      [id, itemId, username, note]
+    );
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ============ RATINGS ============
 app.post('/api/items/:itemId/rate', async (req, res) => {
   const { itemId } = req.params;
   const { username, stars, review } = req.body;
@@ -496,14 +702,16 @@ app.get('/api/items/:itemId/ratings', async (req, res) => {
   }
 });
 
-app.put('/api/lists/:id/reorder', async (req, res) => {
-  const { id } = req.params;
-  const { username, newOrder } = req.body;
+// ============ VOTES ============
+app.post('/api/lists/:listId/items/:itemId/vote', async (req, res) => {
+  const { listId, itemId } = req.params;
+  const { username, vote } = req.body;
+  const id = uuidv4();
   
   try {
     await pool.query(
-      'UPDATE lists SET list_order = $1 WHERE id = $2',
-      [newOrder, id]
+      'INSERT INTO list_votes (id, list_id, item_id, username, vote) VALUES ($1, $2, $3, $4, $5) ON CONFLICT (list_id, item_id, username) DO UPDATE SET vote = $5',
+      [id, listId, itemId, username, vote]
     );
     res.json({ success: true });
   } catch (err) {
@@ -511,6 +719,168 @@ app.put('/api/lists/:id/reorder', async (req, res) => {
   }
 });
 
+// ============ COMMENTS ============
+app.post('/api/items/:itemId/comments', async (req, res) => {
+  const { itemId } = req.params;
+  const { username, listId, comment } = req.body;
+  const id = uuidv4();
+  
+  try {
+    await pool.query(
+      'INSERT INTO list_comments (id, list_id, item_id, username, comment) VALUES ($1, $2, $3, $4, $5)',
+      [id, listId, itemId, username, comment]
+    );
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ============ WATCHED ============
+app.post('/api/items/:itemId/watched', async (req, res) => {
+  const { itemId } = req.params;
+  const { username } = req.body;
+  const id = uuidv4();
+  
+  try {
+    await pool.query(
+      'INSERT INTO watched_items (id, username, item_id) VALUES ($1, $2, $3) ON CONFLICT DO NOTHING',
+      [id, username, itemId]
+    );
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get('/api/watched', async (req, res) => {
+  const { username } = req.query;
+  
+  try {
+    const result = await pool.query(`
+      SELECT w.*, li.* FROM watched_items w
+      JOIN list_items li ON w.item_id = li.id
+      WHERE w.username = $1
+      ORDER BY w.watched_at DESC
+      LIMIT 50
+    `, [username]);
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ============ ACTIVITY FEED ============
+app.get('/api/feed', async (req, res) => {
+  const { username } = req.query;
+  
+  try {
+    const result = await pool.query(`
+      SELECT af.* FROM activity_feed af
+      WHERE af.username IN (
+        SELECT friend_username FROM user_friends WHERE username = $1
+        UNION
+        SELECT $1
+      )
+      ORDER BY af.created_at DESC
+      LIMIT 50
+    `, [username]);
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ============ STATS ============
+app.get('/api/stats/:username', async (req, res) => {
+  const { username } = req.params;
+  
+  try {
+    const totalItems = await pool.query(`
+      SELECT COUNT(*) FROM list_items li
+      JOIN lists l ON li.list_id = l.id
+      WHERE l.owner = $1
+    `, [username]);
+    
+    const totalRuntime = await pool.query(`
+      SELECT SUM(runtime) FROM list_items li
+      JOIN lists l ON li.list_id = l.id
+      WHERE l.owner = $1 AND li.runtime IS NOT NULL
+    `, [username]);
+    
+    const genreCount = await pool.query(`
+      SELECT UNNEST(genres) as genre, COUNT(*) as count
+      FROM list_items li
+      JOIN lists l ON li.list_id = l.id
+      WHERE l.owner = $1 AND genres IS NOT NULL
+      GROUP BY genre
+      ORDER BY count DESC
+      LIMIT 10
+    `, [username]);
+    
+    const monthlyActivity = await pool.query(`
+      SELECT DATE_TRUNC('month', added_at) as month, COUNT(*) as count
+      FROM list_items li
+      JOIN lists l ON li.list_id = l.id
+      WHERE l.owner = $1
+      GROUP BY month
+      ORDER BY month DESC
+      LIMIT 12
+    `, [username]);
+    
+    res.json({
+      totalItems: parseInt(totalItems.rows[0].count),
+      totalRuntime: parseInt(totalRuntime.rows[0].sum || 0),
+      topGenres: genreCount.rows,
+      monthlyActivity: monthlyActivity.rows
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ============ RECOMMENDATIONS ============
+app.get('/api/recommendations', async (req, res) => {
+  const { username, key, lang = 'es-ES' } = req.query;
+  
+  try {
+    // Obtener todos los items del usuario
+    const items = await pool.query(`
+      SELECT DISTINCT li.tmdb_id, li.media_type FROM list_items li
+      JOIN lists l ON li.list_id = l.id
+      WHERE l.owner = $1
+      ORDER BY li.added_at DESC
+      LIMIT 10
+    `, [username]);
+    
+    if (items.rows.length === 0) {
+      return res.json({ results: [] });
+    }
+    
+    // Obtener recomendaciones para cada item
+    const recommendations = new Map();
+    
+    for (const item of items.rows.slice(0, 3)) {
+      const url = `https://api.themoviedb.org/3/${item.media_type}/${item.tmdb_id}/recommendations?api_key=${key}&language=${lang}`;
+      const response = await fetch(url);
+      const data = await response.json();
+      
+      if (data.results) {
+        data.results.slice(0, 5).forEach(rec => {
+          if (!recommendations.has(rec.id)) {
+            recommendations.set(rec.id, { ...rec, media_type: item.media_type });
+          }
+        });
+      }
+    }
+    
+    res.json({ results: Array.from(recommendations.values()).slice(0, 20) });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ============ STREMIO MANIFEST ============
 app.get('/manifest.json', async (req, res) => {
   const { username, addonName } = req.query;
   if (!username) return res.status(400).json({ error: 'username required' });
@@ -544,15 +914,8 @@ app.get('/manifest.json', async (req, res) => {
 
 app.get('/catalog/:type/:id.json', async (req, res) => {
   const { type, id } = req.params;
-  const { username } = req.query;
-  if (!username) return res.status(400).json({ error: 'username required' });
   
   try {
-    const listResult = await pool.query('SELECT * FROM lists WHERE id = $1', [id]);
-    if (listResult.rows.length === 0 || listResult.rows[0].type !== type) {
-      return res.json({ metas: [] });
-    }
-    
     const itemsResult = await pool.query(
       'SELECT * FROM list_items WHERE list_id = $1 ORDER BY added_at DESC LIMIT 100',
       [id]
