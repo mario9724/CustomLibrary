@@ -1,0 +1,18 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Fondo morado -->
+  <rect width="200" height="200" fill="#8B5AFA" rx="30"/>
+  
+  <!-- Forma de S con cajones -->
+  <path d="M60 50 Q100 70 140 50" stroke="white" stroke-width="20" fill="none" stroke-linecap="round"/>
+  <path d="M60 150 Q100 130 140 150" stroke="white" stroke-width="20" fill="none" stroke-linecap="round"/>
+  
+  <!-- Cajones horizontales -->
+  <rect x="50" y="85" width="100" height="15" rx="5" fill="white"/>
+  <rect x="50" y="105" width="100" height="15" rx="5" fill="white"/>
+  <rect x="50" y="125" width="100" height="15" rx="5" fill="white"/>
+  
+  <!-- Manijas -->
+  <circle cx="60" cy="92.5" r="3" fill="#8B5AFA"/>
+  <circle cx="60" cy="112.5" r="3" fill="#8B5AFA"/>
+  <circle cx="60" cy="132.5" r="3" fill="#8B5AFA"/>
+</svg>
