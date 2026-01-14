@@ -69,12 +69,14 @@ body {
   color: #f0f0f0;
   font-size: 16px;
   width: 100%;
+  transition: all 0.2s;
 }
 
 .welcome-form input:focus,
 .welcome-form select:focus {
   outline: none;
-  border-color: #666;
+  border-color: #f0f0f0 !important;
+  box-shadow: 0 0 0 2px rgba(240, 240, 240, 0.2);
 }
 
 .help-text {
@@ -189,6 +191,13 @@ h2 {
   background: #111;
   color: #f0f0f0;
   margin-bottom: 20px;
+  transition: all 0.2s;
+}
+
+.search-section-top input:focus {
+  outline: none;
+  border-color: #f0f0f0 !important;
+  box-shadow: 0 0 0 2px rgba(240, 240, 240, 0.2);
 }
 
 #searchResults {
@@ -348,18 +357,23 @@ h2 {
 
 #listDetailItems {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
   gap: 16px;
 }
 
 .detail-item {
   display: flex;
-  gap: 12px;
+  flex-direction: column;
   padding: 12px;
   background: #0a0a0a;
   border-radius: 8px;
   border: 1px solid #222;
-  position: relative;
+}
+
+.detail-item-content {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 10px;
 }
 
 .detail-item img {
@@ -375,33 +389,46 @@ h2 {
   display: flex;
   flex-direction: column;
   gap: 6px;
+  min-width: 0;
 }
 
-.detail-item-info strong {
+.detail-item-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.detail-item-title strong {
   font-size: 1em;
   color: #fff;
+}
+
+.detail-item-title .rating {
+  font-size: 0.75em;
+  color: #ffd700;
+  white-space: nowrap;
 }
 
 .detail-item-info .overview {
   font-size: 0.85em;
   color: #aaa;
   line-height: 1.4;
-}
-
-.detail-item-info .rating {
-  font-size: 0.9em;
-  color: #ffd700;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
 }
 
 .detail-item-actions {
   display: flex;
-  flex-direction: column;
   gap: 6px;
-  margin-top: 10px;
+  justify-content: flex-start;
+  padding-left: 92px;
 }
 
 .detail-item-actions button {
-  padding: 6px 10px;
+  padding: 6px 12px;
   border: 1px solid #333;
   background: #111;
   color: #fff;
@@ -443,6 +470,13 @@ form input {
   background: #111;
   color: #f0f0f0;
   font-size: 14px;
+  transition: all 0.2s;
+}
+
+form input:focus {
+  outline: none;
+  border-color: #f0f0f0 !important;
+  box-shadow: 0 0 0 2px rgba(240, 240, 240, 0.2);
 }
 
 form button {
@@ -555,6 +589,15 @@ footer {
   font-size: 14px;
   text-align: center;
   font-family: inherit;
+  transition: all 0.2s;
+}
+
+.modal-content select:focus,
+.modal-content input:focus,
+.modal-content textarea:focus {
+  outline: none;
+  border-color: #f0f0f0 !important;
+  box-shadow: 0 0 0 2px rgba(240, 240, 240, 0.2);
 }
 
 .modal-content textarea {
@@ -694,6 +737,11 @@ footer {
   #searchResults,
   #listDetailItems {
     grid-template-columns: 1fr;
+  }
+  
+  .detail-item-actions {
+    padding-left: 0;
+    flex-wrap: wrap;
   }
   
   footer {
