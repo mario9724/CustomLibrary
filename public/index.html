@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- WELCOME SCREEN -->
+  <!-- WELCOME SCREEN - USERNAME -->
   <div id="welcomeScreen" class="screen active">
     <div class="welcome-container">
       <svg class="logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
@@ -35,18 +35,62 @@
         <label data-i18n="welcomeQuestion">Bienvenido, ¿cómo puedo llamarte?</label>
         <input type="text" id="welcomeUsername" data-i18n-placeholder="yourName" placeholder="Tu nombre">
 
+        <button id="checkUserBtn" data-i18n="continue" disabled>Continuar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOGIN SCREEN -->
+  <div id="loginScreen" class="screen">
+    <div class="welcome-container">
+      <svg class="logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <rect x="30" y="40" width="25" height="120" rx="2" fill="#f0f0f0"/>
+        <rect x="65" y="35" width="25" height="130" rx="2" fill="#d0d0d0"/>
+        <rect x="100" y="30" width="25" height="140" rx="2" fill="#b0b0b0"/>
+        <rect x="135" y="35" width="25" height="130" rx="2" fill="#909090"/>
+        <line x1="20" y1="160" x2="180" y2="160" stroke="#666" stroke-width="3"/>
+      </svg>
+
+      <div class="welcome-form">
+        <h2 id="welcomeBackText" data-i18n="welcomeBack">¡Bienvenido de nuevo!</h2>
+        <label data-i18n="enterPin">Introduce tu PIN de 4 dígitos</label>
+        <input type="password" id="loginPin" maxlength="4" pattern="[0-9]{4}" placeholder="****" inputmode="numeric">
+        <button id="loginBtn" data-i18n="login" disabled>Iniciar sesión</button>
+        <button id="backToUsernameBtn" class="secondary-btn" data-i18n="back">Volver</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- REGISTER SCREEN -->
+  <div id="registerScreen" class="screen">
+    <div class="welcome-container">
+      <svg class="logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <rect x="30" y="40" width="25" height="120" rx="2" fill="#f0f0f0"/>
+        <rect x="65" y="35" width="25" height="130" rx="2" fill="#d0d0d0"/>
+        <rect x="100" y="30" width="25" height="140" rx="2" fill="#b0b0b0"/>
+        <rect x="135" y="35" width="25" height="130" rx="2" fill="#909090"/>
+        <line x1="20" y1="160" x2="180" y2="160" stroke="#666" stroke-width="3"/>
+      </svg>
+
+      <div class="welcome-form">
+        <h2 data-i18n="newUser">¡Nuevo usuario!</h2>
+        
         <label data-i18n="addonNameQuestion">¿Y cómo me llamo yo?</label>
         <input type="text" id="addonName" placeholder="Librería de Usuario">
         <small data-i18n="addonNameHelp">Este será el nombre del addon en tu reproductor</small>
 
         <label data-i18n="tmdbQuestion">Voy a necesitar tu clave API de TMDB</label>
-        <input type="text" id="welcomeTmdbKey" data-i18n-placeholder="tmdbKeyPlaceholder" placeholder="API Key de TMDB">
+        <input type="text" id="registerTmdbKey" data-i18n-placeholder="tmdbKeyPlaceholder" placeholder="API Key de TMDB">
         <small class="help-text">
           <span data-i18n="getTmdbKeyText">Esto lo consigues</span>
           <a href="https://www.themoviedb.org/settings/api" target="_blank" data-i18n="here">AQUÍ</a>
         </small>
 
-        <button id="startBtn" data-i18n="startButton" disabled>Pasemos a crear tus listas</button>
+        <label data-i18n="createPin">Crea un PIN de 4 dígitos</label>
+        <input type="password" id="registerPin" maxlength="4" pattern="[0-9]{4}" placeholder="****" inputmode="numeric">
+        <small data-i18n="pinHelp">Úsalo para acceder a tu cuenta</small>
+
+        <button id="registerBtn" data-i18n="startButton" disabled>Pasemos a crear tus listas</button>
       </div>
     </div>
   </div>
@@ -63,6 +107,7 @@
           <line x1="20" y1="160" x2="180" y2="160" stroke="#666" stroke-width="3"/>
         </svg>
         <h1 id="mainTitle"></h1>
+        <button id="changeUserBtn" class="icon-btn" title="Cambiar usuario">👤</button>
       </header>
 
       <section class="search-section-top">
@@ -84,6 +129,15 @@
         </form>
       </section>
 
+      <section class="friends-section">
+        <h2 data-i18n="friends">Amigos</h2>
+        <div id="friendsDisplay"></div>
+        <form id="addFriendForm">
+          <input type="text" id="friendUsername" data-i18n-placeholder="friendUsername" placeholder="Nombre de usuario" required>
+          <button type="submit" data-i18n="addFriend">Añadir amigo</button>
+        </form>
+      </section>
+
       <footer>
         <button id="importBtn" class="big-btn gray-btn"><span data-i18n="importPin">Añadir lista por PIN</span></button>
         <button id="copyInstallBtn" class="big-btn gray-btn"><span data-i18n="copyUrl">Copiar URL de instalación</span></button>
@@ -98,6 +152,24 @@
       <button id="backBtn" class="back-btn">← <span data-i18n="back">Volver</span></button>
       <h1 id="listDetailTitle"></h1>
       <div id="listDetailItems"></div>
+    </div>
+  </div>
+
+  <!-- FRIEND DETAIL SCREEN -->
+  <div id="friendDetailScreen" class="screen">
+    <div class="container">
+      <button id="backFromFriendBtn" class="back-btn">← <span data-i18n="back">Volver</span></button>
+      <h1 id="friendDetailTitle"></h1>
+      
+      <section class="friend-section">
+        <h2 data-i18n="friendLists">Listas</h2>
+        <div id="friendListsDisplay"></div>
+      </section>
+
+      <section class="friend-section">
+        <h2 data-i18n="friendRatings">Calificaciones recientes</h2>
+        <div id="friendRatingsDisplay"></div>
+      </section>
     </div>
   </div>
 
@@ -117,7 +189,7 @@
   <div id="pinModal" class="modal">
     <div class="modal-content">
       <h3 data-i18n="importPinTitle">Introduce el PIN de 6 dígitos</h3>
-      <input type="text" id="pinInput" maxlength="6" pattern="[0-9]{6}" placeholder="123456">
+      <input type="text" id="pinInput" maxlength="6" pattern="[0-9]{6}" placeholder="123456" inputmode="numeric">
       <div class="modal-buttons">
         <button id="pinImportBtn" data-i18n="import">Importar</button>
         <button id="pinCancelBtn" data-i18n="cancel">Cancelar</button>
