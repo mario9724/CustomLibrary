@@ -18,8 +18,20 @@ async function initDB() {
     await pool.query(`
       CREATE TABLE IF NOT EXISTS users (
         username VARCHAR(255) PRIMARY KEY,
+        pin VARCHAR(4) NOT NULL,
         addon_name VARCHAR(255) DEFAULT 'CustomLibrary',
+        tmdb_key VARCHAR(255),
+        language VARCHAR(10) DEFAULT 'en',
         created_at TIMESTAMP DEFAULT NOW()
+      );
+    `);
+    
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS user_friends (
+        username VARCHAR(255) REFERENCES users(username) ON DELETE CASCADE,
+        friend_username VARCHAR(255),
+        added_at TIMESTAMP DEFAULT NOW(),
+        PRIMARY KEY (username, friend_username)
       );
     `);
     
@@ -130,6 +142,51 @@ function generatePIN() {
   return Math.floor(100000 + Math.random() * 900000).toString();
 }
 
+function generateUserPIN() {
+  return Math.floor(1000 + Math.random() * 9000).toString();
+}
+
+app.post('/api/auth/check-user', async (req, res) => {
+  const { username } = req.body;
+  try {
+    const result = await pool.query('SELECT username, addon_name, language FROM users WHERE username = $1', [username]);
+    if (result.rows.length > 0) {
+      res.json({ exists: true, user: result.rows[0] });
+    } else {
+      res.json({ exists: false });
+    }
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/api/auth/login', async (req, res) => {
+  const { username, pin } = req.body;
+  try {
+    const result = await pool.query('SELECT username, addon_name, tmdb_key, language FROM users WHERE username = $1 AND pin = $2', [username, pin]);
+    if (result.rows.length > 0) {
+      res.json({ success: true, user: result.rows[0] });
+    } else {
+      res.json({ success: false, error: 'PIN incorrecto' });
+    }
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/api/auth/register', async (req, res) => {
+  const { username, pin, addonName, tmdbKey, language } = req.body;
+  try {
+    await pool.query(
+      'INSERT INTO users (username, pin, addon_name, tmdb_key, language) VALUES ($1, $2, $3, $4, $5)',
+      [username, pin, addonName, tmdbKey, language]
+    );
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 app.get('/api/tmdb/search', async (req, res) => {
   const { q, key, lang = 'es-ES' } = req.query;
   try {
@@ -138,6 +195,48 @@ app.get('/api/tmdb/search', async (req, res) => {
     res.json(await response.json());
   } catch (e) {
     res.status(500).json({ error: 'TMDB request failed' });
+  }
+});
+
+app.get('/api/friends', async (req, res) => {
+  const { username } = req.query;
+  try {
+    const result = await pool.query(
+      'SELECT friend_username, added_at FROM user_friends WHERE username = $1 ORDER BY added_at DESC',
+      [username]
+    );
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/api/friends/add', async (req, res) => {
+  const { username, friendUsername } = req.body;
+  try {
+    const userExists = await pool.query('SELECT username FROM users WHERE username = $1', [friendUsername]);
+    if (userExists.rows.length === 0) {
+      return res.status(404).json({ error: 'Usuario no encontrado' });
+    }
+    
+    await pool.query(
+      'INSERT INTO user_friends (username, friend_username) VALUES ($1, $2) ON CONFLICT DO NOTHING',
+      [username, friendUsername]
+    );
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.delete('/api/friends/:friendUsername', async (req, res) => {
+  const { friendUsername } = req.params;
+  const { username } = req.query;
+  try {
+    await pool.query('DELETE FROM user_friends WHERE username = $1 AND friend_username = $2', [username, friendUsername]);
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 });
 
@@ -221,8 +320,6 @@ app.post('/api/lists', async (req, res) => {
       }
     }
     
-    await pool.query('INSERT INTO users (username) VALUES ($1) ON CONFLICT DO NOTHING', [username]);
-    
     const orderResult = await pool.query('SELECT COALESCE(MAX(list_order), -1) + 1 AS next_order FROM lists WHERE owner = $1', [username]);
     const nextOrder = orderResult.rows[0].next_order;
     
@@ -302,8 +399,6 @@ app.post('/api/lists/import-pin', async (req, res) => {
   const { username, pin } = req.body;
   
   try {
-    await pool.query('INSERT INTO users (username) VALUES ($1) ON CONFLICT DO NOTHING', [username]);
-    
     const listResult = await pool.query('SELECT * FROM lists WHERE pin = $1', [pin]);
     if (listResult.rows.length === 0) {
       return res.status(404).json({ error: 'PIN no válido' });
