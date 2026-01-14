@@ -18,7 +18,7 @@ async function initDB() {
   try {
     console.log('🔥 Initializing database...');
     
-    const forceReset = true;
+    const forceReset = false;
     
     if (forceReset) {
       console.log('⚠️  FORCE RESET ENABLED - Dropping all tables...');
