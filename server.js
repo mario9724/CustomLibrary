@@ -103,7 +103,7 @@ async function initDB() {
         runtime INTEGER,
         genres TEXT[],
         director VARCHAR(255),
-        cast TEXT[]
+        cast_members TEXT[]
       )
     `);
     console.log('✅ List items table created');
@@ -114,7 +114,7 @@ async function initDB() {
         item_id UUID REFERENCES list_items(id) ON DELETE CASCADE,
         username VARCHAR(255),
         tag VARCHAR(100),
-        created_at TIMESTAMP DEFAULT NOW
+        created_at TIMESTAMP DEFAULT NOW()
       )
     `);
     await client.query(`CREATE UNIQUE INDEX IF NOT EXISTS idx_item_tags_unique ON item_tags(item_id, username, tag)`);
@@ -228,6 +228,7 @@ app.post('/api/auth/check-user', async (req, res) => {
       res.json({ exists: false });
     }
   } catch (err) {
+    console.error('Error in check-user:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -242,6 +243,7 @@ app.post('/api/auth/login', async (req, res) => {
       res.json({ success: false, error: 'PIN incorrecto' });
     }
   } catch (err) {
+    console.error('Error in login:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -255,6 +257,7 @@ app.post('/api/auth/register', async (req, res) => {
     );
     res.json({ success: true });
   } catch (err) {
+    console.error('Error in register:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -266,6 +269,7 @@ app.put('/api/users/:username/theme', async (req, res) => {
     await pool.query('UPDATE users SET theme = $1 WHERE username = $2', [theme, username]);
     res.json({ success: true });
   } catch (err) {
+    console.error('Error updating theme:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -278,6 +282,7 @@ app.get('/api/tmdb/search', async (req, res) => {
     const response = await fetch(url);
     res.json(await response.json());
   } catch (e) {
+    console.error('TMDB search error:', e);
     res.status(500).json({ error: 'TMDB request failed' });
   }
 });
@@ -290,6 +295,7 @@ app.get('/api/tmdb/recommendations/:tmdbId', async (req, res) => {
     const response = await fetch(url);
     res.json(await response.json());
   } catch (e) {
+    console.error('TMDB recommendations error:', e);
     res.status(500).json({ error: 'TMDB request failed' });
   }
 });
@@ -302,6 +308,7 @@ app.get('/api/tmdb/details/:tmdbId', async (req, res) => {
     const response = await fetch(url);
     res.json(await response.json());
   } catch (e) {
+    console.error('TMDB details error:', e);
     res.status(500).json({ error: 'TMDB request failed' });
   }
 });
@@ -316,6 +323,7 @@ app.get('/api/friends', async (req, res) => {
     );
     res.json(result.rows);
   } catch (err) {
+    console.error('Error getting friends:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -334,6 +342,7 @@ app.post('/api/friends/add', async (req, res) => {
     );
     res.json({ success: true });
   } catch (err) {
+    console.error('Error adding friend:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -345,6 +354,7 @@ app.delete('/api/friends/:friendUsername', async (req, res) => {
     await pool.query('DELETE FROM user_friends WHERE username = $1 AND friend_username = $2', [username, friendUsername]);
     res.json({ success: true });
   } catch (err) {
+    console.error('Error deleting friend:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -370,6 +380,7 @@ app.get('/api/lists', async (req, res) => {
     
     res.json(lists);
   } catch (err) {
+    console.error('Error getting lists:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -420,6 +431,7 @@ app.get('/api/lists/:id', async (req, res) => {
     
     res.json({ ...list, items: itemsWithExtras, isOwner });
   } catch (err) {
+    console.error('Error getting list details:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -427,6 +439,8 @@ app.get('/api/lists/:id', async (req, res) => {
 app.post('/api/lists', async (req, res) => {
   const { username, list } = req.body;
   const id = uuidv4();
+  
+  console.log('📝 Creating list:', { username, list, id });
   
   try {
     let pin;
@@ -453,8 +467,10 @@ app.post('/api/lists', async (req, res) => {
       [uuidv4(), username, 'create_list', 'list', id, JSON.stringify({ listName: list.name })]
     );
     
-    res.json({ id, pin });
+    console.log('✅ List created successfully:', { id, pin });
+    res.json({ success: true, id, pin });
   } catch (err) {
+    console.error('❌ Error creating list:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -467,6 +483,7 @@ app.delete('/api/lists/:id', async (req, res) => {
     await pool.query('DELETE FROM lists WHERE id = $1 AND owner = $2', [id, username]);
     res.json({ success: true });
   } catch (err) {
+    console.error('Error deleting list:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -489,6 +506,7 @@ app.post('/api/lists/import-pin', async (req, res) => {
     
     res.json({ success: true, list });
   } catch (err) {
+    console.error('Error importing list:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -501,6 +519,7 @@ app.put('/api/lists/:id/reorder', async (req, res) => {
     await pool.query('UPDATE lists SET list_order = $1 WHERE id = $2', [newOrder, id]);
     res.json({ success: true });
   } catch (err) {
+    console.error('Error reordering list:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -511,9 +530,11 @@ app.post('/api/lists/:id/items', async (req, res) => {
   const { username, item } = req.body;
   const itemId = uuidv4();
   
+  console.log('📝 Adding item to list:', { listId: id, itemId, username, item });
+  
   try {
     await pool.query(
-      'INSERT INTO list_items (id, list_id, tmdb_id, imdb_id, media_type, title, poster, overview, rating, added_by, release_date, runtime, genres, director, cast) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)',
+      'INSERT INTO list_items (id, list_id, tmdb_id, imdb_id, media_type, title, poster, overview, rating, added_by, release_date, runtime, genres, director, cast_members) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)',
       [itemId, id, item.tmdbId, item.imdbId, item.mediaType, item.title, item.poster, item.overview, item.rating, username, item.releaseDate, item.runtime, item.genres, item.director, item.cast]
     );
     
@@ -522,8 +543,10 @@ app.post('/api/lists/:id/items', async (req, res) => {
       [uuidv4(), username, 'add_item', 'item', itemId, JSON.stringify({ title: item.title, listId: id })]
     );
     
-    res.json({ success: true });
+    console.log('✅ Item added successfully');
+    res.json({ success: true, itemId });
   } catch (err) {
+    console.error('❌ Error adding item:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -545,6 +568,7 @@ app.delete('/api/lists/:listId/items/:itemId', async (req, res) => {
     await pool.query('DELETE FROM list_items WHERE id = $1 AND list_id = $2', [itemId, listId]);
     res.json({ success: true });
   } catch (err) {
+    console.error('Error deleting item:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -565,6 +589,7 @@ app.post('/api/items/:itemId/tags', async (req, res) => {
     if (err.code === '23505') {
       res.json({ success: true });
     } else {
+      console.error('Error adding tag:', err);
       res.status(500).json({ error: err.message });
     }
   }
@@ -578,6 +603,7 @@ app.delete('/api/items/:itemId/tags/:tag', async (req, res) => {
     await pool.query('DELETE FROM item_tags WHERE item_id = $1 AND username = $2 AND tag = $3', [itemId, username, tag]);
     res.json({ success: true });
   } catch (err) {
+    console.error('Error deleting tag:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -599,6 +625,7 @@ app.post('/api/items/:itemId/note', async (req, res) => {
     
     res.json({ success: true });
   } catch (err) {
+    console.error('Error saving note:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -620,6 +647,7 @@ app.post('/api/items/:itemId/rate', async (req, res) => {
     
     res.json({ success: true });
   } catch (err) {
+    console.error('Error saving rating:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -634,6 +662,7 @@ app.get('/api/items/:itemId/ratings', async (req, res) => {
     );
     res.json(result.rows);
   } catch (err) {
+    console.error('Error getting ratings:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -655,6 +684,7 @@ app.post('/api/lists/:listId/items/:itemId/vote', async (req, res) => {
     
     res.json({ success: true });
   } catch (err) {
+    console.error('Error saving vote:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -672,6 +702,7 @@ app.post('/api/items/:itemId/comments', async (req, res) => {
     );
     res.json({ success: true });
   } catch (err) {
+    console.error('Error adding comment:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -692,6 +723,7 @@ app.post('/api/items/:itemId/watched', async (req, res) => {
     if (err.code === '23505') {
       res.json({ success: true });
     } else {
+      console.error('Error marking as watched:', err);
       res.status(500).json({ error: err.message });
     }
   }
@@ -710,6 +742,7 @@ app.get('/api/watched', async (req, res) => {
     `, [username]);
     res.json(result.rows);
   } catch (err) {
+    console.error('Error getting watched items:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -731,6 +764,7 @@ app.get('/api/feed', async (req, res) => {
     `, [username]);
     res.json(result.rows);
   } catch (err) {
+    console.error('Error getting feed:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -779,6 +813,7 @@ app.get('/api/stats/:username', async (req, res) => {
       monthlyActivity: monthlyActivity.rows
     });
   } catch (err) {
+    console.error('Error getting stats:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -818,6 +853,7 @@ app.get('/api/recommendations', async (req, res) => {
     
     res.json({ results: Array.from(recommendations.values()).slice(0, 20) });
   } catch (err) {
+    console.error('Error getting recommendations:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -850,6 +886,7 @@ app.get('/manifest.json', async (req, res) => {
       logo: `${req.protocol}://${req.get('host')}/icon.svg`
     });
   } catch (err) {
+    console.error('Error generating manifest:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -872,6 +909,7 @@ app.get('/catalog/:type/:id.json', async (req, res) => {
     
     res.json({ metas });
   } catch (err) {
+    console.error('Error getting catalog:', err);
     res.status(500).json({ error: err.message });
   }
 });
