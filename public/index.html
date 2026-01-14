@@ -3,76 +3,100 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CustomLibrary - Configuración</title>
+  <title>CustomLibrary - Your Personal Stremio Library</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <img src="icon.svg" alt="Custom Library" class="logo">
-    <h1>CustomLibrary</h1>
-    <select id="langSelect">
-      <option value="es">🇪🇸 Español</option>
-      <option value="en">🇬🇧 English</option>
-      <option value="fr">🇫🇷 Français</option>
-      <option value="de">🇩🇪 Deutsch</option>
-      <option value="it">🇮🇹 Italiano</option>
-      <option value="pt">🇵🇹 Português</option>
-      <option value="ru">🇷🇺 Русский</option>
-      <option value="zh">🇨🇳 中文</option>
-      <option value="ja">🇯🇵 日本語</option>
-      <option value="ar">🇸🇦 العربية</option>
-      <option value="hi">🇮🇳 हिन्दी</option>
-      <option value="ko">🇰🇷 한국어</option>
-    </select>
-  </header>
-
-  <main>
-    <!-- Usuario obligatorio -->
-    <section class="config-section">
-      <label for="username" data-i18n="username">Nombre de usuario (obligatorio):</label>
-      <input type="text" id="username" placeholder="Ej: Mario" required>
-    </section>
-
-    <!-- Clave TMDB -->
-    <section class="config-section" id="tmdbSection" style="display:none;">
-      <label for="tmdbKey" data-i18n="tmdbKey">Clave API de TMDB:</label>
-      <input type="text" id="tmdbKey" placeholder="Introduce tu API Key">
-      <small data-i18n="tmdbHelp">
-        Obtén tu clave gratuita en: 
-        <a href="https://www.themoviedb.org/settings/api" target="_blank">themoviedb.org/settings/api</a>
-      </small>
-    </section>
-
-    <!-- Búsqueda TMDB -->
-    <section class="config-section" id="searchSection" style="display:none;">
-      <h3 data-i18n="searchTitle">Buscar y agregar contenido</h3>
-      <input type="text" id="searchInput" placeholder="Buscar películas/series..." data-i18n-placeholder="searchPlaceholder">
-      <select id="targetList">
-        <option value="" data-i18n="selectList">Selecciona una lista...</option>
-      </select>
-      <div id="searchResults"></div>
-    </section>
-
-    <!-- Mis Listas -->
-    <section class="config-section" id="listsSection" style="display:none;">
-      <h2 data-i18n="myLists">Mis Listas</h2>
-      <div id="listDisplay"></div>
+  <div id="welcomeScreen" class="screen active">
+    <div class="welcome-container">
+      <svg class="logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <rect x="30" y="40" width="25" height="120" rx="2" fill="#f0f0f0"/>
+        <rect x="65" y="35" width="25" height="130" rx="2" fill="#d0d0d0"/>
+        <rect x="100" y="30" width="25" height="140" rx="2" fill="#b0b0b0"/>
+        <rect x="135" y="35" width="25" height="130" rx="2" fill="#909090"/>
+        <line x1="20" y1="160" x2="180" y2="160" stroke="#666" stroke-width="3"/>
+      </svg>
       
-      <h3 data-i18n="createList">Crear Nueva Lista</h3>
-      <form id="newListForm">
-        <input type="text" id="listName" placeholder="Nombre de la lista" required data-i18n-placeholder="listName">
-        <input type="text" id="listType" placeholder="movie, series, anime, etc." required data-i18n-placeholder="listType">
-        <button type="submit" data-i18n="create">Crear Lista</button>
-      </form>
-    </section>
+      <h1>CustomLibrary</h1>
+      
+      <div class="lang-selector">
+        <select id="langSelect">
+          <option value="es">🇪🇸 Español</option>
+          <option value="en">🇬🇧 English</option>
+          <option value="fr">🇫🇷 Français</option>
+          <option value="de">🇩🇪 Deutsch</option>
+          <option value="it">🇮🇹 Italiano</option>
+          <option value="pt">🇵🇹 Português</option>
+          <option value="ru">🇷🇺 Русский</option>
+          <option value="ja">🇯🇵 日本語</option>
+          <option value="zh">🇨🇳 中文</option>
+        </select>
+      </div>
 
-    <!-- Botones inferiores -->
-    <section class="actions" id="bottomActions" style="display:none;">
-      <button id="exportBtn" data-i18n="export">📥 Exportar Todas las Listas</button>
-      <button id="copyInstallBtn" data-i18n="copyUrl">📋 Copiar URL de Instalación</button>
-      <button id="installBtn" data-i18n="install">🚀 Instalar en Stremio</button>
-    </section>
-  </main>
+      <div class="welcome-form">
+        <label data-i18n="welcomeQuestion">¿Cómo te llamas?</label>
+        <input type="text" id="welcomeUsername" data-i18n-placeholder="usernamePlaceholder" placeholder="Tu nombre de usuario">
+
+        <label data-i18n="tmdbQuestion">¿Cuál es tu clave API de TMDB?</label>
+        <small data-i18n="tmdbPrivacy">Solo se usará para mostrarte información en tus búsquedas</small>
+        <input type="text" id="welcomeTmdbKey" data-i18n-placeholder="tmdbKeyPlaceholder" placeholder="API Key de TMDB">
+        <small class="help-text">
+          <span data-i18n="getTmdbKey">Consigue tu clave en:</span>
+          <a href="https://www.themoviedb.org/settings/api" target="_blank">TMDB API Settings</a>
+        </small>
+
+        <button id="startBtn" data-i18n="startButton" disabled>Pasemos a crear tus listas</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="mainScreen" class="screen">
+    <div class="container">
+      <header>
+        <h1>📚 CustomLibrary - <span id="displayUsername"></span></h1>
+        <select id="langSelectMain" style="padding: 8px; border-radius: 5px; border: 1px solid #444;">
+          <option value="es">🇪🇸</option>
+          <option value="en">🇬🇧</option>
+          <option value="fr">🇫🇷</option>
+          <option value="de">🇩🇪</option>
+          <option value="it">🇮🇹</option>
+          <option value="pt">🇵🇹</option>
+          <option value="ru">🇷🇺</option>
+          <option value="ja">🇯🇵</option>
+          <option value="zh">🇨🇳</option>
+        </select>
+      </header>
+
+      <section class="lists-section">
+        <h2 data-i18n="myLists">Mis Listas</h2>
+        <div id="listDisplay"></div>
+      </section>
+
+      <section class="create-section">
+        <h2 data-i18n="createList">Crear Nueva Lista</h2>
+        <form id="newListForm">
+          <input type="text" id="listName" data-i18n-placeholder="listName" placeholder="Nombre de la lista" required>
+          <input type="text" id="listType" data-i18n-placeholder="listType" placeholder="Tipo: movie, series..." required>
+          <button type="submit" data-i18n="create">Crear</button>
+        </form>
+      </section>
+
+      <section class="search-section">
+        <h2 data-i18n="searchTitle">Buscar y agregar contenido</h2>
+        <input type="text" id="searchInput" data-i18n-placeholder="searchPlaceholder" placeholder="Buscar...">
+        <select id="targetList">
+          <option value="" data-i18n="selectList">Selecciona lista...</option>
+        </select>
+        <div id="searchResults"></div>
+      </section>
+
+      <footer>
+        <button id="exportBtn">📥 <span data-i18n="export">Exportar</span></button>
+        <button id="copyInstallBtn">📋 <span data-i18n="copyUrl">Copiar URL</span></button>
+        <button id="installBtn">🚀 <span data-i18n="install">Instalar</span></button>
+      </footer>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>
