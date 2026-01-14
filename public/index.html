@@ -79,18 +79,25 @@
         <h2 data-i18n="createList">Crear Nueva Lista</h2>
         <form id="newListForm">
           <input type="text" id="listName" data-i18n-placeholder="listName" placeholder="Nombre de la lista" required>
-          <input type="text" id="listType" data-i18n-placeholder="listType" placeholder="Tipo: movie, series..." required>
+          <input type="text" id="listType" data-i18n-placeholder="listType" placeholder="Tipo" value="Librería" required>
           <button type="submit" data-i18n="create">Crear</button>
         </form>
       </section>
 
       <footer>
-        <button id="exportBtn" class="big-btn">📤 <span data-i18n="export">Exportar Listas</span></button>
-        <button id="importBtn" class="big-btn">📥 <span data-i18n="import">Importar Listas</span></button>
-        <input type="file" id="importFile" accept=".json" style="display: none;">
+        <button id="importBtn" class="big-btn">🔢 <span data-i18n="importPin">Importar con PIN</span></button>
         <button id="copyInstallBtn" class="big-btn">📋 <span data-i18n="copyUrl">Copiar URL de Instalación</span></button>
         <button id="installBtn" class="big-btn">🚀 <span data-i18n="install">Instalar en Stremio</span></button>
       </footer>
+    </div>
+  </div>
+
+  <!-- LIST DETAIL SCREEN -->
+  <div id="listDetailScreen" class="screen">
+    <div class="container">
+      <button id="backBtn" class="back-btn">← <span data-i18n="back">Volver</span></button>
+      <h1 id="listDetailTitle"></h1>
+      <div id="listDetailItems"></div>
     </div>
   </div>
 
@@ -102,6 +109,33 @@
       <div class="modal-buttons">
         <button id="modalAddBtn" data-i18n="add">Agregar</button>
         <button id="modalCancelBtn" data-i18n="cancel">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal para importar PIN -->
+  <div id="pinModal" class="modal">
+    <div class="modal-content">
+      <h3 data-i18n="importPinTitle">Introduce el PIN de 6 dígitos</h3>
+      <input type="text" id="pinInput" maxlength="6" pattern="[0-9]{6}" placeholder="123456">
+      <div class="modal-buttons">
+        <button id="pinImportBtn" data-i18n="import">Importar</button>
+        <button id="pinCancelBtn" data-i18n="cancel">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal para mostrar PIN -->
+  <div id="showPinModal" class="modal">
+    <div class="modal-content">
+      <h3 data-i18n="sharePinTitle">PIN de la lista</h3>
+      <div class="pin-display">
+        <span id="pinDisplay"></span>
+      </div>
+      <p data-i18n="sharePinText">Comparte este PIN para que otros puedan importar la lista</p>
+      <div class="modal-buttons">
+        <button id="copyPinBtn" data-i18n="copyPin">Copiar PIN</button>
+        <button id="closePinBtn" data-i18n="close">Cerrar</button>
       </div>
     </div>
   </div>
