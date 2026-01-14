@@ -7,237 +7,266 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- WELCOME SCREEN - USERNAME -->
+  <!-- WELCOME SCREEN -->
   <div id="welcomeScreen" class="screen active">
     <div class="welcome-container">
       <svg class="logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-        <rect x="30" y="40" width="25" height="120" rx="2" fill="#f0f0f0"/>
-        <rect x="65" y="35" width="25" height="130" rx="2" fill="#d0d0d0"/>
-        <rect x="100" y="30" width="25" height="140" rx="2" fill="#b0b0b0"/>
-        <rect x="135" y="35" width="25" height="130" rx="2" fill="#909090"/>
-        <line x1="20" y1="160" x2="180" y2="160" stroke="#666" stroke-width="3"/>
+        <circle cx="100" cy="100" r="80" fill="none" stroke="url(#grad1)" stroke-width="8"/>
+        <defs>
+          <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#7b2cbf;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#c77dff;stop-opacity:1" />
+          </linearGradient>
+        </defs>
+        <path d="M 70 80 L 130 100 L 70 120 Z" fill="#c77dff"/>
+        <rect x="130" y="90" width="10" height="20" fill="#c77dff"/>
       </svg>
-
-      <div class="welcome-form">
-        <label data-i18n="languageQuestionFirst">Ey, ¿en qué idioma podemos hablar?</label>
-        <select id="langSelect">
-          <option value="en">🇬🇧 English</option>
-          <option value="es">🇪🇸 Español</option>
-          <option value="fr">🇫🇷 Français</option>
-          <option value="de">🇩🇪 Deutsch</option>
-          <option value="it">🇮🇹 Italiano</option>
-          <option value="pt">🇵🇹 Português</option>
-          <option value="ru">🇷🇺 Русский</option>
-          <option value="ja">🇯🇵 日本語</option>
-          <option value="zh">🇨🇳 中文</option>
+      <h1 id="welcomeTitle">Welcome to CustomLibrary</h1>
+      <div id="languageSelectDiv" class="input-group">
+        <label id="languageQuestionLabel">What language can we speak?</label>
+        <select id="languageSelect">
+          <option value="en">English 🇬🇧</option>
+          <option value="es">Español 🇪🇸</option>
+          <option value="fr">Français 🇫🇷</option>
+          <option value="de">Deutsch 🇩🇪</option>
+          <option value="it">Italiano 🇮🇹</option>
+          <option value="pt">Português 🇵🇹</option>
+          <option value="ru">Русский 🇷🇺</option>
+          <option value="ja">日本語 🇯🇵</option>
+          <option value="zh">中文 🇨🇳</option>
         </select>
-
-        <label data-i18n="welcomeQuestion">Bienvenido, ¿cómo puedo llamarte?</label>
-        <input type="text" id="welcomeUsername" data-i18n-placeholder="yourName" placeholder="Tu nombre">
-
-        <button id="checkUserBtn" data-i18n="continue" disabled>Continuar</button>
+      </div>
+      <div id="nameInputDiv" class="input-group" style="display:none;">
+        <label id="nameQuestionLabel">Hey, what's your name?</label>
+        <input type="text" id="nameInput" placeholder="Your name">
+        <button id="continueBtn">Continue</button>
       </div>
     </div>
   </div>
 
   <!-- LOGIN SCREEN -->
   <div id="loginScreen" class="screen">
-    <div class="welcome-container">
-      <svg class="logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-        <rect x="30" y="40" width="25" height="120" rx="2" fill="#f0f0f0"/>
-        <rect x="65" y="35" width="25" height="130" rx="2" fill="#d0d0d0"/>
-        <rect x="100" y="30" width="25" height="140" rx="2" fill="#b0b0b0"/>
-        <rect x="135" y="35" width="25" height="130" rx="2" fill="#909090"/>
-        <line x1="20" y1="160" x2="180" y2="160" stroke="#666" stroke-width="3"/>
-      </svg>
-
-      <div class="welcome-form">
-        <h2 id="welcomeBackText" data-i18n="welcomeBack">¡Bienvenido de nuevo!</h2>
-        <label data-i18n="enterPin">Introduce tu PIN de 4 dígitos</label>
-        <input type="password" id="loginPin" maxlength="4" pattern="[0-9]{4}" placeholder="****" inputmode="numeric">
-        <button id="loginBtn" data-i18n="login" disabled>Iniciar sesión</button>
-        <button id="backToUsernameBtn" class="secondary-btn" data-i18n="back">Volver</button>
-      </div>
+    <div class="auth-container">
+      <h2 id="loginTitle">Login</h2>
+      <input type="text" id="loginUsername" placeholder="Username">
+      <input type="password" id="loginPassword" placeholder="Password">
+      <button id="loginBtn">Login</button>
+      <p id="loginSwitch">Don't have an account? <span id="goToRegister">Register</span></p>
     </div>
   </div>
 
   <!-- REGISTER SCREEN -->
   <div id="registerScreen" class="screen">
-    <div class="welcome-container">
-      <svg class="logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-        <rect x="30" y="40" width="25" height="120" rx="2" fill="#f0f0f0"/>
-        <rect x="65" y="35" width="25" height="130" rx="2" fill="#d0d0d0"/>
-        <rect x="100" y="30" width="25" height="140" rx="2" fill="#b0b0b0"/>
-        <rect x="135" y="35" width="25" height="130" rx="2" fill="#909090"/>
-        <line x1="20" y1="160" x2="180" y2="160" stroke="#666" stroke-width="3"/>
-      </svg>
-
-      <div class="welcome-form">
-        <h2 data-i18n="newUser">¡Nuevo usuario!</h2>
-        
-        <label data-i18n="addonNameQuestion">¿Y cómo me llamo yo?</label>
-        <input type="text" id="addonName" placeholder="Librería de Usuario">
-        <small data-i18n="addonNameHelp">Este será el nombre del addon en tu reproductor</small>
-
-        <label data-i18n="tmdbQuestion">Voy a necesitar tu clave API de TMDB</label>
-        <input type="text" id="registerTmdbKey" data-i18n-placeholder="tmdbKeyPlaceholder" placeholder="API Key de TMDB">
-        <small class="help-text">
-          <span data-i18n="getTmdbKeyText">Esto lo consigues</span>
-          <a href="https://www.themoviedb.org/settings/api" target="_blank" data-i18n="here">AQUÍ</a>
-        </small>
-
-        <label data-i18n="createPin">Crea un PIN de 4 dígitos</label>
-        <input type="password" id="registerPin" maxlength="4" pattern="[0-9]{4}" placeholder="****" inputmode="numeric">
-        <small data-i18n="pinHelp">Úsalo para acceder a tu cuenta</small>
-
-        <button id="registerBtn" data-i18n="startButton" disabled>Pasemos a crear tus listas</button>
-      </div>
+    <div class="auth-container">
+      <h2 id="registerTitle">Register</h2>
+      <input type="text" id="registerUsername" placeholder="Username">
+      <input type="password" id="registerPassword" placeholder="Password">
+      <button id="registerBtn">Register</button>
+      <p id="registerSwitch">Already have an account? <span id="goToLogin">Login</span></p>
     </div>
   </div>
 
   <!-- MAIN SCREEN -->
   <div id="mainScreen" class="screen">
-    <div class="container">
-      <header>
-        <svg class="logo-small" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-          <rect x="30" y="40" width="25" height="120" rx="2" fill="#f0f0f0"/>
-          <rect x="65" y="35" width="25" height="130" rx="2" fill="#d0d0d0"/>
-          <rect x="100" y="30" width="25" height="140" rx="2" fill="#b0b0b0"/>
-          <rect x="135" y="35" width="25" height="130" rx="2" fill="#909090"/>
-          <line x1="20" y1="160" x2="180" y2="160" stroke="#666" stroke-width="3"/>
-        </svg>
-        <h1 id="mainTitle"></h1>
-        <button id="changeUserBtn" class="icon-btn" title="Cambiar usuario">👤</button>
-      </header>
+    <header>
+      <div class="header-left">
+        <h1 id="mainTitle">My Library</h1>
+        <p id="addonUrl"></p>
+      </div>
+      <div class="header-right">
+        <button id="friendsBtn">👥 <span id="friendsBtnText">Friends</span></button>
+        <button id="ratingsBtn">⭐ <span id="ratingsBtnText">Ratings</span></button>
+        <button id="logoutBtn">🚪 <span id="logoutBtnText">Logout</span></button>
+      </div>
+    </header>
 
-      <section class="search-section-top">
-        <input type="text" id="searchInput" data-i18n-placeholder="searchPlaceholder" placeholder="Buscar...">
+    <main>
+      <section id="listsSection">
+        <div class="section-header">
+          <h2 id="listsTitle">My Lists</h2>
+          <button id="createListBtn">+ <span id="createListBtnText">Create List</span></button>
+        </div>
+        <div id="listsContainer"></div>
+      </section>
+
+      <section id="searchSection">
+        <h2 id="searchTitle">Add Items</h2>
+        <div class="search-bar">
+          <input type="text" id="searchInput" placeholder="Search movies/series">
+          <button id="searchBtn">🔍</button>
+        </div>
         <div id="searchResults"></div>
       </section>
+    </main>
 
-      <section class="lists-section">
-        <h2 data-i18n="yourLists">Estas son tus listas</h2>
-        <div id="listDisplay"></div>
-      </section>
-
-      <section class="create-section">
-        <h2 data-i18n="createList">Crear nueva lista</h2>
-        <form id="newListForm">
-          <input type="text" id="listName" data-i18n-placeholder="listName" placeholder="Nombre de la lista" required>
-          <input type="text" id="listType" data-i18n-placeholder="listType" placeholder="Tipo" required>
-          <button type="submit" data-i18n="create">Crear</button>
-        </form>
-      </section>
-
-      <section class="friends-section">
-        <h2 data-i18n="friends">Amigos</h2>
-        <div id="friendsDisplay"></div>
-        <form id="addFriendForm">
-          <input type="text" id="friendUsername" data-i18n-placeholder="friendUsername" placeholder="Nombre de usuario" required>
-          <button type="submit" data-i18n="addFriend">Añadir amigo</button>
-        </form>
-      </section>
-
-      <footer>
-        <button id="importBtn" class="big-btn gray-btn"><span data-i18n="importPin">Añadir lista por PIN</span></button>
-        <button id="copyInstallBtn" class="big-btn gray-btn"><span data-i18n="copyUrl">Copiar URL de instalación</span></button>
-        <button id="installBtn" class="big-btn purple-btn"><span data-i18n="install">Instalar en tu reproductor</span></button>
-      </footer>
-    </div>
+    <footer>
+      <p>CustomLibrary v2.0 | <span id="footerMadeWith">Made with</span> ❤️</p>
+    </footer>
   </div>
 
-  <!-- LIST DETAIL SCREEN -->
-  <div id="listDetailScreen" class="screen">
-    <div class="container">
-      <button id="backBtn" class="back-btn">← <span data-i18n="back">Volver</span></button>
-      <h1 id="listDetailTitle"></h1>
-      <div id="listDetailItems"></div>
-    </div>
-  </div>
-
-  <!-- FRIEND DETAIL SCREEN -->
-  <div id="friendDetailScreen" class="screen">
-    <div class="container">
-      <button id="backFromFriendBtn" class="back-btn">← <span data-i18n="back">Volver</span></button>
-      <h1 id="friendDetailTitle"></h1>
+  <!-- FULLSCREEN SEARCH ITEM MODAL -->
+  <div id="itemDetailModal" class="modal">
+    <div class="item-detail-fullscreen">
+      <button class="close-detail-btn" id="closeDetailBtn">✕</button>
+      <button class="nav-arrow nav-left" id="prevItemBtn">◀</button>
+      <button class="nav-arrow nav-right" id="nextItemBtn">▶</button>
       
-      <section class="friend-section">
-        <h2 data-i18n="friendLists">Listas</h2>
-        <div id="friendListsDisplay"></div>
-      </section>
-
-      <section class="friend-section">
-        <h2 data-i18n="friendRatings">Calificaciones recientes</h2>
-        <div id="friendRatingsDisplay"></div>
-      </section>
+      <div class="detail-backdrop" id="detailBackdrop"></div>
+      <div class="detail-content">
+        <img id="detailPoster" class="detail-poster" src="" alt="">
+        <div class="detail-info">
+          <h2 id="detailTitle"></h2>
+          <div class="detail-meta">
+            <span id="detailRating">⭐ --</span>
+            <span id="detailYear">----</span>
+            <span id="detailRuntime">-- min</span>
+          </div>
+          <p id="detailOverview"></p>
+          
+          <div class="detail-section">
+            <h3 id="detailDirectorLabel">Director</h3>
+            <p id="detailDirector">--</p>
+          </div>
+          
+          <div class="detail-section">
+            <h3 id="detailCastLabel">Cast</h3>
+            <p id="detailCast">--</p>
+          </div>
+          
+          <div class="detail-section">
+            <h3 id="detailReviewsLabel">Recent Reviews</h3>
+            <div id="detailReviews"></div>
+          </div>
+          
+          <div class="detail-actions">
+            <button id="detailTrailerBtn">🎬 <span id="detailTrailerText">Trailer</span></button>
+            <button id="detailAddBtn">➕ <span id="detailAddText">Add to List</span></button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- Modal para seleccionar lista -->
-  <div id="listModal" class="modal">
+  <!-- CREATE LIST MODAL -->
+  <div id="createListModal" class="modal">
     <div class="modal-content">
-      <h3 data-i18n="selectListModal">¿A qué lista quieres agregar esto?</h3>
-      <select id="modalListSelect"></select>
+      <h3 id="createListModalTitle">Create New List</h3>
+      <input type="text" id="newListName" placeholder="List name">
+      <textarea id="newListMessage" placeholder="Custom message (optional)" rows="3"></textarea>
       <div class="modal-buttons">
-        <button id="modalAddBtn" data-i18n="add">Agregar</button>
-        <button id="modalCancelBtn" data-i18n="cancel">Cancelar</button>
+        <button id="confirmCreateBtn">Create</button>
+        <button id="cancelCreateBtn">Cancel</button>
       </div>
     </div>
   </div>
 
-  <!-- Modal para importar PIN -->
-  <div id="pinModal" class="modal">
+  <!-- SELECT LIST MODAL -->
+  <div id="selectListModal" class="modal">
     <div class="modal-content">
-      <h3 data-i18n="importPinTitle">Introduce el PIN de 6 dígitos</h3>
-      <input type="text" id="pinInput" maxlength="6" pattern="[0-9]{6}" placeholder="123456" inputmode="numeric">
+      <h3 id="selectListModalTitle">Select List</h3>
+      <div id="selectListOptions"></div>
+      <button id="cancelSelectBtn">Cancel</button>
+    </div>
+  </div>
+
+  <!-- SHARE MODAL -->
+  <div id="shareModal" class="modal">
+    <div class="modal-content">
+      <h3 id="shareModalTitle">Share List</h3>
+      <p id="sharePinLabel">PIN:</p>
+      <input type="text" id="sharePinInput" readonly>
+      <button id="copyPinBtn">📋 Copy PIN</button>
+      <button id="closePinBtn">Close</button>
+    </div>
+  </div>
+
+  <!-- IMPORT LIST MODAL -->
+  <div id="importModal" class="modal">
+    <div class="modal-content">
+      <h3 id="importModalTitle">Import List</h3>
+      <input type="text" id="importPinInput" placeholder="Enter PIN">
       <div class="modal-buttons">
-        <button id="pinImportBtn" data-i18n="import">Importar</button>
-        <button id="pinCancelBtn" data-i18n="cancel">Cancelar</button>
+        <button id="confirmImportBtn">Import</button>
+        <button id="cancelImportBtn">Cancel</button>
       </div>
     </div>
   </div>
 
-  <!-- Modal para mostrar PIN -->
-  <div id="showPinModal" class="modal">
-    <div class="modal-content">
-      <h3 data-i18n="sharePinTitle">PIN de la lista</h3>
-      <div class="pin-display">
-        <span id="pinDisplay"></span>
+  <!-- FRIENDS MODAL -->
+  <div id="friendsModal" class="modal">
+    <div class="modal-content large">
+      <h3 id="friendsModalTitle">Friends</h3>
+      <div class="friends-tabs">
+        <button class="tab-btn active" data-tab="myFriends" id="myFriendsTab">My Friends</button>
+        <button class="tab-btn" data-tab="addFriend" id="addFriendTab">Add Friend</button>
       </div>
-      <p data-i18n="sharePinText">Comparte este PIN para que otros puedan importar la lista</p>
-      <div class="modal-buttons">
-        <button id="copyPinBtn" data-i18n="copyPin">Copiar PIN</button>
-        <button id="closePinBtn" data-i18n="close">Cerrar</button>
+      
+      <div class="tab-content active" id="myFriendsContent">
+        <div id="friendsList"></div>
       </div>
+      
+      <div class="tab-content" id="addFriendContent">
+        <input type="text" id="friendUsernameInput" placeholder="Username">
+        <button id="addFriendBtn">Add Friend</button>
+      </div>
+      
+      <button id="closeFriendsBtn">Close</button>
     </div>
   </div>
 
-  <!-- Modal para calificar -->
-  <div id="ratingModal" class="modal">
+  <!-- FRIEND PROFILE MODAL -->
+  <div id="friendProfileModal" class="modal">
+    <div class="modal-content large">
+      <h3 id="friendProfileName"></h3>
+      
+      <div class="profile-section">
+        <h4 id="friendRatingsLabel">Ratings</h4>
+        <div id="friendRatingsList"></div>
+      </div>
+      
+      <div class="profile-section">
+        <h4 id="friendListsLabel">Lists</h4>
+        <div id="friendListsContainer"></div>
+      </div>
+      
+      <button id="closeFriendProfileBtn">Close</button>
+    </div>
+  </div>
+
+  <!-- RATINGS MODAL -->
+  <div id="ratingsModal" class="modal">
+    <div class="modal-content large">
+      <h3 id="ratingsModalTitle">Item Ratings</h3>
+      <div id="ratingsFilter">
+        <button class="filter-btn active" data-filter="all" id="allRatingsBtn">All Users</button>
+        <button class="filter-btn" data-filter="friends" id="friendsRatingsBtn">Friends Only</button>
+      </div>
+      <div id="ratingsList"></div>
+      <button id="closeRatingsBtn">Close</button>
+    </div>
+  </div>
+
+  <!-- RATE ITEM MODAL -->
+  <div id="rateModal" class="modal">
     <div class="modal-content">
-      <h3 data-i18n="rateTitle">Calificar</h3>
+      <h3 id="rateModalTitle">Rate Item</h3>
+      <p id="rateItemName"></p>
       <div class="star-rating">
-        <span class="star" data-rating="1">★</span>
-        <span class="star" data-rating="2">★</span>
-        <span class="star" data-rating="3">★</span>
-        <span class="star" data-rating="4">★</span>
-        <span class="star" data-rating="5">★</span>
+        <span class="star" data-value="1">★</span>
+        <span class="star" data-value="2">★</span>
+        <span class="star" data-value="3">★</span>
+        <span class="star" data-value="4">★</span>
+        <span class="star" data-value="5">★</span>
+        <span class="star" data-value="6">★</span>
+        <span class="star" data-value="7">★</span>
+        <span class="star" data-value="8">★</span>
+        <span class="star" data-value="9">★</span>
+        <span class="star" data-value="10">★</span>
       </div>
-      <textarea id="reviewText" data-i18n-placeholder="reviewPlaceholder" placeholder="Escribe una reseña (opcional)..." rows="4"></textarea>
+      <p id="ratingValue">0/10</p>
       <div class="modal-buttons">
-        <button id="submitRatingBtn" data-i18n="submit">Enviar</button>
-        <button id="cancelRatingBtn" data-i18n="cancel">Cancelar</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal para ver calificaciones -->
-  <div id="viewRatingsModal" class="modal">
-    <div class="modal-content ratings-modal">
-      <h3 data-i18n="ratingsTitle">Calificaciones</h3>
-      <div id="ratingsDisplay"></div>
-      <div class="modal-buttons">
-        <button id="closeRatingsBtn" data-i18n="close">Cerrar</button>
+        <button id="confirmRatingBtn">Confirm</button>
+        <button id="cancelRatingBtn">Cancel</button>
       </div>
     </div>
   </div>
