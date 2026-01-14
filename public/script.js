@@ -3,12 +3,19 @@ const translations = {
     languageQuestionFirst: 'Hey, what language can we speak?',
     welcomeQuestion: 'Welcome, what can I call you?',
     yourName: 'Your name',
+    continue: 'Continue',
+    welcomeBack: 'Welcome back!',
+    enterPin: 'Enter your 4-digit PIN',
+    login: 'Login',
+    newUser: 'New user!',
     addonNameQuestion: 'And what should I be called?',
     addonNameHelp: 'This will be the addon name in your player',
     tmdbQuestion: "I'll need your TMDB API Key",
     tmdbKeyPlaceholder: 'TMDB API Key',
     getTmdbKeyText: 'Get it',
     here: 'HERE',
+    createPin: 'Create a 4-digit PIN',
+    pinHelp: 'Use it to access your account',
     startButton: "Let's create your lists",
     mainTitleTemplate: 'Alright {{username}}, what did you like?',
     yourLists: 'These are your lists',
@@ -38,18 +45,34 @@ const translations = {
     reviewPlaceholder: 'Write a review (optional)...',
     submit: 'Submit',
     ratingsTitle: 'Ratings',
-    viewRatings: 'Ratings'
+    viewRatings: 'Ratings',
+    friends: 'Friends',
+    friendUsername: 'Username',
+    addFriend: 'Add friend',
+    removeFriend: 'Remove',
+    friendLists: 'Lists',
+    friendRatings: 'Recent ratings',
+    noFriends: 'No friends yet',
+    noLists: 'No lists created yet',
+    noItems: 'No items in this list'
   },
   es: {
     languageQuestionFirst: 'Ey, ¿en qué idioma podemos hablar?',
     welcomeQuestion: 'Bienvenido, ¿cómo puedo llamarte?',
     yourName: 'Tu nombre',
+    continue: 'Continuar',
+    welcomeBack: '¡Bienvenido de nuevo!',
+    enterPin: 'Introduce tu PIN de 4 dígitos',
+    login: 'Iniciar sesión',
+    newUser: '¡Nuevo usuario!',
     addonNameQuestion: '¿Y cómo me llamo yo?',
     addonNameHelp: 'Este será el nombre del addon en tu reproductor',
     tmdbQuestion: 'Voy a necesitar tu clave API de TMDB',
     tmdbKeyPlaceholder: 'API Key de TMDB',
     getTmdbKeyText: 'Esto lo consigues',
     here: 'AQUÍ',
+    createPin: 'Crea un PIN de 4 dígitos',
+    pinHelp: 'Úsalo para acceder a tu cuenta',
     startButton: 'Pasemos a crear tus listas',
     mainTitleTemplate: 'De acuerdo {{username}}, ¿qué fue eso que te gustó?',
     yourLists: 'Estas son tus listas',
@@ -79,18 +102,34 @@ const translations = {
     reviewPlaceholder: 'Escribe una reseña (opcional)...',
     submit: 'Enviar',
     ratingsTitle: 'Calificaciones',
-    viewRatings: 'Calificaciones'
+    viewRatings: 'Calificaciones',
+    friends: 'Amigos',
+    friendUsername: 'Nombre de usuario',
+    addFriend: 'Añadir amigo',
+    removeFriend: 'Eliminar',
+    friendLists: 'Listas',
+    friendRatings: 'Calificaciones recientes',
+    noFriends: 'Aún no tienes amigos',
+    noLists: 'No hay listas creadas aún',
+    noItems: 'No hay elementos en esta lista'
   },
   fr: {
     languageQuestionFirst: 'Hé, quelle langue pouvons-nous parler?',
     welcomeQuestion: 'Bienvenue, comment puis-je t\'appeler?',
     yourName: 'Ton nom',
+    continue: 'Continuer',
+    welcomeBack: 'Bon retour!',
+    enterPin: 'Entre ton PIN à 4 chiffres',
+    login: 'Connexion',
+    newUser: 'Nouvel utilisateur!',
     addonNameQuestion: 'Et comment je m\'appelle?',
     addonNameHelp: 'Ce sera le nom de l\'addon dans ton lecteur',
     tmdbQuestion: 'J\'aurai besoin de ta clé API TMDB',
     tmdbKeyPlaceholder: 'Clé API TMDB',
     getTmdbKeyText: 'Obtiens-la',
     here: 'ICI',
+    createPin: 'Crée un PIN à 4 chiffres',
+    pinHelp: 'Utilise-le pour accéder à ton compte',
     startButton: 'Créons tes listes',
     mainTitleTemplate: "D'accord {{username}}, qu'as-tu aimé?",
     yourLists: 'Voici tes listes',
@@ -120,18 +159,34 @@ const translations = {
     reviewPlaceholder: 'Écris un avis (optionnel)...',
     submit: 'Envoyer',
     ratingsTitle: 'Notes',
-    viewRatings: 'Notes'
+    viewRatings: 'Notes',
+    friends: 'Amis',
+    friendUsername: 'Nom d\'utilisateur',
+    addFriend: 'Ajouter un ami',
+    removeFriend: 'Supprimer',
+    friendLists: 'Listes',
+    friendRatings: 'Notes récentes',
+    noFriends: 'Pas encore d\'amis',
+    noLists: 'Aucune liste créée',
+    noItems: 'Aucun élément dans cette liste'
   },
   de: {
     languageQuestionFirst: 'Hey, welche Sprache können wir sprechen?',
     welcomeQuestion: 'Willkommen, wie kann ich dich nennen?',
     yourName: 'Dein Name',
+    continue: 'Weiter',
+    welcomeBack: 'Willkommen zurück!',
+    enterPin: 'Gib deine 4-stellige PIN ein',
+    login: 'Anmelden',
+    newUser: 'Neuer Benutzer!',
     addonNameQuestion: 'Und wie soll ich heißen?',
     addonNameHelp: 'Dies wird der Addon-Name in deinem Player sein',
     tmdbQuestion: 'Ich brauche deinen TMDB API-Schlüssel',
     tmdbKeyPlaceholder: 'TMDB API-Schlüssel',
     getTmdbKeyText: 'Hol ihn dir',
     here: 'HIER',
+    createPin: 'Erstelle eine 4-stellige PIN',
+    pinHelp: 'Verwende sie für den Zugriff auf dein Konto',
     startButton: 'Lass uns deine Listen erstellen',
     mainTitleTemplate: 'Ok {{username}}, was hat dir gefallen?',
     yourLists: 'Das sind deine Listen',
@@ -161,18 +216,34 @@ const translations = {
     reviewPlaceholder: 'Schreibe eine Bewertung (optional)...',
     submit: 'Senden',
     ratingsTitle: 'Bewertungen',
-    viewRatings: 'Bewertungen'
+    viewRatings: 'Bewertungen',
+    friends: 'Freunde',
+    friendUsername: 'Benutzername',
+    addFriend: 'Freund hinzufügen',
+    removeFriend: 'Entfernen',
+    friendLists: 'Listen',
+    friendRatings: 'Aktuelle Bewertungen',
+    noFriends: 'Noch keine Freunde',
+    noLists: 'Noch keine Listen erstellt',
+    noItems: 'Keine Elemente in dieser Liste'
   },
   it: {
     languageQuestionFirst: 'Ehi, che lingua possiamo parlare?',
     welcomeQuestion: 'Benvenuto, come posso chiamarti?',
     yourName: 'Il tuo nome',
+    continue: 'Continua',
+    welcomeBack: 'Bentornato!',
+    enterPin: 'Inserisci il tuo PIN a 4 cifre',
+    login: 'Accedi',
+    newUser: 'Nuovo utente!',
     addonNameQuestion: 'E come mi chiamo io?',
     addonNameHelp: 'Questo sarà il nome dell\'addon nel tuo lettore',
     tmdbQuestion: 'Avrò bisogno della tua chiave API TMDB',
     tmdbKeyPlaceholder: 'Chiave API TMDB',
     getTmdbKeyText: 'Ottienila',
     here: 'QUI',
+    createPin: 'Crea un PIN a 4 cifre',
+    pinHelp: 'Usalo per accedere al tuo account',
     startButton: 'Creiamo le tue liste',
     mainTitleTemplate: 'Va bene {{username}}, cosa ti è piaciuto?',
     yourLists: 'Queste sono le tue liste',
@@ -202,18 +273,34 @@ const translations = {
     reviewPlaceholder: 'Scrivi una recensione (opzionale)...',
     submit: 'Invia',
     ratingsTitle: 'Valutazioni',
-    viewRatings: 'Valutazioni'
+    viewRatings: 'Valutazioni',
+    friends: 'Amici',
+    friendUsername: 'Nome utente',
+    addFriend: 'Aggiungi amico',
+    removeFriend: 'Rimuovi',
+    friendLists: 'Liste',
+    friendRatings: 'Valutazioni recenti',
+    noFriends: 'Nessun amico ancora',
+    noLists: 'Nessuna lista creata',
+    noItems: 'Nessun elemento in questa lista'
   },
   pt: {
     languageQuestionFirst: 'Ei, que idioma podemos falar?',
     welcomeQuestion: 'Bem-vindo, como posso te chamar?',
     yourName: 'Seu nome',
+    continue: 'Continuar',
+    welcomeBack: 'Bem-vindo de volta!',
+    enterPin: 'Digite seu PIN de 4 dígitos',
+    login: 'Entrar',
+    newUser: 'Novo usuário!',
     addonNameQuestion: 'E como eu me chamo?',
     addonNameHelp: 'Este será o nome do addon no seu player',
     tmdbQuestion: 'Vou precisar da sua chave API TMDB',
     tmdbKeyPlaceholder: 'Chave API TMDB',
     getTmdbKeyText: 'Consiga',
     here: 'AQUI',
+    createPin: 'Crie um PIN de 4 dígitos',
+    pinHelp: 'Use-o para acessar sua conta',
     startButton: 'Vamos criar suas listas',
     mainTitleTemplate: 'Certo {{username}}, do que você gostou?',
     yourLists: 'Estas são suas listas',
@@ -243,18 +330,34 @@ const translations = {
     reviewPlaceholder: 'Escreva uma avaliação (opcional)...',
     submit: 'Enviar',
     ratingsTitle: 'Avaliações',
-    viewRatings: 'Avaliações'
+    viewRatings: 'Avaliações',
+    friends: 'Amigos',
+    friendUsername: 'Nome de usuário',
+    addFriend: 'Adicionar amigo',
+    removeFriend: 'Remover',
+    friendLists: 'Listas',
+    friendRatings: 'Avaliações recentes',
+    noFriends: 'Ainda sem amigos',
+    noLists: 'Nenhuma lista criada',
+    noItems: 'Nenhum item nesta lista'
   },
   ru: {
     languageQuestionFirst: 'Эй, на каком языке мы можем говорить?',
     welcomeQuestion: 'Добро пожаловать, как мне тебя называть?',
     yourName: 'Твое имя',
+    continue: 'Продолжить',
+    welcomeBack: 'С возвращением!',
+    enterPin: 'Введи свой 4-значный PIN',
+    login: 'Войти',
+    newUser: 'Новый пользователь!',
     addonNameQuestion: 'А как меня зовут?',
     addonNameHelp: 'Это будет имя аддона в твоем плеере',
     tmdbQuestion: 'Мне понадобится твой API ключ TMDB',
     tmdbKeyPlaceholder: 'API ключ TMDB',
     getTmdbKeyText: 'Получи его',
     here: 'ЗДЕСЬ',
+    createPin: 'Создай 4-значный PIN',
+    pinHelp: 'Используй его для доступа к аккаунту',
     startButton: 'Давай создадим твои списки',
     mainTitleTemplate: 'Хорошо {{username}}, что тебе понравилось?',
     yourLists: 'Вот твои списки',
@@ -284,18 +387,34 @@ const translations = {
     reviewPlaceholder: 'Напишите отзыв (необязательно)...',
     submit: 'Отправить',
     ratingsTitle: 'Оценки',
-    viewRatings: 'Оценки'
+    viewRatings: 'Оценки',
+    friends: 'Друзья',
+    friendUsername: 'Имя пользователя',
+    addFriend: 'Добавить друга',
+    removeFriend: 'Удалить',
+    friendLists: 'Списки',
+    friendRatings: 'Недавние оценки',
+    noFriends: 'Пока нет друзей',
+    noLists: 'Списков еще не создано',
+    noItems: 'В этом списке нет элементов'
   },
   ja: {
     languageQuestionFirst: 'やあ、何語で話せますか？',
     welcomeQuestion: 'ようこそ、何と呼べばいいですか？',
     yourName: 'あなたの名前',
+    continue: '続ける',
+    welcomeBack: 'おかえりなさい！',
+    enterPin: '4桁のPINを入力',
+    login: 'ログイン',
+    newUser: '新しいユーザー！',
     addonNameQuestion: '私の名前は？',
     addonNameHelp: 'これがあなたのプレーヤーのアドオン名になります',
     tmdbQuestion: 'TMDB APIキーが必要です',
     tmdbKeyPlaceholder: 'TMDB APIキー',
     getTmdbKeyText: 'こちらで取得',
     here: 'ここ',
+    createPin: '4桁のPINを作成',
+    pinHelp: 'アカウントにアクセスするために使用',
     startButton: 'リストを作成しましょう',
     mainTitleTemplate: 'わかりました{{username}}さん、何が好きでしたか？',
     yourLists: 'あなたのリスト',
@@ -325,18 +444,34 @@ const translations = {
     reviewPlaceholder: 'レビューを書く（オプション）...',
     submit: '送信',
     ratingsTitle: '評価',
-    viewRatings: '評価'
+    viewRatings: '評価',
+    friends: '友達',
+    friendUsername: 'ユーザー名',
+    addFriend: '友達を追加',
+    removeFriend: '削除',
+    friendLists: 'リスト',
+    friendRatings: '最近の評価',
+    noFriends: 'まだ友達がいません',
+    noLists: 'リストがまだ作成されていません',
+    noItems: 'このリストにアイテムがありません'
   },
   zh: {
     languageQuestionFirst: '嘿，我们可以说什么语言？',
     welcomeQuestion: '欢迎，我该怎么称呼你？',
     yourName: '你的名字',
+    continue: '继续',
+    welcomeBack: '欢迎回来！',
+    enterPin: '输入你的4位PIN',
+    login: '登录',
+    newUser: '新用户！',
     addonNameQuestion: '我叫什么名字？',
     addonNameHelp: '这将是你播放器中的插件名称',
     tmdbQuestion: '我需要你的TMDB API密钥',
     tmdbKeyPlaceholder: 'TMDB API密钥',
     getTmdbKeyText: '在这里获取',
     here: '这里',
+    createPin: '创建4位PIN',
+    pinHelp: '用它访问你的账户',
     startButton: '让我们创建你的列表',
     mainTitleTemplate: '好的{{username}}，你喜欢什么？',
     yourLists: '这些是你的列表',
@@ -366,7 +501,16 @@ const translations = {
     reviewPlaceholder: '写评论（可选）...',
     submit: '提交',
     ratingsTitle: '评分',
-    viewRatings: '评分'
+    viewRatings: '评分',
+    friends: '朋友',
+    friendUsername: '用户名',
+    addFriend: '添加朋友',
+    removeFriend: '删除',
+    friendLists: '列表',
+    friendRatings: '最近的评分',
+    noFriends: '还没有朋友',
+    noLists: '还没有创建列表',
+    noItems: '此列表中没有项目'
   }
 };
 
@@ -378,16 +522,22 @@ let pendingItem = null;
 let currentListId = null;
 let currentItemId = null;
 let selectedRating = 0;
+let tempUsername = '';
 
 const welcomeUsername = document.getElementById('welcomeUsername');
-const addonNameInput = document.getElementById('addonName');
-const welcomeTmdbKey = document.getElementById('welcomeTmdbKey');
-const startBtn = document.getElementById('startBtn');
+const checkUserBtn = document.getElementById('checkUserBtn');
 const langSelect = document.getElementById('langSelect');
+const loginPin = document.getElementById('loginPin');
+const loginBtn = document.getElementById('loginBtn');
+const backToUsernameBtn = document.getElementById('backToUsernameBtn');
+const addonNameInput = document.getElementById('addonName');
+const registerTmdbKey = document.getElementById('registerTmdbKey');
+const registerPin = document.getElementById('registerPin');
+const registerBtn = document.getElementById('registerBtn');
 
 function updateAddonName() {
   const t = translations[currentLang] || translations.en;
-  const username = welcomeUsername.value.trim();
+  const username = tempUsername || welcomeUsername.value.trim();
   if (username) {
     addonNameInput.value = t.listTypeTemplate.replace('{{username}}', username);
   }
@@ -400,42 +550,171 @@ function updateListTypePlaceholder() {
 
 langSelect.addEventListener('change', (e) => {
   currentLang = e.target.value;
-  localStorage.setItem('lang', currentLang);
   updateUI();
   updateAddonName();
 });
 
 welcomeUsername.addEventListener('input', () => {
-  checkWelcomeForm();
-  updateAddonName();
+  checkUserBtn.disabled = welcomeUsername.value.trim().length === 0;
 });
 
-function checkWelcomeForm() {
-  const hasUsername = welcomeUsername.value.trim().length > 0;
-  const hasTmdbKey = welcomeTmdbKey.value.trim().length > 0;
-  startBtn.disabled = !(hasUsername && hasTmdbKey);
-}
+checkUserBtn.addEventListener('click', async () => {
+  tempUsername = welcomeUsername.value.trim();
+  if (!tempUsername) return;
+  
+  const res = await fetch('/api/auth/check-user', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username: tempUsername })
+  });
+  
+  const data = await res.json();
+  
+  if (data.exists) {
+    currentLang = data.user.language || 'en';
+    langSelect.value = currentLang;
+    updateUI();
+    
+    document.getElementById('welcomeScreen').classList.remove('active');
+    document.getElementById('loginScreen').classList.add('active');
+    document.getElementById('welcomeBackText').textContent = `${translations[currentLang].welcomeBack} ${tempUsername}!`;
+  } else {
+    updateAddonName();
+    document.getElementById('welcomeScreen').classList.remove('active');
+    document.getElementById('registerScreen').classList.add('active');
+  }
+});
 
-welcomeTmdbKey.addEventListener('input', checkWelcomeForm);
+backToUsernameBtn.addEventListener('click', () => {
+  document.getElementById('loginScreen').classList.remove('active');
+  document.getElementById('welcomeScreen').classList.add('active');
+  loginPin.value = '';
+  tempUsername = '';
+});
 
-startBtn.addEventListener('click', () => {
-  currentUsername = welcomeUsername.value.trim();
-  currentTmdbKey = welcomeTmdbKey.value.trim();
-  currentAddonName = addonNameInput.value.trim();
+loginPin.addEventListener('input', () => {
+  loginBtn.disabled = loginPin.value.length !== 4;
+});
+
+loginBtn.addEventListener('click', async () => {
+  const pin = loginPin.value.trim();
+  if (pin.length !== 4) return;
   
-  localStorage.setItem('username', currentUsername);
-  localStorage.setItem('tmdbKey', currentTmdbKey);
-  localStorage.setItem('addonName', currentAddonName);
-  localStorage.setItem('lang', currentLang);
+  const res = await fetch('/api/auth/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username: tempUsername, pin })
+  });
   
-  const t = translations[currentLang] || translations.en;
-  document.getElementById('mainTitle').textContent = t.mainTitleTemplate.replace('{{username}}', currentUsername);
+  const data = await res.json();
   
-  document.getElementById('welcomeScreen').classList.remove('active');
-  document.getElementById('mainScreen').classList.add('active');
+  if (data.success) {
+    currentUsername = tempUsername;
+    currentTmdbKey = data.user.tmdb_key;
+    currentAddonName = data.user.addon_name;
+    currentLang = data.user.language || 'en';
+    
+    localStorage.setItem('username', currentUsername);
+    localStorage.setItem('pin', pin);
+    
+    const t = translations[currentLang] || translations.en;
+    document.getElementById('mainTitle').textContent = t.mainTitleTemplate.replace('{{username}}', currentUsername);
+    
+    document.getElementById('loginScreen').classList.remove('active');
+    document.getElementById('mainScreen').classList.add('active');
+    
+    loadLists(currentUsername);
+    loadFriends(currentUsername);
+    updateListTypePlaceholder();
+    updateUI();
+  } else {
+    alert(data.error || 'PIN incorrecto');
+    loginPin.value = '';
+  }
+});
+
+registerPin.addEventListener('input', () => {
+  const hasAddonName = addonNameInput.value.trim().length > 0;
+  const hasTmdbKey = registerTmdbKey.value.trim().length > 0;
+  const hasPin = registerPin.value.length === 4;
+  registerBtn.disabled = !(hasAddonName && hasTmdbKey && hasPin);
+});
+
+registerTmdbKey.addEventListener('input', () => {
+  const hasAddonName = addonNameInput.value.trim().length > 0;
+  const hasTmdbKey = registerTmdbKey.value.trim().length > 0;
+  const hasPin = registerPin.value.length === 4;
+  registerBtn.disabled = !(hasAddonName && hasTmdbKey && hasPin);
+});
+
+addonNameInput.addEventListener('input', () => {
+  const hasAddonName = addonNameInput.value.trim().length > 0;
+  const hasTmdbKey = registerTmdbKey.value.trim().length > 0;
+  const hasPin = registerPin.value.length === 4;
+  registerBtn.disabled = !(hasAddonName && hasTmdbKey && hasPin);
+});
+
+registerBtn.addEventListener('click', async () => {
+  const addonName = addonNameInput.value.trim();
+  const tmdbKey = registerTmdbKey.value.trim();
+  const pin = registerPin.value.trim();
   
-  loadLists(currentUsername);
-  updateListTypePlaceholder();
+  if (!addonName || !tmdbKey || pin.length !== 4) return;
+  
+  const res = await fetch('/api/auth/register', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ 
+      username: tempUsername, 
+      pin, 
+      addonName, 
+      tmdbKey,
+      language: currentLang
+    })
+  });
+  
+  const data = await res.json();
+  
+  if (data.success) {
+    currentUsername = tempUsername;
+    currentTmdbKey = tmdbKey;
+    currentAddonName = addonName;
+    
+    localStorage.setItem('username', currentUsername);
+    localStorage.setItem('pin', pin);
+    
+    const t = translations[currentLang] || translations.en;
+    document.getElementById('mainTitle').textContent = t.mainTitleTemplate.replace('{{username}}', currentUsername);
+    
+    document.getElementById('registerScreen').classList.remove('active');
+    document.getElementById('mainScreen').classList.add('active');
+    
+    loadLists(currentUsername);
+    loadFriends(currentUsername);
+    updateListTypePlaceholder();
+  } else {
+    alert(data.error || 'Error al registrar');
+  }
+});
+
+document.getElementById('changeUserBtn').addEventListener('click', () => {
+  if (!confirm('¿Cerrar sesión?')) return;
+  
+  localStorage.removeItem('username');
+  localStorage.removeItem('pin');
+  
+  currentUsername = '';
+  currentTmdbKey = '';
+  currentAddonName = '';
+  tempUsername = '';
+  
+  welcomeUsername.value = '';
+  loginPin.value = '';
+  registerPin.value = '';
+  registerTmdbKey.value = '';
+  
+  document.getElementById('mainScreen').classList.remove('active');
+  document.getElementById('welcomeScreen').classList.add('active');
 });
 
 function updateUI() {
@@ -539,15 +818,15 @@ async function loadLists(username) {
   const t = translations[currentLang] || translations.en;
   const display = document.getElementById('listDisplay');
   display.innerHTML = lists.length === 0 
-    ? '<p style="text-align:center; opacity:0.7;">No hay listas creadas aún</p>'
+    ? `<p style="text-align:center; opacity:0.7;">${t.noLists}</p>`
     : lists.map((list, idx) => `
     <div class="list-item" draggable="true" data-id="${list.id}" data-index="${idx}">
       <div class="list-info" onclick="showListDetail('${list.id}')">
-        <strong>${list.name}</strong> <span style="opacity:0.8">(${list.type})</span><br>
+        <strong>${escapeHtml(list.name)}</strong> <span style="opacity:0.8">(${escapeHtml(list.type)})</span><br>
         <small>${list.items?.length || 0} elementos</small>
       </div>
       <div class="list-actions">
-        <button onclick="shareList('${list.id}', '${list.name}', '${list.pin}')">${t.share}</button>
+        <button onclick="shareList('${list.id}', '${escapeHtml(list.name)}', '${list.pin}')">${t.share}</button>
         <button onclick="deleteList('${list.id}')" ${!list.isOwner ? 'disabled style="opacity:0.3"' : ''}>${t.delete}</button>
         <div class="arrows">
           <button onclick="moveList('${list.id}', ${idx}, -1)" ${idx === 0 ? 'disabled' : ''}>▲</button>
@@ -565,7 +844,96 @@ async function loadLists(username) {
   });
   
   const modalListSelect = document.getElementById('modalListSelect');
-  modalListSelect.innerHTML = lists.map(l => `<option value="${l.id}">${l.name}</option>`).join('');
+  modalListSelect.innerHTML = lists.map(l => `<option value="${l.id}">${escapeHtml(l.name)}</option>`).join('');
+}
+
+async function loadFriends(username) {
+  const res = await fetch(`/api/friends?username=${username}`);
+  const friends = await res.json();
+  
+  const t = translations[currentLang] || translations.en;
+  const display = document.getElementById('friendsDisplay');
+  
+  if (friends.length === 0) {
+    display.innerHTML = `<p style="text-align:center; opacity:0.7;">${t.noFriends}</p>`;
+  } else {
+    display.innerHTML = friends.map(f => `
+      <div class="friend-item">
+        <div class="friend-info" onclick="showFriendDetail('${escapeHtml(f.friend_username)}')">
+          <strong>${escapeHtml(f.friend_username)}</strong>
+        </div>
+        <button onclick="removeFriend('${escapeHtml(f.friend_username)}')">${t.removeFriend}</button>
+      </div>
+    `).join('');
+  }
+}
+
+document.getElementById('addFriendForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const friendUsername = document.getElementById('friendUsername').value.trim();
+  
+  if (!friendUsername || friendUsername === currentUsername) {
+    alert('Usuario inválido');
+    return;
+  }
+  
+  const res = await fetch('/api/friends/add', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username: currentUsername, friendUsername })
+  });
+  
+  if (res.ok) {
+    loadFriends(currentUsername);
+    e.target.reset();
+  } else {
+    const data = await res.json();
+    alert(data.error || 'Error al añadir amigo');
+  }
+});
+
+async function removeFriend(friendUsername) {
+  if (!confirm(`¿Eliminar a ${friendUsername}?`)) return;
+  
+  await fetch(`/api/friends/${friendUsername}?username=${currentUsername}`, { method: 'DELETE' });
+  loadFriends(currentUsername);
+}
+
+async function showFriendDetail(friendUsername) {
+  document.getElementById('friendDetailTitle').textContent = friendUsername;
+  
+  const listsRes = await fetch(`/api/lists?username=${friendUsername}`);
+  const lists = await listsRes.json();
+  
+  const t = translations[currentLang] || translations.en;
+  const listsDisplay = document.getElementById('friendListsDisplay');
+  
+  listsDisplay.innerHTML = lists.length === 0
+    ? `<p style="opacity:0.7;">${t.noLists}</p>`
+    : lists.map(list => `
+      <div class="list-item">
+        <div class="list-info">
+          <strong>${escapeHtml(list.name)}</strong> <span style="opacity:0.8">(${escapeHtml(list.type)})</span><br>
+          <small>${list.items?.length || 0} elementos</small>
+        </div>
+      </div>
+    `).join('');
+  
+  document.getElementById('friendRatingsDisplay').innerHTML = '<p style="opacity:0.7;">Próximamente...</p>';
+  
+  document.getElementById('mainScreen').classList.remove('active');
+  document.getElementById('friendDetailScreen').classList.add('active');
+}
+
+document.getElementById('backFromFriendBtn').addEventListener('click', () => {
+  document.getElementById('friendDetailScreen').classList.remove('active');
+  document.getElementById('mainScreen').classList.add('active');
+});
+
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
 }
 
 let draggedElement = null;
@@ -687,17 +1055,17 @@ async function showListDetail(listId) {
   const t = translations[currentLang] || translations.en;
   const itemsContainer = document.getElementById('listDetailItems');
   itemsContainer.innerHTML = list.items.length === 0
-    ? '<p style="text-align:center; opacity:0.7;">No hay elementos en esta lista</p>'
+    ? `<p style="text-align:center; opacity:0.7;">${t.noItems}</p>`
     : list.items.map(item => `
       <div class="detail-item">
         <div class="detail-item-content">
-          <img src="${item.poster ? `https://image.tmdb.org/t/p/w200${item.poster}` : 'image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'80\' height=\'120\'%3E%3Crect fill=\'%23333\' width=\'80\' height=\'120\'/%3E%3C/svg%3E'}" alt="${item.title}">
+          <img src="${item.poster ? `https://image.tmdb.org/t/p/w200${item.poster}` : 'image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'80\' height=\'120\'%3E%3Crect fill=\'%23333\' width=\'80\' height=\'120\'/%3E%3C/svg%3E'}" alt="${escapeHtml(item.title)}">
           <div class="detail-item-info">
             <div class="detail-item-title">
-              <strong>${item.title}</strong>
-              ${item.rating ? `<span class="rating">${item.rating}</span>` : ''}
+              <strong>${escapeHtml(item.title)}</strong>
+              ${item.rating ? `<span class="rating">${escapeHtml(item.rating)}</span>` : ''}
             </div>
-            <div class="overview">${item.overview || 'Sin sinopsis'}</div>
+            <div class="overview">${escapeHtml(item.overview) || 'Sin sinopsis'}</div>
           </div>
         </div>
         <div class="detail-item-actions">
@@ -782,10 +1150,10 @@ async function viewRatings(itemId) {
     display.innerHTML = ratings.map(r => `
       <div class="rating-item">
         <div class="rating-item-header">
-          <span class="rating-item-user">${r.username}</span>
+          <span class="rating-item-user">${escapeHtml(r.username)}</span>
           <span class="rating-item-stars">${'★'.repeat(r.stars)}${'☆'.repeat(5 - r.stars)}</span>
         </div>
-        ${r.review ? `<div class="rating-item-review">${r.review}</div>` : ''}
+        ${r.review ? `<div class="rating-item-review">${escapeHtml(r.review)}</div>` : ''}
       </div>
     `).join('');
   }
@@ -811,7 +1179,7 @@ document.getElementById('searchInput').addEventListener('input', (e) => {
   
   searchTimeout = setTimeout(async () => {
     const langMap = { es: 'es-ES', en: 'en-US', fr: 'fr-FR', de: 'de-DE', it: 'it-IT', pt: 'pt-PT', ru: 'ru-RU', ja: 'ja-JP', zh: 'zh-CN' };
-    const res = await fetch(`/api/tmdb/search?q=${q}&key=${currentTmdbKey}&lang=${langMap[currentLang] || 'en-US'}`);
+    const res = await fetch(`/api/tmdb/search?q=${encodeURIComponent(q)}&key=${currentTmdbKey}&lang=${langMap[currentLang] || 'en-US'}`);
     const data = await res.json();
     
     const results = (data.results || [])
@@ -825,19 +1193,27 @@ document.getElementById('searchInput').addEventListener('input', (e) => {
         const mediaType = item.media_type;
         const overview = item.overview || 'No hay sinopsis disponible';
         const rating = item.vote_average ? `⭐ ${item.vote_average.toFixed(1)}` : '';
+        const poster = item.poster_path || '';
         
-        const safeTitleJS = title.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '\\"');
-        const safeOverviewJS = overview.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '\\"');
-        const safePoster = item.poster_path || '';
+        const itemData = {
+          tmdbId: item.id,
+          mediaType: mediaType,
+          title: title,
+          poster: poster,
+          overview: overview,
+          rating: rating
+        };
+        
+        const itemDataStr = JSON.stringify(itemData).replace(/"/g, '&quot;');
         
         return `
-          <div class="search-item" onclick="showListModal({tmdbId: ${item.id}, mediaType: '${mediaType}', title: '${safeTitleJS}', poster: '${safePoster}', overview: '${safeOverviewJS}', rating: '${rating}'})">
-            <img src="https://image.tmdb.org/t/p/w200${item.poster_path || ''}" alt="${title.replace(/"/g, '&quot;')}" onerror="this.src='image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'80\\' height=\\'120\\'%3E%3Crect fill=\\'%23333\\' width=\\'80\\' height=\\'120\\'/%3E%3C/svg%3E'">
+          <div class="search-item" onclick='showListModal(${itemDataStr})'>
+            <img src="https://image.tmdb.org/t/p/w200${poster}" alt="${escapeHtml(title)}" onerror="this.src='image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'80\\' height=\\'120\\'%3E%3Crect fill=\\'%23333\\' width=\\'80\\' height=\\'120\\'/%3E%3C/svg%3E'">
             <div class="search-item-info">
-              <strong>${title}</strong>
+              <strong>${escapeHtml(title)}</strong>
               <small>${mediaType.toUpperCase()}</small>
               ${rating ? `<div class="rating">${rating}</div>` : ''}
-              <div class="overview">${overview}</div>
+              <div class="overview">${escapeHtml(overview)}</div>
             </div>
           </div>
         `;
@@ -847,30 +1223,36 @@ document.getElementById('searchInput').addEventListener('input', (e) => {
 
 window.addEventListener('DOMContentLoaded', () => {
   const savedUsername = localStorage.getItem('username');
-  const savedKey = localStorage.getItem('tmdbKey');
-  const savedAddonName = localStorage.getItem('addonName');
-  const savedLang = localStorage.getItem('lang');
+  const savedPin = localStorage.getItem('pin');
   
-  if (savedLang) {
-    currentLang = savedLang;
-    langSelect.value = currentLang;
-  }
-  
-  if (savedUsername && savedKey) {
-    currentUsername = savedUsername;
-    currentTmdbKey = savedKey;
-    currentAddonName = savedAddonName || '';
-    
-    const t = translations[currentLang] || translations.en;
-    document.getElementById('mainTitle').textContent = t.mainTitleTemplate.replace('{{username}}', currentUsername);
-    
-    document.getElementById('welcomeScreen').classList.remove('active');
-    document.getElementById('mainScreen').classList.add('active');
-    loadLists(currentUsername);
+  if (savedUsername && savedPin) {
+    fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: savedUsername, pin: savedPin })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        currentUsername = savedUsername;
+        currentTmdbKey = data.user.tmdb_key;
+        currentAddonName = data.user.addon_name;
+        currentLang = data.user.language || 'en';
+        langSelect.value = currentLang;
+        
+        const t = translations[currentLang] || translations.en;
+        document.getElementById('mainTitle').textContent = t.mainTitleTemplate.replace('{{username}}', currentUsername);
+        
+        document.getElementById('welcomeScreen').classList.remove('active');
+        document.getElementById('mainScreen').classList.add('active');
+        
+        loadLists(currentUsername);
+        loadFriends(currentUsername);
+        updateListTypePlaceholder();
+        updateUI();
+      }
+    });
   }
   
   updateUI();
-  if (currentUsername) {
-    updateListTypePlaceholder();
-  }
 });
