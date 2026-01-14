@@ -690,11 +690,13 @@ async function showListDetail(listId) {
     ? '<p style="text-align:center; opacity:0.7;">No hay elementos en esta lista</p>'
     : list.items.map(item => `
       <div class="detail-item">
-        <div style="display:flex; gap:12px; flex:1;">
+        <div class="detail-item-content">
           <img src="${item.poster ? `https://image.tmdb.org/t/p/w200${item.poster}` : 'image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'80\' height=\'120\'%3E%3Crect fill=\'%23333\' width=\'80\' height=\'120\'/%3E%3C/svg%3E'}" alt="${item.title}">
           <div class="detail-item-info">
-            <strong>${item.title}</strong>
-            ${item.rating ? `<div class="rating">${item.rating}</div>` : ''}
+            <div class="detail-item-title">
+              <strong>${item.title}</strong>
+              ${item.rating ? `<span class="rating">${item.rating}</span>` : ''}
+            </div>
             <div class="overview">${item.overview || 'Sin sinopsis'}</div>
           </div>
         </div>
@@ -824,9 +826,13 @@ document.getElementById('searchInput').addEventListener('input', (e) => {
         const overview = item.overview || 'No hay sinopsis disponible';
         const rating = item.vote_average ? `⭐ ${item.vote_average.toFixed(1)}` : '';
         
+        const safeTitleJS = title.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '\\"');
+        const safeOverviewJS = overview.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '\\"');
+        const safePoster = item.poster_path || '';
+        
         return `
-          <div class="search-item" onclick='showListModal({tmdbId: ${item.id}, mediaType: "${mediaType}", title: "${title.replace(/'/g, "\\'")}", poster: "${item.poster_path || ''}", overview: "${overview.replace(/'/g, "\\'")}", rating: "${rating}"})'>
-            <img src="https://image.tmdb.org/t/p/w200${item.poster_path || ''}" alt="${title}" onerror="this.src='image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'80\' height=\'120\'%3E%3Crect fill=\'%23333\' width=\'80\' height=\'120\'/%3E%3C/svg%3E'">
+          <div class="search-item" onclick="showListModal({tmdbId: ${item.id}, mediaType: '${mediaType}', title: '${safeTitleJS}', poster: '${safePoster}', overview: '${safeOverviewJS}', rating: '${rating}'})">
+            <img src="https://image.tmdb.org/t/p/w200${item.poster_path || ''}" alt="${title.replace(/"/g, '&quot;')}" onerror="this.src='image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'80\\' height=\\'120\\'%3E%3Crect fill=\\'%23333\\' width=\\'80\\' height=\\'120\\'/%3E%3C/svg%3E'">
             <div class="search-item-info">
               <strong>${title}</strong>
               <small>${mediaType.toUpperCase()}</small>
