@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CustomLibrary - Configuración</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <img src="icon.svg" alt="Custom Library" class="logo">
+    <h1>CustomLibrary</h1>
+    <select id="langSelect">
+      <option value="es">🇪🇸 Español</option>
+      <option value="en">🇬🇧 English</option>
+      <option value="fr">🇫🇷 Français</option>
+      <option value="de">🇩🇪 Deutsch</option>
+      <option value="it">🇮🇹 Italiano</option>
+      <option value="pt">🇵🇹 Português</option>
+      <option value="ru">🇷🇺 Русский</option>
+      <option value="zh">🇨🇳 中文</option>
+      <option value="ja">🇯🇵 日本語</option>
+      <option value="ar">🇸🇦 العربية</option>
+      <option value="hi">🇮🇳 हिन्दी</option>
+      <option value="ko">🇰🇷 한국어</option>
+    </select>
+  </header>
+
+  <main>
+    <!-- Usuario obligatorio -->
+    <section class="config-section">
+      <label for="username" data-i18n="username">Nombre de usuario (obligatorio):</label>
+      <input type="text" id="username" placeholder="Ej: Mario" required>
+    </section>
+
+    <!-- Clave TMDB -->
+    <section class="config-section" id="tmdbSection" style="display:none;">
+      <label for="tmdbKey" data-i18n="tmdbKey">Clave API de TMDB:</label>
+      <input type="text" id="tmdbKey" placeholder="Introduce tu API Key">
+      <small data-i18n="tmdbHelp">
+        Obtén tu clave gratuita en: 
+        <a href="https://www.themoviedb.org/settings/api" target="_blank">themoviedb.org/settings/api</a>
+      </small>
+    </section>
+
+    <!-- Búsqueda TMDB -->
+    <section class="config-section" id="searchSection" style="display:none;">
+      <h3 data-i18n="searchTitle">Buscar y agregar contenido</h3>
+      <input type="text" id="searchInput" placeholder="Buscar películas/series..." data-i18n-placeholder="searchPlaceholder">
+      <select id="targetList">
+        <option value="" data-i18n="selectList">Selecciona una lista...</option>
+      </select>
+      <div id="searchResults"></div>
+    </section>
+
+    <!-- Mis Listas -->
+    <section class="config-section" id="listsSection" style="display:none;">
+      <h2 data-i18n="myLists">Mis Listas</h2>
+      <div id="listDisplay"></div>
+      
+      <h3 data-i18n="createList">Crear Nueva Lista</h3>
+      <form id="newListForm">
+        <input type="text" id="listName" placeholder="Nombre de la lista" required data-i18n-placeholder="listName">
+        <input type="text" id="listType" placeholder="movie, series, anime, etc." required data-i18n-placeholder="listType">
+        <button type="submit" data-i18n="create">Crear Lista</button>
+      </form>
+    </section>
+
+    <!-- Botones inferiores -->
+    <section class="actions" id="bottomActions" style="display:none;">
+      <button id="exportBtn" data-i18n="export">📥 Exportar Todas las Listas</button>
+      <button id="copyInstallBtn" data-i18n="copyUrl">📋 Copiar URL de Instalación</button>
+      <button id="installBtn" data-i18n="install">🚀 Instalar en Stremio</button>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
