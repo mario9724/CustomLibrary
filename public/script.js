@@ -50,7 +50,6 @@ const translations = {
     install: '🚀 Installer dans Stremio',
     recommended: '{{username}} vous a recommandé {{listName}}'
   }
-  // Añade más idiomas aquí...
 };
 
 let currentLang = 'es';
@@ -120,6 +119,46 @@ document.getElementById('newListForm').addEventListener('submit', async (e) => {
   }
 });
 
+// ✅ FUNCIÓN CLAVE: ID óptimo para AIO Metadata
+async function getOptimalId(tmdbId, mediaType) {
+  try {
+    if (!currentTmdbKey) return `tmdb:${tmdbId}`;
+    
+    const url = `https://api.themoviedb.org/3/${mediaType === 'tv' ? 'tv' : 'movie'}/${tmdbId}/external_ids?api_key=${currentTmdbKey}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    
+    return data.imdb_id || `tmdb:${tmdbId}`;
+  } catch (e) {
+    return `tmdb:${tmdbId}`;
+  }
+}
+
+// ✅ AÑADIR ITEM con ID correcto
+async function addToList(tmdbId, mediaType, title, poster) {
+  const listId = document.getElementById('targetList').value;
+  if (!listId) return alert('Selecciona una lista primero');
+
+  const optimalId = await getOptimalId(tmdbId, mediaType);
+
+  await fetch(`/api/lists/${listId}/items`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ 
+      username: currentUsername, 
+      item: { 
+        tmdbId, 
+        imdbId: optimalId,  // ← ID perfecto para AIO Metadata
+        mediaType, 
+        title 
+      } 
+    })
+  });
+  
+  alert('¡Añadido! AIO Metadata cargará automáticamente');
+  loadLists(currentUsername);
+}
+
 // Cargar listas
 async function loadLists(username) {
   const res = await fetch(`/api/lists?username=${username}`);
@@ -143,13 +182,12 @@ async function loadLists(username) {
     </div>
   `).join('');
   
-  // Actualizar dropdown de búsqueda
   document.getElementById('targetList').innerHTML = 
     '<option value="">Selecciona lista...</option>' +
     lists.map(l => `<option value="${l.id}">${l.name}</option>`).join('');
 }
 
-// Compartir lista
+// Resto de funciones (shareList, deleteList, etc.) igual que antes...
 async function shareList(id, name) {
   const t = translations[currentLang] || translations.es;
   const text = t.recommended.replace('{{username}}', currentUsername).replace('{{listName}}', name);
@@ -159,18 +197,16 @@ async function shareList(id, name) {
     await navigator.share({ title: text, text, url });
   } else {
     navigator.clipboard.writeText(`${text}\n${url}`);
-    alert('¡Enlace copiado al portapapeles!');
+    alert('¡Enlace copiado!');
   }
 }
 
-// Eliminar lista
 async function deleteList(id) {
   if (!confirm('¿Eliminar esta lista?')) return;
   await fetch(`/api/lists/${id}?username=${currentUsername}`, { method: 'DELETE' });
   loadLists(currentUsername);
 }
 
-// Mover lista
 async function moveList(id, currentIndex, direction) {
   const newOrder = currentIndex + direction;
   await fetch(`/api/lists/${id}/reorder`, {
@@ -181,28 +217,24 @@ async function moveList(id, currentIndex, direction) {
   loadLists(currentUsername);
 }
 
-// Exportar todo
+// Botones export/install (igual que antes)
 document.getElementById('exportBtn').addEventListener('click', async () => {
   const res = await fetch(`/api/lists?username=${currentUsername}`);
   const lists = await res.json();
-  
   const blob = new Blob([JSON.stringify({ username: currentUsername, lists }, null, 2)], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
   a.download = `customlibrary-${currentUsername}.json`;
   a.click();
-  URL.revokeObjectURL(url);
 });
 
-// Copiar URL instalación
 document.getElementById('copyInstallBtn').addEventListener('click', () => {
   const url = `${window.location.origin}/manifest.json?username=${currentUsername}`;
   navigator.clipboard.writeText(url);
-  alert('¡URL copiada! Pégala en Stremio > Addons > Install from URL');
+  alert('¡URL copiada! Pégala en Stremio');
 });
 
-// Instalar directo en Stremio
 document.getElementById('installBtn').addEventListener('click', () => {
   const url = `stremio://${window.location.host}/manifest.json?username=${currentUsername}`;
   window.open(url, '_blank');
@@ -214,42 +246,24 @@ document.getElementById('searchInput').addEventListener('input', (e) => {
   clearTimeout(searchTimeout);
   searchTimeout = setTimeout(async () => {
     const q = e.target.value.trim();
-    
     if (q.length < 3 || !currentTmdbKey) return;
     
-    const res = await fetch(`/api/tmdb/search?q=${q}&key=${currentTmdbKey}&lang=${currentLang}-${currentLang.toUpperCase()}`);
+    const res = await fetch(`/api/tmdb/search?q=${q}&key=${currentTmdbKey}&lang=${currentLang}`);
     const data = await res.json();
     
-    document.getElementById('searchResults').innerHTML = (data.results || []).slice(0, 12).map(item => `
-      <div class="search-item" onclick="addToList('${item.id}', '${item.media_type}', '${(item.title || item.name || '').replace(/'/g, "\\'")}', '${item.poster_path || ''}')">
-        <img src="https://image.tmdb.org/t/p/w200${item.poster_path || '/placeholder.png'}" alt="${item.title || item.name}" onerror="this.src='image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22300%22%3E%3Crect fill=%22%23333%22 width=%22200%22 height=%22300%22/%3E%3C/svg%3E'">
-        <strong>${item.title || item.name}</strong>
-        <button onclick="event.stopPropagation()">+ Añadir</button>
-      </div>
-    `).join('');
+    document.getElementById('searchResults').innerHTML = (data.results || []).slice(0, 12).map(item => {
+      const title = item.title || item.name;
+      const mediaType = item.media_type || 'movie';
+      return `
+        <div class="search-item" onclick="addToList('${item.id}', '${mediaType}', '${title.replace(/'/g, "\\'")}', '${item.poster_path || ''}')">
+          <img src="https://image.tmdb.org/t/p/w200${item.poster_path || ''}" alt="${title}" onerror="this.src='image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMzMzIi8+PC9zdmc+'">
+          <strong>${title}</strong>
+          <small>${mediaType.toUpperCase()}</small>
+        </div>
+      `;
+    }).join('');
   }, 600);
 });
-
-async function addToList(tmdbId, mediaType, title, poster) {
-  const listId = document.getElementById('targetList').value;
-  
-  if (!listId) {
-    alert('Selecciona una lista primero');
-    return;
-  }
-  
-  await fetch(`/api/lists/${listId}/items`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ 
-      username: currentUsername, 
-      item: { tmdbId, mediaType, title, poster } 
-    })
-  });
-  
-  alert('¡Añadido correctamente!');
-  loadLists(currentUsername);
-}
 
 // Cargar datos guardados
 window.addEventListener('DOMContentLoaded', () => {
