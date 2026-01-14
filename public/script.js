@@ -16,9 +16,14 @@ const translations = {
     searchPlaceholder: 'Buscar películas/series...',
     selectList: 'Selecciona lista...',
     export: 'Exportar',
+    import: 'Importar',
     copyUrl: 'Copiar URL',
     install: 'Instalar',
-    rating: 'Puntuación'
+    rating: 'Puntuación',
+    share: 'Compartir',
+    moveUp: 'Subir',
+    moveDown: 'Bajar',
+    delete: 'Eliminar'
   },
   en: {
     welcomeQuestion: "What's your name?",
@@ -37,9 +42,14 @@ const translations = {
     searchPlaceholder: 'Search movies/series...',
     selectList: 'Select list...',
     export: 'Export',
+    import: 'Import',
     copyUrl: 'Copy URL',
     install: 'Install',
-    rating: 'Rating'
+    rating: 'Rating',
+    share: 'Share',
+    moveUp: 'Move Up',
+    moveDown: 'Move Down',
+    delete: 'Delete'
   },
   fr: {
     welcomeQuestion: 'Comment tu t\'appelles ?',
@@ -58,9 +68,14 @@ const translations = {
     searchPlaceholder: 'Rechercher films/séries...',
     selectList: 'Sélectionner une liste...',
     export: 'Exporter',
+    import: 'Importer',
     copyUrl: 'Copier l\'URL',
     install: 'Installer',
-    rating: 'Note'
+    rating: 'Note',
+    share: 'Partager',
+    moveUp: 'Monter',
+    moveDown: 'Descendre',
+    delete: 'Supprimer'
   },
   de: {
     welcomeQuestion: 'Wie heißt du?',
@@ -79,9 +94,14 @@ const translations = {
     searchPlaceholder: 'Filme/Serien suchen...',
     selectList: 'Liste auswählen...',
     export: 'Exportieren',
+    import: 'Importieren',
     copyUrl: 'URL kopieren',
     install: 'Installieren',
-    rating: 'Bewertung'
+    rating: 'Bewertung',
+    share: 'Teilen',
+    moveUp: 'Nach oben',
+    moveDown: 'Nach unten',
+    delete: 'Löschen'
   },
   it: {
     welcomeQuestion: 'Come ti chiami?',
@@ -100,9 +120,14 @@ const translations = {
     searchPlaceholder: 'Cerca film/serie...',
     selectList: 'Seleziona lista...',
     export: 'Esporta',
+    import: 'Importa',
     copyUrl: 'Copia URL',
     install: 'Installa',
-    rating: 'Valutazione'
+    rating: 'Valutazione',
+    share: 'Condividi',
+    moveUp: 'Su',
+    moveDown: 'Giù',
+    delete: 'Elimina'
   },
   pt: {
     welcomeQuestion: 'Qual é o seu nome?',
@@ -121,9 +146,14 @@ const translations = {
     searchPlaceholder: 'Pesquisar filmes/séries...',
     selectList: 'Selecione a lista...',
     export: 'Exportar',
+    import: 'Importar',
     copyUrl: 'Copiar URL',
     install: 'Instalar',
-    rating: 'Avaliação'
+    rating: 'Avaliação',
+    share: 'Compartilhar',
+    moveUp: 'Subir',
+    moveDown: 'Descer',
+    delete: 'Excluir'
   },
   ru: {
     welcomeQuestion: 'Как тебя зовут?',
@@ -142,9 +172,14 @@ const translations = {
     searchPlaceholder: 'Искать фильмы/сериалы...',
     selectList: 'Выбрать список...',
     export: 'Экспорт',
+    import: 'Импорт',
     copyUrl: 'Копировать URL',
     install: 'Установить',
-    rating: 'Рейтинг'
+    rating: 'Рейтинг',
+    share: 'Поделиться',
+    moveUp: 'Вверх',
+    moveDown: 'Вниз',
+    delete: 'Удалить'
   },
   ja: {
     welcomeQuestion: 'お名前は？',
@@ -163,9 +198,14 @@ const translations = {
     searchPlaceholder: '映画/シリーズを検索...',
     selectList: 'リストを選択...',
     export: 'エクスポート',
+    import: 'インポート',
     copyUrl: 'URLをコピー',
     install: 'インストール',
-    rating: '評価'
+    rating: '評価',
+    share: '共有',
+    moveUp: '上へ',
+    moveDown: '下へ',
+    delete: '削除'
   },
   zh: {
     welcomeQuestion: '你叫什么名字？',
@@ -184,9 +224,14 @@ const translations = {
     searchPlaceholder: '搜索电影/系列...',
     selectList: '选择列表...',
     export: '导出',
+    import: '导入',
     copyUrl: '复制URL',
     install: '安装',
-    rating: '评分'
+    rating: '评分',
+    share: '分享',
+    moveUp: '上移',
+    moveDown: '下移',
+    delete: '删除'
   }
 };
 
@@ -194,7 +239,6 @@ let currentLang = 'es';
 let currentUsername = '';
 let currentTmdbKey = '';
 
-// Welcome screen logic
 const welcomeUsername = document.getElementById('welcomeUsername');
 const welcomeTmdbKey = document.getElementById('welcomeTmdbKey');
 const startBtn = document.getElementById('startBtn');
@@ -222,7 +266,6 @@ startBtn.addEventListener('click', () => {
   loadLists(currentUsername);
 });
 
-// Language switchers
 document.getElementById('langSelect').addEventListener('change', (e) => {
   currentLang = e.target.value;
   document.getElementById('langSelectMain').value = currentLang;
@@ -248,14 +291,12 @@ function updateUI() {
     if (t[key]) el.placeholder = t[key];
   });
 
-  // Update select options dynamically
   const targetList = document.getElementById('targetList');
   if (targetList.options.length > 0) {
     targetList.options[0].text = t.selectList;
   }
 }
 
-// Create list
 document.getElementById('newListForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   const name = document.getElementById('listName').value.trim();
@@ -275,7 +316,6 @@ document.getElementById('newListForm').addEventListener('submit', async (e) => {
   }
 });
 
-// Get IMDb ID
 async function getOptimalId(tmdbId, mediaType) {
   try {
     if (!currentTmdbKey) return `tmdb:${tmdbId}`;
@@ -290,7 +330,6 @@ async function getOptimalId(tmdbId, mediaType) {
   }
 }
 
-// Add to list
 async function addToList(tmdbId, mediaType, title, poster, overview, rating) {
   const listId = document.getElementById('targetList').value;
   if (!listId) return alert('Selecciona una lista primero');
@@ -310,11 +349,11 @@ async function addToList(tmdbId, mediaType, title, poster, overview, rating) {
   loadLists(currentUsername);
 }
 
-// Load lists
 async function loadLists(username) {
   const res = await fetch(`/api/lists?username=${username}`);
   const lists = await res.json();
   
+  const t = translations[currentLang] || translations.es;
   const display = document.getElementById('listDisplay');
   display.innerHTML = lists.length === 0 
     ? '<p style="text-align:center; opacity:0.7;">No hay listas creadas aún</p>'
@@ -325,16 +364,15 @@ async function loadLists(username) {
         <small>${list.items?.length || 0} elementos</small>
       </div>
       <div class="list-actions">
-        <button onclick="shareList('${list.id}', '${list.name}')">📤</button>
-        <button onclick="moveList('${list.id}', ${idx}, -1)" ${idx === 0 ? 'disabled' : ''}>⬆️</button>
-        <button onclick="moveList('${list.id}', ${idx}, 1)" ${idx === lists.length - 1 ? 'disabled' : ''}>⬇️</button>
-        <button onclick="deleteList('${list.id}')">🗑️</button>
+        <button onclick="shareList('${list.id}', '${list.name}')" data-tooltip="${t.share}">👤</button>
+        <button onclick="moveList('${list.id}', ${idx}, -1)" ${idx === 0 ? 'disabled' : ''} data-tooltip="${t.moveUp}">▲</button>
+        <button onclick="moveList('${list.id}', ${idx}, 1)" ${idx === lists.length - 1 ? 'disabled' : ''} data-tooltip="${t.moveDown}">▼</button>
+        <button onclick="deleteList('${list.id}')" data-tooltip="${t.delete}">🗑️</button>
       </div>
     </div>
   `).join('');
   
   const targetList = document.getElementById('targetList');
-  const t = translations[currentLang] || translations.es;
   targetList.innerHTML = 
     `<option value="">${t.selectList}</option>` +
     lists.map(l => `<option value="${l.id}">${l.name}</option>`).join('');
@@ -366,7 +404,37 @@ async function moveList(id, currentIndex, direction) {
   loadLists(currentUsername);
 }
 
-// Export/Install buttons
+// ✅ IMPORTAR LISTAS
+document.getElementById('importBtn').addEventListener('click', () => {
+  document.getElementById('importFile').click();
+});
+
+document.getElementById('importFile').addEventListener('change', async (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  
+  const reader = new FileReader();
+  reader.onload = async (event) => {
+    try {
+      const data = JSON.parse(event.target.result);
+      const res = await fetch('/api/lists/import', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: currentUsername, lists: data.lists })
+      });
+      
+      if (res.ok) {
+        alert('¡Listas importadas correctamente!');
+        loadLists(currentUsername);
+      }
+    } catch (err) {
+      alert('Error al importar archivo');
+    }
+  };
+  reader.readAsText(file);
+  e.target.value = '';
+});
+
 document.getElementById('exportBtn').addEventListener('click', async () => {
   const res = await fetch(`/api/lists?username=${currentUsername}`);
   const lists = await res.json();
@@ -389,7 +457,6 @@ document.getElementById('installBtn').addEventListener('click', () => {
   window.open(url, '_blank');
 });
 
-// TMDB Search
 let searchTimeout;
 document.getElementById('searchInput').addEventListener('input', (e) => {
   clearTimeout(searchTimeout);
@@ -423,7 +490,6 @@ document.getElementById('searchInput').addEventListener('input', (e) => {
   }, 600);
 });
 
-// Load saved data
 window.addEventListener('DOMContentLoaded', () => {
   const savedUsername = localStorage.getItem('username');
   const savedKey = localStorage.getItem('tmdbKey');
