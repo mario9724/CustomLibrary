@@ -15,6 +15,7 @@ const pool = new Pool({
 
 async function initDB() {
   try {
+    // Crear tabla users
     await pool.query(`
       CREATE TABLE IF NOT EXISTS users (
         username VARCHAR(255) PRIMARY KEY,
@@ -23,27 +24,102 @@ async function initDB() {
       );
     `);
     
+    // Crear tabla lists con estructura base
     await pool.query(`
       CREATE TABLE IF NOT EXISTS lists (
         id UUID PRIMARY KEY,
-        owner VARCHAR(255) REFERENCES users(username) ON DELETE CASCADE,
         name VARCHAR(255) NOT NULL,
         type VARCHAR(50) NOT NULL,
         list_order INTEGER DEFAULT 0,
-        pin VARCHAR(6) UNIQUE,
         created_at TIMESTAMP DEFAULT NOW()
       );
     `);
     
+    // Migración: Añadir columna owner si no existe
+    try {
+      await pool.query(`ALTER TABLE lists ADD COLUMN IF NOT EXISTS owner VARCHAR(255);`);
+      
+      // Si existe columna username antigua, migrar a owner
+      const hasUsername = await pool.query(`
+        SELECT column_name FROM information_schema.columns 
+        WHERE table_name='lists' AND column_name='username'
+      `);
+      
+      if (hasUsername.rows.length > 0) {
+        console.log('🔄 Migrando username → owner...');
+        await pool.query(`UPDATE lists SET owner = username WHERE owner IS NULL;`);
+        await pool.query(`ALTER TABLE lists DROP COLUMN username;`);
+      }
+      
+      // Asegurar que owner tiene valores
+      const nullOwners = await pool.query(`SELECT COUNT(*) FROM lists WHERE owner IS NULL`);
+      if (parseInt(nullOwners.rows[0].count) > 0) {
+        console.log('⚠️ Listas sin owner detectadas, asignando owner por defecto...');
+        // Si hay listas sin owner, asignar al primer usuario o crear uno genérico
+        const firstUser = await pool.query(`SELECT username FROM users LIMIT 1`);
+        if (firstUser.rows.length > 0) {
+          await pool.query(`UPDATE lists SET owner = $1 WHERE owner IS NULL`, [firstUser.rows[0].username]);
+        }
+      }
+    } catch (err) {
+      console.log('ℹ️ Owner column:', err.message);
+    }
+    
+    // Añadir columna pin
+    await pool.query(`ALTER TABLE lists ADD COLUMN IF NOT EXISTS pin VARCHAR(6);`);
+    
+    // Generar PINs únicos para listas sin PIN
+    const listsWithoutPin = await pool.query(`SELECT id FROM lists WHERE pin IS NULL`);
+    for (const list of listsWithoutPin.rows) {
+      let pinGenerated = false;
+      let attempts = 0;
+      while (!pinGenerated && attempts < 10) {
+        try {
+          const newPin = Math.floor(100000 + Math.random() * 900000).toString();
+          await pool.query(`UPDATE lists SET pin = $1 WHERE id = $2`, [newPin, list.id]);
+          pinGenerated = true;
+        } catch (err) {
+          attempts++;
+        }
+      }
+    }
+    
+    // Hacer pin único (constraint)
+    try {
+      await pool.query(`ALTER TABLE lists ADD CONSTRAINT lists_pin_key UNIQUE (pin);`);
+    } catch (err) {
+      // Constraint ya existe
+    }
+    
+    // Añadir foreign key a owner (sin ON DELETE CASCADE para no borrar listas huérfanas)
+    try {
+      await pool.query(`
+        DO $$ 
+        BEGIN
+          IF NOT EXISTS (
+            SELECT 1 FROM information_schema.table_constraints 
+            WHERE constraint_name = 'lists_owner_fkey'
+          ) THEN
+            ALTER TABLE lists ADD CONSTRAINT lists_owner_fkey 
+            FOREIGN KEY (owner) REFERENCES users(username) ON DELETE CASCADE;
+          END IF;
+        END $$;
+      `);
+    } catch (err) {
+      console.log('ℹ️ Foreign key owner:', err.message);
+    }
+    
+    // Crear tabla list_collaborators
     await pool.query(`
       CREATE TABLE IF NOT EXISTS list_collaborators (
         list_id UUID REFERENCES lists(id) ON DELETE CASCADE,
-        username VARCHAR(255) REFERENCES users(username) ON DELETE CASCADE,
+        username VARCHAR(255),
         added_at TIMESTAMP DEFAULT NOW(),
         PRIMARY KEY (list_id, username)
       );
     `);
     
+    // Crear tabla list_items
     await pool.query(`
       CREATE TABLE IF NOT EXISTS list_items (
         id UUID PRIMARY KEY,
@@ -60,7 +136,7 @@ async function initDB() {
       );
     `);
     
-    console.log('✅ Database initialized');
+    console.log('✅ Database initialized and migrated successfully');
   } catch (err) {
     console.error('❌ Database init error:', err);
   }
@@ -103,6 +179,7 @@ app.get('/api/lists', async (req, res) => {
     
     res.json(lists);
   } catch (err) {
+    console.error('Error loading lists:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -129,9 +206,23 @@ app.get('/api/lists/:id', async (req, res) => {
 app.post('/api/lists', async (req, res) => {
   const { username, list } = req.body;
   const id = uuidv4();
-  const pin = generatePIN();
   
   try {
+    // Generar PIN único
+    let pin = generatePIN();
+    let pinUnique = false;
+    let attempts = 0;
+    
+    while (!pinUnique && attempts < 10) {
+      const existing = await pool.query('SELECT id FROM lists WHERE pin = $1', [pin]);
+      if (existing.rows.length === 0) {
+        pinUnique = true;
+      } else {
+        pin = generatePIN();
+        attempts++;
+      }
+    }
+    
     await pool.query('INSERT INTO users (username) VALUES ($1) ON CONFLICT DO NOTHING', [username]);
     
     const orderResult = await pool.query('SELECT COALESCE(MAX(list_order), -1) + 1 AS next_order FROM lists WHERE owner = $1', [username]);
@@ -144,6 +235,7 @@ app.post('/api/lists', async (req, res) => {
     
     res.json({ id, pin });
   } catch (err) {
+    console.error('Error creating list:', err);
     res.status(500).json({ error: err.message });
   }
 });
