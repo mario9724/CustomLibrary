@@ -49,7 +49,7 @@ async function initDB() {
         theme VARCHAR(20) DEFAULT 'dark',
         streaming_services TEXT[] DEFAULT '{}',
         created_at TIMESTAMP DEFAULT NOW()
-      );
+      )
     `);
     console.log('✅ Users table created');
     
@@ -59,7 +59,7 @@ async function initDB() {
         friend_username VARCHAR(255),
         added_at TIMESTAMP DEFAULT NOW(),
         PRIMARY KEY (username, friend_username)
-      );
+      )
     `);
     console.log('✅ User friends table created');
     
@@ -73,7 +73,7 @@ async function initDB() {
         pin VARCHAR(6) UNIQUE,
         is_collaborative BOOLEAN DEFAULT false,
         created_at TIMESTAMP DEFAULT NOW()
-      );
+      )
     `);
     console.log('✅ Lists table created');
     
@@ -83,7 +83,7 @@ async function initDB() {
         username VARCHAR(255),
         added_at TIMESTAMP DEFAULT NOW(),
         PRIMARY KEY (list_id, username)
-      );
+      )
     `);
     console.log('✅ List collaborators table created');
     
@@ -105,7 +105,7 @@ async function initDB() {
         genres TEXT[],
         director VARCHAR(255),
         cast TEXT[]
-      );
+      )
     `);
     console.log('✅ List items table created');
     
@@ -117,7 +117,7 @@ async function initDB() {
         tag VARCHAR(100),
         created_at TIMESTAMP DEFAULT NOW(),
         UNIQUE(item_id, username, tag)
-      );
+      )
     `);
     console.log('✅ Item tags table created');
     
@@ -131,7 +131,7 @@ async function initDB() {
         created_at TIMESTAMP DEFAULT NOW(),
         updated_at TIMESTAMP DEFAULT NOW(),
         UNIQUE(item_id, username)
-      );
+      )
     `);
     console.log('✅ Item notes table created');
     
@@ -144,7 +144,7 @@ async function initDB() {
         review TEXT,
         created_at TIMESTAMP DEFAULT NOW(),
         UNIQUE(item_id, username)
-      );
+      )
     `);
     console.log('✅ Item ratings table created');
     
@@ -157,7 +157,7 @@ async function initDB() {
         vote INTEGER CHECK (vote IN (-1, 1)),
         created_at TIMESTAMP DEFAULT NOW(),
         UNIQUE(list_id, item_id, username)
-      );
+      )
     `);
     console.log('✅ List votes table created');
     
@@ -169,7 +169,7 @@ async function initDB() {
         username VARCHAR(255),
         comment TEXT,
         created_at TIMESTAMP DEFAULT NOW()
-      );
+      )
     `);
     console.log('✅ List comments table created');
     
@@ -180,7 +180,7 @@ async function initDB() {
         achievement_key VARCHAR(100),
         earned_at TIMESTAMP DEFAULT NOW(),
         UNIQUE(username, achievement_key)
-      );
+      )
     `);
     console.log('✅ User achievements table created');
     
@@ -193,7 +193,7 @@ async function initDB() {
         target_id UUID,
         metadata JSONB,
         created_at TIMESTAMP DEFAULT NOW()
-      );
+      )
     `);
     console.log('✅ Activity feed table created');
     
@@ -203,8 +203,8 @@ async function initDB() {
         username VARCHAR(255),
         item_id UUID REFERENCES list_items(id) ON DELETE CASCADE,
         watched_at TIMESTAMP DEFAULT NOW(),
-        UNIQUE(username, item_id)
-      );
+        CONSTRAINT unique_user_item UNIQUE(username, item_id)
+      )
     `);
     console.log('✅ Watched items table created');
     
@@ -669,7 +669,7 @@ app.post('/api/items/:itemId/watched', async (req, res) => {
   
   try {
     await pool.query(
-      'INSERT INTO watched_items (id, username, item_id) VALUES ($1, $2, $3) ON CONFLICT DO NOTHING',
+      'INSERT INTO watched_items (id, username, item_id) VALUES ($1, $2, $3) ON CONFLICT (username, item_id) DO NOTHING',
       [id, username, itemId]
     );
     res.json({ success: true });
