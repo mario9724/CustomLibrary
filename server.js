@@ -15,49 +15,44 @@ const pool = new Pool({
 
 async function initDB() {
   try {
-    // Crear tabla users primero (sin constraints estrictos)
+    console.log('🔥 Initializing database...');
+    
+    // FORCE RESET: Cambia a true SOLO LA PRIMERA VEZ, luego vuelve a false
+    const forceReset = true; // ⚠️ CAMBIAR A false DESPUÉS DEL PRIMER DEPLOY
+    
+    if (forceReset) {
+      console.log('⚠️  FORCE RESET ENABLED - Dropping all tables...');
+      await pool.query('DROP TABLE IF EXISTS watched_items CASCADE');
+      await pool.query('DROP TABLE IF EXISTS activity_feed CASCADE');
+      await pool.query('DROP TABLE IF EXISTS user_achievements CASCADE');
+      await pool.query('DROP TABLE IF EXISTS list_comments CASCADE');
+      await pool.query('DROP TABLE IF EXISTS list_votes CASCADE');
+      await pool.query('DROP TABLE IF EXISTS item_ratings CASCADE');
+      await pool.query('DROP TABLE IF EXISTS item_notes CASCADE');
+      await pool.query('DROP TABLE IF EXISTS item_tags CASCADE');
+      await pool.query('DROP TABLE IF EXISTS list_items CASCADE');
+      await pool.query('DROP TABLE IF EXISTS list_collaborators CASCADE');
+      await pool.query('DROP TABLE IF EXISTS lists CASCADE');
+      await pool.query('DROP TABLE IF EXISTS user_friends CASCADE');
+      await pool.query('DROP TABLE IF EXISTS users CASCADE');
+      console.log('✅ All tables dropped successfully');
+    }
+    
+    // Crear USERS con TODAS las columnas desde el inicio
     await pool.query(`
       CREATE TABLE IF NOT EXISTS users (
         username VARCHAR(255) PRIMARY KEY,
+        pin VARCHAR(4) NOT NULL,
         addon_name VARCHAR(255) DEFAULT 'CustomLibrary',
         tmdb_key VARCHAR(255),
         language VARCHAR(10) DEFAULT 'en',
+        theme VARCHAR(20) DEFAULT 'dark',
+        streaming_services TEXT[] DEFAULT '{}',
         created_at TIMESTAMP DEFAULT NOW()
       );
     `);
+    console.log('✅ Users table created');
     
-    // Migrar columnas nuevas de forma segura
-    const migrations = [
-      { column: 'pin', type: 'VARCHAR(4)', default: null },
-      { column: 'theme', type: 'VARCHAR(20)', default: "'dark'" },
-      { column: 'streaming_services', type: 'TEXT[]', default: "'{}'::TEXT[]" }
-    ];
-    
-    for (const migration of migrations) {
-      try {
-        const exists = await pool.query(`
-          SELECT column_name FROM information_schema.columns 
-          WHERE table_name='users' AND column_name='${migration.column}'
-        `);
-        
-        if (exists.rows.length === 0) {
-          console.log(`➕ Adding column ${migration.column}`);
-          await pool.query(`ALTER TABLE users ADD COLUMN ${migration.column} ${migration.type} ${migration.default ? `DEFAULT ${migration.default}` : ''}`);
-        }
-      } catch (err) {
-        console.log(`⚠️  Column ${migration.column} might already exist`);
-      }
-    }
-    
-    // Asegurar que PIN existe y tiene valores
-    try {
-      await pool.query(`UPDATE users SET pin = '0000' WHERE pin IS NULL`);
-      await pool.query(`ALTER TABLE users ALTER COLUMN pin SET NOT NULL`);
-    } catch (err) {
-      console.log('⚠️  PIN constraint already set or column does not exist yet');
-    }
-    
-    // Resto de tablas
     await pool.query(`
       CREATE TABLE IF NOT EXISTS user_friends (
         username VARCHAR(255) REFERENCES users(username) ON DELETE CASCADE,
@@ -66,80 +61,21 @@ async function initDB() {
         PRIMARY KEY (username, friend_username)
       );
     `);
+    console.log('✅ User friends table created');
     
     await pool.query(`
       CREATE TABLE IF NOT EXISTS lists (
         id UUID PRIMARY KEY,
+        owner VARCHAR(255) REFERENCES users(username) ON DELETE CASCADE,
         name VARCHAR(255) NOT NULL,
         type VARCHAR(50) NOT NULL,
         list_order INTEGER DEFAULT 0,
+        pin VARCHAR(6) UNIQUE,
+        is_collaborative BOOLEAN DEFAULT false,
         created_at TIMESTAMP DEFAULT NOW()
       );
     `);
-    
-    // Migrar columnas de lists
-    const listMigrations = [
-      { column: 'owner', type: 'VARCHAR(255)', default: null },
-      { column: 'pin', type: 'VARCHAR(6)', default: null },
-      { column: 'is_collaborative', type: 'BOOLEAN', default: 'false' }
-    ];
-    
-    for (const migration of listMigrations) {
-      try {
-        const exists = await pool.query(`
-          SELECT column_name FROM information_schema.columns 
-          WHERE table_name='lists' AND column_name='${migration.column}'
-        `);
-        
-        if (exists.rows.length === 0) {
-          console.log(`➕ Adding lists.${migration.column}`);
-          await pool.query(`ALTER TABLE lists ADD COLUMN ${migration.column} ${migration.type} ${migration.default ? `DEFAULT ${migration.default}` : ''}`);
-        }
-      } catch (err) {
-        console.log(`⚠️  Column lists.${migration.column} might already exist`);
-      }
-    }
-    
-    // Generar PINs para listas sin PIN
-    const listsWithoutPin = await pool.query(`SELECT id FROM lists WHERE pin IS NULL`);
-    for (const list of listsWithoutPin.rows) {
-      let pinGenerated = false;
-      let attempts = 0;
-      while (!pinGenerated && attempts < 10) {
-        try {
-          const newPin = Math.floor(100000 + Math.random() * 900000).toString();
-          await pool.query(`UPDATE lists SET pin = $1 WHERE id = $2`, [newPin, list.id]);
-          pinGenerated = true;
-        } catch (err) {
-          attempts++;
-        }
-      }
-    }
-    
-    // Constraint único de PIN
-    try {
-      await pool.query(`ALTER TABLE lists ADD CONSTRAINT lists_pin_key UNIQUE (pin);`);
-    } catch (err) {
-      console.log('⚠️  PIN unique constraint already exists');
-    }
-    
-    // Foreign key de owner
-    try {
-      await pool.query(`
-        DO $$ 
-        BEGIN
-          IF NOT EXISTS (
-            SELECT 1 FROM information_schema.table_constraints 
-            WHERE constraint_name = 'lists_owner_fkey'
-          ) THEN
-            ALTER TABLE lists ADD CONSTRAINT lists_owner_fkey 
-            FOREIGN KEY (owner) REFERENCES users(username) ON DELETE CASCADE;
-          END IF;
-        END $$;
-      `);
-    } catch (err) {
-      console.log('⚠️  Foreign key constraint already exists');
-    }
+    console.log('✅ Lists table created');
     
     await pool.query(`
       CREATE TABLE IF NOT EXISTS list_collaborators (
@@ -149,6 +85,7 @@ async function initDB() {
         PRIMARY KEY (list_id, username)
       );
     `);
+    console.log('✅ List collaborators table created');
     
     await pool.query(`
       CREATE TABLE IF NOT EXISTS list_items (
@@ -162,36 +99,16 @@ async function initDB() {
         overview TEXT,
         rating VARCHAR(20),
         added_by VARCHAR(255),
-        added_at TIMESTAMP DEFAULT NOW()
+        added_at TIMESTAMP DEFAULT NOW(),
+        release_date DATE,
+        runtime INTEGER,
+        genres TEXT[],
+        director VARCHAR(255),
+        cast TEXT[]
       );
     `);
+    console.log('✅ List items table created');
     
-    // Migrar columnas de list_items
-    const itemMigrations = [
-      { column: 'release_date', type: 'DATE', default: null },
-      { column: 'runtime', type: 'INTEGER', default: null },
-      { column: 'genres', type: 'TEXT[]', default: null },
-      { column: 'director', type: 'VARCHAR(255)', default: null },
-      { column: 'cast', type: 'TEXT[]', default: null }
-    ];
-    
-    for (const migration of itemMigrations) {
-      try {
-        const exists = await pool.query(`
-          SELECT column_name FROM information_schema.columns 
-          WHERE table_name='list_items' AND column_name='${migration.column}'
-        `);
-        
-        if (exists.rows.length === 0) {
-          console.log(`➕ Adding list_items.${migration.column}`);
-          await pool.query(`ALTER TABLE list_items ADD COLUMN ${migration.column} ${migration.type} ${migration.default ? `DEFAULT ${migration.default}` : ''}`);
-        }
-      } catch (err) {
-        console.log(`⚠️  Column list_items.${migration.column} might already exist`);
-      }
-    }
-    
-    // NUEVAS TABLAS
     await pool.query(`
       CREATE TABLE IF NOT EXISTS item_tags (
         id UUID PRIMARY KEY,
@@ -202,6 +119,7 @@ async function initDB() {
         UNIQUE(item_id, username, tag)
       );
     `);
+    console.log('✅ Item tags table created');
     
     await pool.query(`
       CREATE TABLE IF NOT EXISTS item_notes (
@@ -215,6 +133,7 @@ async function initDB() {
         UNIQUE(item_id, username)
       );
     `);
+    console.log('✅ Item notes table created');
     
     await pool.query(`
       CREATE TABLE IF NOT EXISTS item_ratings (
@@ -227,6 +146,7 @@ async function initDB() {
         UNIQUE(item_id, username)
       );
     `);
+    console.log('✅ Item ratings table created');
     
     await pool.query(`
       CREATE TABLE IF NOT EXISTS list_votes (
@@ -239,6 +159,7 @@ async function initDB() {
         UNIQUE(list_id, item_id, username)
       );
     `);
+    console.log('✅ List votes table created');
     
     await pool.query(`
       CREATE TABLE IF NOT EXISTS list_comments (
@@ -250,6 +171,7 @@ async function initDB() {
         created_at TIMESTAMP DEFAULT NOW()
       );
     `);
+    console.log('✅ List comments table created');
     
     await pool.query(`
       CREATE TABLE IF NOT EXISTS user_achievements (
@@ -260,6 +182,7 @@ async function initDB() {
         UNIQUE(username, achievement_key)
       );
     `);
+    console.log('✅ User achievements table created');
     
     await pool.query(`
       CREATE TABLE IF NOT EXISTS activity_feed (
@@ -272,6 +195,7 @@ async function initDB() {
         created_at TIMESTAMP DEFAULT NOW()
       );
     `);
+    console.log('✅ Activity feed table created');
     
     await pool.query(`
       CREATE TABLE IF NOT EXISTS watched_items (
@@ -282,10 +206,11 @@ async function initDB() {
         UNIQUE(username, item_id)
       );
     `);
+    console.log('✅ Watched items table created');
     
-    console.log('✅ Database initialized and migrated successfully');
+    console.log('🎉 Database initialized successfully with all tables');
   } catch (err) {
-    console.error('❌ Database init error:', err);
+    console.error('❌ Database initialization error:', err);
   }
 }
 
