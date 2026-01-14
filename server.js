@@ -18,7 +18,6 @@ let db;
   db.data = db.data || { users: {} };
   await db.write();
 
-  // API: Proxy TMDB Search
   app.get('/api/tmdb/search', async (req, res) => {
     const { q, key, lang = 'es-ES' } = req.query;
     try {
@@ -30,7 +29,6 @@ let db;
     }
   });
 
-  // API: Get Lists
   app.get('/api/lists', async (req, res) => {
     const { username } = req.query;
     const user = db.data.users[username];
@@ -38,15 +36,13 @@ let db;
     res.json(lists.sort((a, b) => (a.order || 0) - (b.order || 0)));
   });
 
-  // API: Create List
   app.post('/api/lists', async (req, res) => {
     const { username, list } = req.body;
     if (!db.data.users[username]) db.data.users[username] = { lists: {} };
     const id = uuidv4();
     const lists = db.data.users[username].lists;
     db.data.users[username].lists[id] = {
-      id,
-      ...list,
+      id, ...list,
       order: Object.keys(lists).length,
       items: [],
       public: false
@@ -55,7 +51,6 @@ let db;
     res.json({ id });
   });
 
-  // API: Update List
   app.put('/api/lists/:id', async (req, res) => {
     const { id } = req.params;
     const { username, list } = req.body;
@@ -68,7 +63,6 @@ let db;
     }
   });
 
-  // API: Delete List
   app.delete('/api/lists/:id', async (req, res) => {
     const { id } = req.params;
     const { username } = req.query;
@@ -81,14 +75,12 @@ let db;
     }
   });
 
-  // API: Add Item to List
   app.post('/api/lists/:id/items', async (req, res) => {
     const { id } = req.params;
     const { username, item } = req.body;
     if (db.data.users[username]?.lists[id]) {
       db.data.users[username].lists[id].items.push({
-        id: uuidv4(),
-        ...item,
+        id: uuidv4(), ...item,
         addedBy: username,
         addedAt: Date.now()
       });
@@ -99,7 +91,6 @@ let db;
     }
   });
 
-  // API: Reorder List
   app.put('/api/lists/:id/reorder', async (req, res) => {
     const { id } = req.params;
     const { username, newOrder } = req.body;
@@ -112,9 +103,24 @@ let db;
     }
   });
 
-  // ========== STREMIO ENDPOINTS ==========
+  // ✅ IMPORTAR LISTAS
+  app.post('/api/lists/import', async (req, res) => {
+    const { username, lists } = req.body;
+    if (!db.data.users[username]) db.data.users[username] = { lists: {} };
+    
+    lists.forEach((list, idx) => {
+      const id = uuidv4();
+      db.data.users[username].lists[id] = {
+        ...list,
+        id,
+        order: Object.keys(db.data.users[username].lists).length + idx
+      };
+    });
+    
+    await db.write();
+    res.json({ success: true });
+  });
 
-  // Manifest dinámico (SOLO catalog)
   app.get('/manifest.json', (req, res) => {
     const { username } = req.query;
     if (!username) return res.status(400).json({ error: 'username required' });
@@ -124,18 +130,14 @@ let db;
 
     const catalogs = Object.values(userLists)
       .sort((a, b) => (a.order || 0) - (b.order || 0))
-      .map(l => ({
-        id: l.id,
-        type: l.type,
-        name: l.name
-      }));
+      .map(l => ({ id: l.id, type: l.type, name: l.name }));
 
     res.json({
       id: `com.customlibrary.${username}`,
       version: '1.0.0',
       name: `CustomLibrary - ${username}`,
-      description: 'Biblioteca personalizada (usa tu AIO Metadata)',
-      resources: ['catalog'],  // ← SOLO catalog!
+      description: 'Personal curated library',
+      resources: ['catalog'],
       types: types.length > 0 ? types : ['movie', 'series'],
       idPrefixes: ['tt', 'tmdb'],
       catalogs,
@@ -143,39 +145,26 @@ let db;
     });
   });
 
-  // ✅ CATÁLOGO PURAMENTE BÁSICO (AIO Metadata provee todo)
+  // ✅ CATÁLOGO CON POSTERS DE TMDB + METADATA DE STREMIO
   app.get('/catalog/:type/:id.json', (req, res) => {
     const { type, id } = req.params;
     const { username } = req.query;
-
     if (!username) return res.status(400).json({ error: 'username required' });
 
     const userLists = db.data.users[username]?.lists || {};
     const list = userLists[id];
+    if (!list || list.type !== type) return res.json({ metas: [] });
 
-    if (!list || list.type !== type) {
-      return res.json({ metas: [] });
-    }
-
-    // ✅ SOLO IDs reales → AIO Metadata hace el resto
-    const metas = (list.items || []).slice(0, 20).map(item => {
-      let metaId = item.imdbId || 
-                   (item.tmdbId ? `tmdb:${item.tmdbId}` : `tt${item.tmdbId}`) || 
-                   `custom_${item.id}`;
-
-      return {
-        id: metaId,      // ID para AIO Metadata/Cinemeta
-        type: item.mediaType || type,
-        name: item.title || item.name || 'Sin título'
-        // ¡SIN poster/description! → Providers externos
-      };
-    });
+    const metas = (list.items || []).slice(0, 100).map(item => ({
+      id: item.imdbId || `tmdb:${item.tmdbId}`,
+      type: item.mediaType || type,
+      name: item.title || 'Untitled',
+      poster: item.poster ? `https://image.tmdb.org/t/p/w500${item.poster}` : undefined
+    }));
 
     res.json({ metas });
   });
 
   const port = process.env.PORT || 3000;
-  app.listen(port, () => {
-    console.log(`✅ Custom Library running on port ${port}`);
-  });
+  app.listen(port, () => console.log(`✅ Custom Library running on port ${port}`));
 })();
