@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,17 +19,10 @@
       </svg>
 
       <div class="welcome-form">
-        <label data-i18n="helloQuestion">Hola, ¿cómo te llamas?</label>
-        <input type="text" id="welcomeUsername" data-i18n-placeholder="yourName" placeholder="Tu nombre">
-
-        <label data-i18n="addonNameQuestion">¿Y cómo me llamo yo?</label>
-        <input type="text" id="addonName" value="CustomLibrary" placeholder="CustomLibrary">
-        <small data-i18n="addonNameHelp">Este será el nombre del addon en Stremio</small>
-
-        <label data-i18n="languageQuestion">¿En qué idioma hablas?</label>
+        <label data-i18n="languageQuestionFirst">Ey, ¿en qué idioma podemos hablar?</label>
         <select id="langSelect">
-          <option value="es">🇪🇸 Español</option>
           <option value="en">🇬🇧 English</option>
+          <option value="es">🇪🇸 Español</option>
           <option value="fr">🇫🇷 Français</option>
           <option value="de">🇩🇪 Deutsch</option>
           <option value="it">🇮🇹 Italiano</option>
@@ -38,6 +31,13 @@
           <option value="ja">🇯🇵 日本語</option>
           <option value="zh">🇨🇳 中文</option>
         </select>
+
+        <label data-i18n="welcomeQuestion">Bienvenido, ¿cómo puedo llamarte?</label>
+        <input type="text" id="welcomeUsername" data-i18n-placeholder="yourName" placeholder="Tu nombre">
+
+        <label data-i18n="addonNameQuestion">¿Y cómo me llamo yo?</label>
+        <input type="text" id="addonName" placeholder="Librería de Usuario">
+        <small data-i18n="addonNameHelp">Este será el nombre del addon en tu reproductor</small>
 
         <label data-i18n="tmdbQuestion">Voy a necesitar tu clave API de TMDB</label>
         <input type="text" id="welcomeTmdbKey" data-i18n-placeholder="tmdbKeyPlaceholder" placeholder="API Key de TMDB">
@@ -76,18 +76,18 @@
       </section>
 
       <section class="create-section">
-        <h2 data-i18n="createList">Crear Nueva Lista</h2>
+        <h2 data-i18n="createList">Crear nueva lista</h2>
         <form id="newListForm">
           <input type="text" id="listName" data-i18n-placeholder="listName" placeholder="Nombre de la lista" required>
-          <input type="text" id="listType" data-i18n-placeholder="listType" placeholder="Tipo" value="Librería" required>
+          <input type="text" id="listType" data-i18n-placeholder="listType" placeholder="Tipo" required>
           <button type="submit" data-i18n="create">Crear</button>
         </form>
       </section>
 
       <footer>
-        <button id="importBtn" class="big-btn">🔢 <span data-i18n="importPin">Importar con PIN</span></button>
-        <button id="copyInstallBtn" class="big-btn">📋 <span data-i18n="copyUrl">Copiar URL de Instalación</span></button>
-        <button id="installBtn" class="big-btn">🚀 <span data-i18n="install">Instalar en Stremio</span></button>
+        <button id="importBtn" class="big-btn gray-btn"><span data-i18n="importPin">Añadir lista por PIN</span></button>
+        <button id="copyInstallBtn" class="big-btn gray-btn"><span data-i18n="copyUrl">Copiar URL de instalación</span></button>
+        <button id="installBtn" class="big-btn purple-btn"><span data-i18n="install">Instalar en tu reproductor</span></button>
       </footer>
     </div>
   </div>
@@ -136,6 +136,36 @@
       <div class="modal-buttons">
         <button id="copyPinBtn" data-i18n="copyPin">Copiar PIN</button>
         <button id="closePinBtn" data-i18n="close">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal para calificar -->
+  <div id="ratingModal" class="modal">
+    <div class="modal-content">
+      <h3 data-i18n="rateTitle">Calificar</h3>
+      <div class="star-rating">
+        <span class="star" data-rating="1">★</span>
+        <span class="star" data-rating="2">★</span>
+        <span class="star" data-rating="3">★</span>
+        <span class="star" data-rating="4">★</span>
+        <span class="star" data-rating="5">★</span>
+      </div>
+      <textarea id="reviewText" data-i18n-placeholder="reviewPlaceholder" placeholder="Escribe una reseña (opcional)..." rows="4"></textarea>
+      <div class="modal-buttons">
+        <button id="submitRatingBtn" data-i18n="submit">Enviar</button>
+        <button id="cancelRatingBtn" data-i18n="cancel">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal para ver calificaciones -->
+  <div id="viewRatingsModal" class="modal">
+    <div class="modal-content ratings-modal">
+      <h3 data-i18n="ratingsTitle">Calificaciones</h3>
+      <div id="ratingsDisplay"></div>
+      <div class="modal-buttons">
+        <button id="closeRatingsBtn" data-i18n="close">Cerrar</button>
       </div>
     </div>
   </div>
