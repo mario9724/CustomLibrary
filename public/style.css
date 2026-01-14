@@ -153,6 +153,22 @@ h2 {
   font-weight: 600;
 }
 
+.back-btn {
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  border: 1px solid #555;
+  background: #222;
+  color: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: all 0.2s;
+}
+
+.back-btn:hover {
+  background: #333;
+}
+
 /* ===== SEARCH TOP ===== */
 .search-section-top {
   margin-bottom: 40px;
@@ -251,6 +267,10 @@ h2 {
   transition: all 0.2s;
 }
 
+.list-item:hover {
+  border-color: #555;
+}
+
 .list-item.dragging {
   opacity: 0.5;
 }
@@ -260,19 +280,24 @@ h2 {
   transform: scale(1.02);
 }
 
+.list-info {
+  flex: 1;
+  cursor: pointer;
+}
+
 .list-info strong {
   font-size: 1em;
   color: #fff;
 }
 
 .list-actions {
-  display: flex;
-  gap: 12px;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
 }
 
-.list-actions .text-btn {
-  padding: 6px 12px;
+.list-actions button {
+  padding: 8px 14px;
   border: 1px solid #555;
   background: transparent;
   color: #fff;
@@ -282,34 +307,94 @@ h2 {
   font-size: 0.9em;
 }
 
-.list-actions .text-btn:hover {
+.list-actions button:hover {
   background: #333;
   border-color: #888;
 }
 
 .list-actions .arrows {
   display: flex;
-  flex-direction: column;
-  gap: 2px;
+  gap: 4px;
+  justify-content: center;
+  align-items: center;
 }
 
 .list-actions .arrows button {
-  padding: 2px 8px;
-  border: none;
+  padding: 4px 8px;
+  font-size: 0.9em;
+  border: 1px solid #555;
   background: transparent;
-  color: #fff;
-  cursor: pointer;
-  font-size: 0.8em;
-  transition: all 0.2s;
-}
-
-.list-actions .arrows button:hover:not(:disabled) {
-  color: #888;
 }
 
 .list-actions .arrows button:disabled {
   opacity: 0.3;
   cursor: not-allowed;
+}
+
+/* ===== LIST DETAIL ===== */
+#listDetailItems {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 16px;
+}
+
+.detail-item {
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  background: #1a1a1a;
+  border-radius: 8px;
+  border: 1px solid #333;
+  position: relative;
+}
+
+.detail-item img {
+  width: 80px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.detail-item-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.detail-item-info strong {
+  font-size: 1em;
+  color: #fff;
+}
+
+.detail-item-info .overview {
+  font-size: 0.85em;
+  color: #aaa;
+  line-height: 1.4;
+}
+
+.detail-item-info .rating {
+  font-size: 0.9em;
+  color: #ffd700;
+}
+
+.detail-item .delete-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  padding: 4px 8px;
+  background: #ff4444;
+  border: none;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85em;
+  transition: all 0.2s;
+}
+
+.detail-item .delete-btn:hover {
+  background: #ff6666;
 }
 
 /* ===== FORMS ===== */
@@ -348,7 +433,7 @@ form button:hover {
 /* ===== FOOTER ===== */
 footer {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 16px;
   margin-top: 40px;
   padding-top: 20px;
@@ -403,9 +488,11 @@ footer {
   margin-bottom: 20px;
   color: #fff;
   font-size: 1.1em;
+  text-align: center;
 }
 
-.modal-content select {
+.modal-content select,
+.modal-content input {
   width: 100%;
   padding: 12px;
   margin-bottom: 20px;
@@ -414,6 +501,30 @@ footer {
   background: #222;
   color: #f0f0f0;
   font-size: 14px;
+  text-align: center;
+}
+
+.modal-content p {
+  text-align: center;
+  color: #aaa;
+  font-size: 0.9em;
+  margin-bottom: 20px;
+}
+
+.pin-display {
+  background: #222;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  margin-bottom: 15px;
+  border: 2px dashed #555;
+}
+
+.pin-display span {
+  font-size: 2em;
+  font-weight: bold;
+  color: #fff;
+  letter-spacing: 8px;
 }
 
 .modal-buttons {
@@ -431,30 +542,43 @@ footer {
   transition: all 0.2s;
 }
 
-#modalAddBtn {
+#modalAddBtn,
+#pinImportBtn,
+#copyPinBtn {
   background: #555;
   color: #fff;
 }
 
-#modalAddBtn:hover {
+#modalAddBtn:hover,
+#pinImportBtn:hover,
+#copyPinBtn:hover {
   background: #777;
 }
 
-#modalCancelBtn {
+#modalCancelBtn,
+#pinCancelBtn,
+#closePinBtn {
   background: #333;
   color: #fff;
 }
 
-#modalCancelBtn:hover {
+#modalCancelBtn:hover,
+#pinCancelBtn:hover,
+#closePinBtn:hover {
   background: #444;
 }
 
 @media (max-width: 768px) {
-  #searchResults {
+  #searchResults,
+  #listDetailItems {
     grid-template-columns: 1fr;
   }
   
   footer {
+    grid-template-columns: 1fr;
+  }
+  
+  .list-actions {
     grid-template-columns: 1fr;
   }
 }
