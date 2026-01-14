@@ -15,7 +15,6 @@ const pool = new Pool({
 
 async function initDB() {
   try {
-    // Crear tabla users
     await pool.query(`
       CREATE TABLE IF NOT EXISTS users (
         username VARCHAR(255) PRIMARY KEY,
@@ -24,7 +23,6 @@ async function initDB() {
       );
     `);
     
-    // Crear tabla lists con estructura base
     await pool.query(`
       CREATE TABLE IF NOT EXISTS lists (
         id UUID PRIMARY KEY,
@@ -35,40 +33,20 @@ async function initDB() {
       );
     `);
     
-    // Migración: Añadir columna owner si no existe
     try {
       await pool.query(`ALTER TABLE lists ADD COLUMN IF NOT EXISTS owner VARCHAR(255);`);
-      
-      // Si existe columna username antigua, migrar a owner
       const hasUsername = await pool.query(`
         SELECT column_name FROM information_schema.columns 
         WHERE table_name='lists' AND column_name='username'
       `);
-      
       if (hasUsername.rows.length > 0) {
-        console.log('🔄 Migrando username → owner...');
         await pool.query(`UPDATE lists SET owner = username WHERE owner IS NULL;`);
-        await pool.query(`ALTER TABLE lists DROP COLUMN username;`);
+        await pool.query(`ALTER TABLE lists DROP COLUMN IF EXISTS username;`);
       }
-      
-      // Asegurar que owner tiene valores
-      const nullOwners = await pool.query(`SELECT COUNT(*) FROM lists WHERE owner IS NULL`);
-      if (parseInt(nullOwners.rows[0].count) > 0) {
-        console.log('⚠️ Listas sin owner detectadas, asignando owner por defecto...');
-        // Si hay listas sin owner, asignar al primer usuario o crear uno genérico
-        const firstUser = await pool.query(`SELECT username FROM users LIMIT 1`);
-        if (firstUser.rows.length > 0) {
-          await pool.query(`UPDATE lists SET owner = $1 WHERE owner IS NULL`, [firstUser.rows[0].username]);
-        }
-      }
-    } catch (err) {
-      console.log('ℹ️ Owner column:', err.message);
-    }
+    } catch (err) {}
     
-    // Añadir columna pin
     await pool.query(`ALTER TABLE lists ADD COLUMN IF NOT EXISTS pin VARCHAR(6);`);
     
-    // Generar PINs únicos para listas sin PIN
     const listsWithoutPin = await pool.query(`SELECT id FROM lists WHERE pin IS NULL`);
     for (const list of listsWithoutPin.rows) {
       let pinGenerated = false;
@@ -84,14 +62,10 @@ async function initDB() {
       }
     }
     
-    // Hacer pin único (constraint)
     try {
       await pool.query(`ALTER TABLE lists ADD CONSTRAINT lists_pin_key UNIQUE (pin);`);
-    } catch (err) {
-      // Constraint ya existe
-    }
+    } catch (err) {}
     
-    // Añadir foreign key a owner (sin ON DELETE CASCADE para no borrar listas huérfanas)
     try {
       await pool.query(`
         DO $$ 
@@ -105,11 +79,8 @@ async function initDB() {
           END IF;
         END $$;
       `);
-    } catch (err) {
-      console.log('ℹ️ Foreign key owner:', err.message);
-    }
+    } catch (err) {}
     
-    // Crear tabla list_collaborators
     await pool.query(`
       CREATE TABLE IF NOT EXISTS list_collaborators (
         list_id UUID REFERENCES lists(id) ON DELETE CASCADE,
@@ -119,7 +90,6 @@ async function initDB() {
       );
     `);
     
-    // Crear tabla list_items
     await pool.query(`
       CREATE TABLE IF NOT EXISTS list_items (
         id UUID PRIMARY KEY,
@@ -133,6 +103,18 @@ async function initDB() {
         rating VARCHAR(20),
         added_by VARCHAR(255),
         added_at TIMESTAMP DEFAULT NOW()
+      );
+    `);
+    
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS item_ratings (
+        id UUID PRIMARY KEY,
+        item_id UUID REFERENCES list_items(id) ON DELETE CASCADE,
+        username VARCHAR(255),
+        stars INTEGER CHECK (stars >= 1 AND stars <= 5),
+        review TEXT,
+        created_at TIMESTAMP DEFAULT NOW(),
+        UNIQUE(item_id, username)
       );
     `);
     
@@ -174,7 +156,7 @@ app.get('/api/lists', async (req, res) => {
         'SELECT * FROM list_items WHERE list_id = $1 ORDER BY added_at DESC',
         [list.id]
       );
-      return { ...list, items: items.rows };
+      return { ...list, items: items.rows, isOwner: list.owner === username };
     }));
     
     res.json(lists);
@@ -192,12 +174,29 @@ app.get('/api/lists/:id', async (req, res) => {
     const listResult = await pool.query('SELECT * FROM lists WHERE id = $1', [id]);
     if (listResult.rows.length === 0) return res.status(404).json({ error: 'List not found' });
     
+    const list = listResult.rows[0];
+    const isOwner = list.owner === username;
+    
     const itemsResult = await pool.query(
       'SELECT * FROM list_items WHERE list_id = $1 ORDER BY added_at DESC',
       [id]
     );
     
-    res.json({ ...listResult.rows[0], items: itemsResult.rows });
+    const itemsWithRatings = await Promise.all(itemsResult.rows.map(async (item) => {
+      const ratingsResult = await pool.query(
+        'SELECT * FROM item_ratings WHERE item_id = $1 ORDER BY created_at DESC',
+        [item.id]
+      );
+      
+      const ratings = ratingsResult.rows;
+      const avgRating = ratings.length > 0 
+        ? (ratings.reduce((sum, r) => sum + r.stars, 0) / ratings.length).toFixed(1)
+        : null;
+      
+      return { ...item, ratings, avgRating };
+    }));
+    
+    res.json({ ...list, items: itemsWithRatings, isOwner });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -208,7 +207,6 @@ app.post('/api/lists', async (req, res) => {
   const id = uuidv4();
   
   try {
-    // Generar PIN único
     let pin = generatePIN();
     let pinUnique = false;
     let attempts = 0;
@@ -236,6 +234,66 @@ app.post('/api/lists', async (req, res) => {
     res.json({ id, pin });
   } catch (err) {
     console.error('Error creating list:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.put('/api/lists/:id', async (req, res) => {
+  const { id } = req.params;
+  const { username, list } = req.body;
+  
+  try {
+    const listResult = await pool.query('SELECT owner FROM lists WHERE id = $1', [id]);
+    if (listResult.rows.length === 0) {
+      return res.status(404).json({ error: 'List not found' });
+    }
+    
+    if (listResult.rows[0].owner !== username) {
+      return res.status(403).json({ error: 'Only owner can edit list' });
+    }
+    
+    await pool.query(
+      'UPDATE lists SET name = $1, type = $2 WHERE id = $3',
+      [list.name, list.type, id]
+    );
+    
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/api/lists/:id/reset-pin', async (req, res) => {
+  const { id } = req.params;
+  const { username } = req.body;
+  
+  try {
+    const listResult = await pool.query('SELECT owner FROM lists WHERE id = $1', [id]);
+    if (listResult.rows.length === 0) {
+      return res.status(404).json({ error: 'List not found' });
+    }
+    
+    if (listResult.rows[0].owner !== username) {
+      return res.status(403).json({ error: 'Only owner can reset PIN' });
+    }
+    
+    let pin = generatePIN();
+    let pinUnique = false;
+    let attempts = 0;
+    
+    while (!pinUnique && attempts < 10) {
+      const existing = await pool.query('SELECT id FROM lists WHERE pin = $1 AND id != $2', [pin, id]);
+      if (existing.rows.length === 0) {
+        pinUnique = true;
+      } else {
+        pin = generatePIN();
+        attempts++;
+      }
+    }
+    
+    await pool.query('UPDATE lists SET pin = $1 WHERE id = $2', [pin, id]);
+    res.json({ pin });
+  } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
@@ -294,10 +352,50 @@ app.post('/api/lists/:id/items', async (req, res) => {
 
 app.delete('/api/lists/:listId/items/:itemId', async (req, res) => {
   const { listId, itemId } = req.params;
+  const { username } = req.query;
   
   try {
+    const listResult = await pool.query('SELECT owner FROM lists WHERE id = $1', [listId]);
+    if (listResult.rows.length === 0) {
+      return res.status(404).json({ error: 'List not found' });
+    }
+    
+    if (listResult.rows[0].owner !== username) {
+      return res.status(403).json({ error: 'Only owner can delete items' });
+    }
+    
     await pool.query('DELETE FROM list_items WHERE id = $1 AND list_id = $2', [itemId, listId]);
     res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/api/items/:itemId/rate', async (req, res) => {
+  const { itemId } = req.params;
+  const { username, stars, review } = req.body;
+  const ratingId = uuidv4();
+  
+  try {
+    await pool.query(
+      'INSERT INTO item_ratings (id, item_id, username, stars, review) VALUES ($1, $2, $3, $4, $5) ON CONFLICT (item_id, username) DO UPDATE SET stars = $4, review = $5, created_at = NOW()',
+      [ratingId, itemId, username, stars, review]
+    );
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get('/api/items/:itemId/ratings', async (req, res) => {
+  const { itemId } = req.params;
+  
+  try {
+    const result = await pool.query(
+      'SELECT * FROM item_ratings WHERE item_id = $1 ORDER BY created_at DESC',
+      [itemId]
+    );
+    res.json(result.rows);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
