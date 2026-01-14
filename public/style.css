@@ -47,6 +47,12 @@ body {
   text-align: left;
 }
 
+.welcome-form h2 {
+  text-align: center;
+  margin-bottom: 10px;
+  color: #fff;
+}
+
 .welcome-form label {
   font-size: 1em;
   font-weight: 600;
@@ -70,6 +76,12 @@ body {
   font-size: 16px;
   width: 100%;
   transition: all 0.2s;
+}
+
+.welcome-form input[type="password"] {
+  text-align: center;
+  font-size: 24px;
+  letter-spacing: 8px;
 }
 
 .welcome-form input:focus,
@@ -100,7 +112,10 @@ body {
   font-weight: 600;
 }
 
-#startBtn {
+#startBtn,
+#checkUserBtn,
+#loginBtn,
+#registerBtn {
   margin-top: 20px;
   padding: 14px;
   font-size: 1.1em;
@@ -113,14 +128,37 @@ body {
   transition: all 0.3s;
 }
 
-#startBtn:disabled {
+#startBtn:disabled,
+#checkUserBtn:disabled,
+#loginBtn:disabled,
+#registerBtn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
 
-#startBtn:not(:disabled):hover {
+#startBtn:not(:disabled):hover,
+#checkUserBtn:not(:disabled):hover,
+#loginBtn:not(:disabled):hover,
+#registerBtn:not(:disabled):hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(255,255,255,0.2);
+}
+
+.secondary-btn {
+  margin-top: 10px;
+  padding: 12px;
+  font-size: 1em;
+  font-weight: 600;
+  border-radius: 8px;
+  border: 1px solid #333;
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.secondary-btn:hover {
+  background: #222;
 }
 
 /* ===== MAIN SCREEN ===== */
@@ -148,6 +186,22 @@ header h1 {
   font-size: 1.3em;
   color: #fff;
   flex: 1;
+}
+
+.icon-btn {
+  padding: 10px 15px;
+  border: 1px solid #333;
+  background: #111;
+  color: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.2em;
+  transition: all 0.2s;
+}
+
+.icon-btn:hover {
+  background: #222;
+  transform: scale(1.05);
 }
 
 section {
@@ -348,6 +402,54 @@ h2 {
 .list-actions .arrows button:disabled {
   opacity: 0.3;
   cursor: not-allowed;
+}
+
+/* ===== FRIENDS ===== */
+#friendsDisplay {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.friend-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: #0a0a0a;
+  border-radius: 8px;
+  border: 1px solid #222;
+  transition: all 0.2s;
+}
+
+.friend-item:hover {
+  border-color: #333;
+}
+
+.friend-info {
+  flex: 1;
+  cursor: pointer;
+}
+
+.friend-info strong {
+  font-size: 1em;
+  color: #fff;
+}
+
+.friend-item button {
+  padding: 6px 12px;
+  border: 1px solid #333;
+  background: #3a0000;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.85em;
+}
+
+.friend-item button:hover {
+  background: #500;
 }
 
 /* ===== LIST DETAIL ===== */
