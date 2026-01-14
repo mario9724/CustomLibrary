@@ -18,7 +18,7 @@ async function initDB() {
     console.log('🔥 Initializing database...');
     
     // FORCE RESET: Cambia a true SOLO LA PRIMERA VEZ, luego vuelve a false
-    const forceReset = false; // ⚠️ CAMBIAR A false DESPUÉS DEL PRIMER DEPLOY
+    const forceReset = true; // ⚠️ CAMBIAR A false DESPUÉS DEL PRIMER DEPLOY
     
     if (forceReset) {
       console.log('⚠️  FORCE RESET ENABLED - Dropping all tables...');
