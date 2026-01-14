@@ -3,8 +3,6 @@ const cors = require('cors');
 const { v4: uuidv4 } = require('uuid');
 const { Low } = require('lowdb');
 const { JSONFile } = require('lowdb/node');
-const { addonBuilder } = require('stremio-addon-sdk');
-const path = require('path');
 
 const app = express();
 app.use(cors());
@@ -101,16 +99,33 @@ let db;
     }
   });
 
-  // Stremio: Manifest dinámico
+  // API: Reorder List
+  app.put('/api/lists/:id/reorder', async (req, res) => {
+    const { id } = req.params;
+    const { username, newOrder } = req.body;
+    if (db.data.users[username]?.lists[id]) {
+      db.data.users[username].lists[id].order = newOrder;
+      await db.write();
+      res.json({ success: true });
+    } else {
+      res.status(404).json({ error: 'List not found' });
+    }
+  });
+
+  // ========== STREMIO ENDPOINTS ==========
+
+  // Manifest dinámico
   app.get('/manifest.json', (req, res) => {
     const { username } = req.query;
     if (!username) return res.status(400).json({ error: 'username required' });
     
     const userLists = db.data.users[username]?.lists || {};
+    const types = [...new Set(Object.values(userLists).map(l => l.type))];
+    
     const catalogs = Object.values(userLists)
       .sort((a, b) => (a.order || 0) - (b.order || 0))
       .map(l => ({
-        id: `${username}_${l.name.toLowerCase().replace(/\s+/g, '_')}`,
+        id: l.id,
         type: l.type,
         name: l.name
       }));
@@ -118,28 +133,53 @@ let db;
     res.json({
       id: `com.customlibrary.${username}`,
       version: '1.0.0',
-      name: `Custom Library - ${username}`,
-      description: 'Biblioteca personalizada con listas multilingües',
-      resources: ['catalog', 'meta'],
-      types: ['movie', 'series'],
+      name: `CustomLibrary - ${username}`,
+      description: 'Biblioteca personalizada multilingüe',
+      resources: ['catalog'],
+      types: types.length > 0 ? types : ['movie', 'series'],
       idPrefixes: ['tt'],
-      catalogs
+      catalogs,
+      logo: `${req.protocol}://${req.get('host')}/icon.svg`
     });
   });
 
-  // Stremio: Addon Builder
-  const builder = new addonBuilder({
-    id: 'com.customlibrary',
-    version: '1.0.0',
-    name: 'Custom Library',
-    description: 'Personal library addon',
-    resources: ['catalog'],
-    types: ['movie', 'series'],
-    catalogs: []
+  // **CORRECCIÓN CRÍTICA**: Endpoint de catálogo para Stremio
+  app.get('/catalog/:type/:id.json', (req, res) => {
+    const { type, id } = req.params;
+    const { username } = req.query;
+
+    if (!username) {
+      return res.status(400).json({ error: 'username required' });
+    }
+
+    const userLists = db.data.users[username]?.lists || {};
+    const list = userLists[id];
+
+    if (!list || list.type !== type) {
+      return res.json({ metas: [] });
+    }
+
+    const metas = (list.items || []).map(item => ({
+      id: item.tmdbId ? `tt${item.tmdbId}` : `custom_${item.id}`,
+      type: item.mediaType || type,
+      name: item.title || item.name || 'Sin título',
+      poster: item.poster ? `https://image.tmdb.org/t/p/w500${item.poster}` : undefined,
+      description: item.addedBy ? `Recomendado por ${item.addedBy}` : undefined
+    }));
+
+    res.json({ metas });
   });
 
-  builder.defineCatalogHandler((args) => {
-    return Promise.resolve({ metas: [] });
+  // Meta endpoint (opcional pero recomendado)
+  app.get('/meta/:type/:id.json', (req, res) => {
+    res.json({
+      meta: {
+        id: req.params.id,
+        type: req.params.type,
+        name: 'Custom Item',
+        description: 'Item de CustomLibrary'
+      }
+    });
   });
 
   const port = process.env.PORT || 3000;
