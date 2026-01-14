@@ -1,45 +1,10 @@
 const translations = {
-  es: {
-    helloQuestion: 'Hola, ¿cómo te llamas?',
-    yourName: 'Tu nombre',
-    addonNameQuestion: '¿Y cómo me llamo yo?',
-    addonNameHelp: 'Este será el nombre del addon en Stremio',
-    languageQuestion: '¿En qué idioma hablas?',
-    tmdbQuestion: 'Voy a necesitar tu clave API de TMDB',
-    tmdbKeyPlaceholder: 'API Key de TMDB',
-    getTmdbKeyText: 'Esto lo consigues',
-    here: 'AQUÍ',
-    startButton: 'Pasemos a crear tus listas',
-    mainTitleTemplate: 'De acuerdo {{username}}, ¿qué fue eso que te gustó?',
-    yourLists: 'Estas son tus listas',
-    createList: 'Crear Nueva Lista',
-    listName: 'Nombre de la lista',
-    listType: 'Librería',
-    create: 'Crear',
-    searchPlaceholder: 'Buscar películas/series...',
-    importPin: 'Importar con PIN',
-    copyUrl: 'Copiar URL de Instalación',
-    install: 'Instalar en Stremio',
-    share: 'Compartir',
-    delete: 'Eliminar',
-    selectListModal: '¿A qué lista quieres agregar esto?',
-    add: 'Agregar',
-    cancel: 'Cancelar',
-    back: 'Volver',
-    importPinTitle: 'Introduce el PIN de 6 dígitos',
-    import: 'Importar',
-    sharePinTitle: 'PIN de la lista',
-    sharePinText: 'Comparte este PIN para que otros puedan importar la lista',
-    copyPin: 'Copiar PIN',
-    close: 'Cerrar',
-    deleteItem: 'Eliminar'
-  },
   en: {
-    helloQuestion: "Hello, what's your name?",
+    languageQuestionFirst: 'Hey, what language can we speak?',
+    welcomeQuestion: 'Welcome, what can I call you?',
     yourName: 'Your name',
     addonNameQuestion: 'And what should I be called?',
-    addonNameHelp: 'This will be the addon name in Stremio',
-    languageQuestion: 'What language do you speak?',
+    addonNameHelp: 'This will be the addon name in your player',
     tmdbQuestion: "I'll need your TMDB API Key",
     tmdbKeyPlaceholder: 'TMDB API Key',
     getTmdbKeyText: 'Get it',
@@ -47,14 +12,14 @@ const translations = {
     startButton: "Let's create your lists",
     mainTitleTemplate: 'Alright {{username}}, what did you like?',
     yourLists: 'These are your lists',
-    createList: 'Create New List',
+    createList: 'Create new list',
     listName: 'List name',
-    listType: 'Library',
+    listTypeTemplate: "{{username}}'s library",
     create: 'Create',
     searchPlaceholder: 'Search movies/series...',
-    importPin: 'Import with PIN',
-    copyUrl: 'Copy Install URL',
-    install: 'Install in Stremio',
+    importPin: 'Add list by PIN',
+    copyUrl: 'Copy install URL',
+    install: 'Install in your player',
     share: 'Share',
     delete: 'Delete',
     selectListModal: 'Which list do you want to add this to?',
@@ -67,32 +32,79 @@ const translations = {
     sharePinText: 'Share this PIN so others can import the list',
     copyPin: 'Copy PIN',
     close: 'Close',
-    deleteItem: 'Delete'
+    deleteItem: 'Delete',
+    rate: 'Rate',
+    rateTitle: 'Rate this item',
+    reviewPlaceholder: 'Write a review (optional)...',
+    submit: 'Submit',
+    ratingsTitle: 'Ratings',
+    viewRatings: 'Ratings'
+  },
+  es: {
+    languageQuestionFirst: 'Ey, ¿en qué idioma podemos hablar?',
+    welcomeQuestion: 'Bienvenido, ¿cómo puedo llamarte?',
+    yourName: 'Tu nombre',
+    addonNameQuestion: '¿Y cómo me llamo yo?',
+    addonNameHelp: 'Este será el nombre del addon en tu reproductor',
+    tmdbQuestion: 'Voy a necesitar tu clave API de TMDB',
+    tmdbKeyPlaceholder: 'API Key de TMDB',
+    getTmdbKeyText: 'Esto lo consigues',
+    here: 'AQUÍ',
+    startButton: 'Pasemos a crear tus listas',
+    mainTitleTemplate: 'De acuerdo {{username}}, ¿qué fue eso que te gustó?',
+    yourLists: 'Estas son tus listas',
+    createList: 'Crear nueva lista',
+    listName: 'Nombre de la lista',
+    listTypeTemplate: 'Librería de {{username}}',
+    create: 'Crear',
+    searchPlaceholder: 'Buscar películas/series...',
+    importPin: 'Añadir lista por PIN',
+    copyUrl: 'Copiar URL de instalación',
+    install: 'Instalar en tu reproductor',
+    share: 'Compartir',
+    delete: 'Eliminar',
+    selectListModal: '¿A qué lista quieres agregar esto?',
+    add: 'Agregar',
+    cancel: 'Cancelar',
+    back: 'Volver',
+    importPinTitle: 'Introduce el PIN de 6 dígitos',
+    import: 'Importar',
+    sharePinTitle: 'PIN de la lista',
+    sharePinText: 'Comparte este PIN para que otros puedan importar la lista',
+    copyPin: 'Copiar PIN',
+    close: 'Cerrar',
+    deleteItem: 'Eliminar',
+    rate: 'Calificar',
+    rateTitle: 'Calificar este elemento',
+    reviewPlaceholder: 'Escribe una reseña (opcional)...',
+    submit: 'Enviar',
+    ratingsTitle: 'Calificaciones',
+    viewRatings: 'Calificaciones'
   },
   fr: {
-    helloQuestion: 'Bonjour, comment tu t\'appelles ?',
+    languageQuestionFirst: 'Hé, quelle langue pouvons-nous parler?',
+    welcomeQuestion: 'Bienvenue, comment puis-je t\'appeler?',
     yourName: 'Ton nom',
-    addonNameQuestion: 'Et comment je m\'appelle ?',
-    addonNameHelp: 'Ce sera le nom de l\'addon dans Stremio',
-    languageQuestion: 'Quelle langue parles-tu ?',
+    addonNameQuestion: 'Et comment je m\'appelle?',
+    addonNameHelp: 'Ce sera le nom de l\'addon dans ton lecteur',
     tmdbQuestion: 'J\'aurai besoin de ta clé API TMDB',
     tmdbKeyPlaceholder: 'Clé API TMDB',
     getTmdbKeyText: 'Obtiens-la',
     here: 'ICI',
     startButton: 'Créons tes listes',
-    mainTitleTemplate: "D'accord {{username}}, qu'est-ce que tu as aimé ?",
+    mainTitleTemplate: "D'accord {{username}}, qu'as-tu aimé?",
     yourLists: 'Voici tes listes',
-    createList: 'Créer une Nouvelle Liste',
+    createList: 'Créer une nouvelle liste',
     listName: 'Nom de la liste',
-    listType: 'Bibliothèque',
+    listTypeTemplate: 'Bibliothèque de {{username}}',
     create: 'Créer',
     searchPlaceholder: 'Rechercher films/séries...',
-    importPin: 'Importer avec PIN',
-    copyUrl: 'Copier l\'URL d\'Installation',
-    install: 'Installer dans Stremio',
+    importPin: 'Ajouter une liste par PIN',
+    copyUrl: 'Copier l\'URL d\'installation',
+    install: 'Installer dans ton lecteur',
     share: 'Partager',
     delete: 'Supprimer',
-    selectListModal: 'À quelle liste veux-tu ajouter ceci ?',
+    selectListModal: 'À quelle liste veux-tu ajouter ceci?',
     add: 'Ajouter',
     cancel: 'Annuler',
     back: 'Retour',
@@ -102,14 +114,20 @@ const translations = {
     sharePinText: 'Partage ce PIN pour que d\'autres puissent importer la liste',
     copyPin: 'Copier le PIN',
     close: 'Fermer',
-    deleteItem: 'Supprimer'
+    deleteItem: 'Supprimer',
+    rate: 'Noter',
+    rateTitle: 'Noter cet élément',
+    reviewPlaceholder: 'Écris un avis (optionnel)...',
+    submit: 'Envoyer',
+    ratingsTitle: 'Notes',
+    viewRatings: 'Notes'
   },
   de: {
-    helloQuestion: 'Hallo, wie heißt du?',
+    languageQuestionFirst: 'Hey, welche Sprache können wir sprechen?',
+    welcomeQuestion: 'Willkommen, wie kann ich dich nennen?',
     yourName: 'Dein Name',
     addonNameQuestion: 'Und wie soll ich heißen?',
-    addonNameHelp: 'Dies wird der Addon-Name in Stremio sein',
-    languageQuestion: 'Welche Sprache sprichst du?',
+    addonNameHelp: 'Dies wird der Addon-Name in deinem Player sein',
     tmdbQuestion: 'Ich brauche deinen TMDB API-Schlüssel',
     tmdbKeyPlaceholder: 'TMDB API-Schlüssel',
     getTmdbKeyText: 'Hol ihn dir',
@@ -119,12 +137,12 @@ const translations = {
     yourLists: 'Das sind deine Listen',
     createList: 'Neue Liste erstellen',
     listName: 'Listenname',
-    listType: 'Bibliothek',
+    listTypeTemplate: '{{username}}s Bibliothek',
     create: 'Erstellen',
     searchPlaceholder: 'Filme/Serien suchen...',
-    importPin: 'Mit PIN importieren',
+    importPin: 'Liste per PIN hinzufügen',
     copyUrl: 'Installations-URL kopieren',
-    install: 'In Stremio installieren',
+    install: 'In deinem Player installieren',
     share: 'Teilen',
     delete: 'Löschen',
     selectListModal: 'Zu welcher Liste möchtest du dies hinzufügen?',
@@ -137,14 +155,20 @@ const translations = {
     sharePinText: 'Teile diese PIN, damit andere die Liste importieren können',
     copyPin: 'PIN kopieren',
     close: 'Schließen',
-    deleteItem: 'Löschen'
+    deleteItem: 'Löschen',
+    rate: 'Bewerten',
+    rateTitle: 'Dieses Element bewerten',
+    reviewPlaceholder: 'Schreibe eine Bewertung (optional)...',
+    submit: 'Senden',
+    ratingsTitle: 'Bewertungen',
+    viewRatings: 'Bewertungen'
   },
   it: {
-    helloQuestion: 'Ciao, come ti chiami?',
+    languageQuestionFirst: 'Ehi, che lingua possiamo parlare?',
+    welcomeQuestion: 'Benvenuto, come posso chiamarti?',
     yourName: 'Il tuo nome',
     addonNameQuestion: 'E come mi chiamo io?',
-    addonNameHelp: 'Questo sarà il nome dell\'addon in Stremio',
-    languageQuestion: 'Che lingua parli?',
+    addonNameHelp: 'Questo sarà il nome dell\'addon nel tuo lettore',
     tmdbQuestion: 'Avrò bisogno della tua chiave API TMDB',
     tmdbKeyPlaceholder: 'Chiave API TMDB',
     getTmdbKeyText: 'Ottienila',
@@ -152,14 +176,14 @@ const translations = {
     startButton: 'Creiamo le tue liste',
     mainTitleTemplate: 'Va bene {{username}}, cosa ti è piaciuto?',
     yourLists: 'Queste sono le tue liste',
-    createList: 'Crea Nuova Lista',
+    createList: 'Crea nuova lista',
     listName: 'Nome della lista',
-    listType: 'Biblioteca',
+    listTypeTemplate: 'Biblioteca di {{username}}',
     create: 'Crea',
     searchPlaceholder: 'Cerca film/serie...',
-    importPin: 'Importa con PIN',
-    copyUrl: 'Copia URL di Installazione',
-    install: 'Installa in Stremio',
+    importPin: 'Aggiungi lista con PIN',
+    copyUrl: 'Copia URL di installazione',
+    install: 'Installa nel tuo lettore',
     share: 'Condividi',
     delete: 'Elimina',
     selectListModal: 'A quale lista vuoi aggiungere questo?',
@@ -172,14 +196,20 @@ const translations = {
     sharePinText: 'Condividi questo PIN affinché altri possano importare la lista',
     copyPin: 'Copia PIN',
     close: 'Chiudi',
-    deleteItem: 'Elimina'
+    deleteItem: 'Elimina',
+    rate: 'Vota',
+    rateTitle: 'Vota questo elemento',
+    reviewPlaceholder: 'Scrivi una recensione (opzionale)...',
+    submit: 'Invia',
+    ratingsTitle: 'Valutazioni',
+    viewRatings: 'Valutazioni'
   },
   pt: {
-    helloQuestion: 'Olá, qual é o seu nome?',
+    languageQuestionFirst: 'Ei, que idioma podemos falar?',
+    welcomeQuestion: 'Bem-vindo, como posso te chamar?',
     yourName: 'Seu nome',
     addonNameQuestion: 'E como eu me chamo?',
-    addonNameHelp: 'Este será o nome do addon no Stremio',
-    languageQuestion: 'Que idioma você fala?',
+    addonNameHelp: 'Este será o nome do addon no seu player',
     tmdbQuestion: 'Vou precisar da sua chave API TMDB',
     tmdbKeyPlaceholder: 'Chave API TMDB',
     getTmdbKeyText: 'Consiga',
@@ -187,14 +217,14 @@ const translations = {
     startButton: 'Vamos criar suas listas',
     mainTitleTemplate: 'Certo {{username}}, do que você gostou?',
     yourLists: 'Estas são suas listas',
-    createList: 'Criar Nova Lista',
+    createList: 'Criar nova lista',
     listName: 'Nome da lista',
-    listType: 'Biblioteca',
+    listTypeTemplate: 'Biblioteca de {{username}}',
     create: 'Criar',
     searchPlaceholder: 'Pesquisar filmes/séries...',
-    importPin: 'Importar com PIN',
-    copyUrl: 'Copiar URL de Instalação',
-    install: 'Instalar no Stremio',
+    importPin: 'Adicionar lista por PIN',
+    copyUrl: 'Copiar URL de instalação',
+    install: 'Instalar no seu player',
     share: 'Compartilhar',
     delete: 'Excluir',
     selectListModal: 'A qual lista você quer adicionar isto?',
@@ -207,14 +237,20 @@ const translations = {
     sharePinText: 'Compartilhe este PIN para que outros possam importar a lista',
     copyPin: 'Copiar PIN',
     close: 'Fechar',
-    deleteItem: 'Excluir'
+    deleteItem: 'Excluir',
+    rate: 'Avaliar',
+    rateTitle: 'Avaliar este item',
+    reviewPlaceholder: 'Escreva uma avaliação (opcional)...',
+    submit: 'Enviar',
+    ratingsTitle: 'Avaliações',
+    viewRatings: 'Avaliações'
   },
   ru: {
-    helloQuestion: 'Привет, как тебя зовут?',
+    languageQuestionFirst: 'Эй, на каком языке мы можем говорить?',
+    welcomeQuestion: 'Добро пожаловать, как мне тебя называть?',
     yourName: 'Твое имя',
     addonNameQuestion: 'А как меня зовут?',
-    addonNameHelp: 'Это будет имя аддона в Stremio',
-    languageQuestion: 'На каком языке ты говоришь?',
+    addonNameHelp: 'Это будет имя аддона в твоем плеере',
     tmdbQuestion: 'Мне понадобится твой API ключ TMDB',
     tmdbKeyPlaceholder: 'API ключ TMDB',
     getTmdbKeyText: 'Получи его',
@@ -222,14 +258,14 @@ const translations = {
     startButton: 'Давай создадим твои списки',
     mainTitleTemplate: 'Хорошо {{username}}, что тебе понравилось?',
     yourLists: 'Вот твои списки',
-    createList: 'Создать Новый Список',
+    createList: 'Создать новый список',
     listName: 'Название списка',
-    listType: 'Библиотека',
+    listTypeTemplate: 'Библиотека {{username}}',
     create: 'Создать',
     searchPlaceholder: 'Искать фильмы/сериалы...',
-    importPin: 'Импортировать с PIN',
-    copyUrl: 'Копировать URL Установки',
-    install: 'Установить в Stremio',
+    importPin: 'Добавить список по PIN',
+    copyUrl: 'Копировать URL установки',
+    install: 'Установить в твой плеер',
     share: 'Поделиться',
     delete: 'Удалить',
     selectListModal: 'В какой список добавить это?',
@@ -242,14 +278,20 @@ const translations = {
     sharePinText: 'Поделитесь этим PIN, чтобы другие могли импортировать список',
     copyPin: 'Копировать PIN',
     close: 'Закрыть',
-    deleteItem: 'Удалить'
+    deleteItem: 'Удалить',
+    rate: 'Оценить',
+    rateTitle: 'Оценить этот элемент',
+    reviewPlaceholder: 'Напишите отзыв (необязательно)...',
+    submit: 'Отправить',
+    ratingsTitle: 'Оценки',
+    viewRatings: 'Оценки'
   },
   ja: {
-    helloQuestion: 'こんにちは、お名前は？',
+    languageQuestionFirst: 'やあ、何語で話せますか？',
+    welcomeQuestion: 'ようこそ、何と呼べばいいですか？',
     yourName: 'あなたの名前',
     addonNameQuestion: '私の名前は？',
-    addonNameHelp: 'これがStremioのアドオン名になります',
-    languageQuestion: '何語を話しますか？',
+    addonNameHelp: 'これがあなたのプレーヤーのアドオン名になります',
     tmdbQuestion: 'TMDB APIキーが必要です',
     tmdbKeyPlaceholder: 'TMDB APIキー',
     getTmdbKeyText: 'こちらで取得',
@@ -259,12 +301,12 @@ const translations = {
     yourLists: 'あなたのリスト',
     createList: '新しいリストを作成',
     listName: 'リスト名',
-    listType: 'ライブラリ',
+    listTypeTemplate: '{{username}}のライブラリ',
     create: '作成',
     searchPlaceholder: '映画/シリーズを検索...',
-    importPin: 'PINでインポート',
+    importPin: 'PINでリストを追加',
     copyUrl: 'インストールURLをコピー',
-    install: 'Stremioにインストール',
+    install: 'プレーヤーにインストール',
     share: '共有',
     delete: '削除',
     selectListModal: 'どのリストに追加しますか？',
@@ -277,14 +319,20 @@ const translations = {
     sharePinText: 'このPINを共有して他の人がリストをインポートできるようにします',
     copyPin: 'PINをコピー',
     close: '閉じる',
-    deleteItem: '削除'
+    deleteItem: '削除',
+    rate: '評価',
+    rateTitle: 'このアイテムを評価',
+    reviewPlaceholder: 'レビューを書く（オプション）...',
+    submit: '送信',
+    ratingsTitle: '評価',
+    viewRatings: '評価'
   },
   zh: {
-    helloQuestion: '你好，你叫什么名字？',
+    languageQuestionFirst: '嘿，我们可以说什么语言？',
+    welcomeQuestion: '欢迎，我该怎么称呼你？',
     yourName: '你的名字',
     addonNameQuestion: '我叫什么名字？',
-    addonNameHelp: '这将是Stremio中的插件名称',
-    languageQuestion: '你说什么语言？',
+    addonNameHelp: '这将是你播放器中的插件名称',
     tmdbQuestion: '我需要你的TMDB API密钥',
     tmdbKeyPlaceholder: 'TMDB API密钥',
     getTmdbKeyText: '在这里获取',
@@ -294,12 +342,12 @@ const translations = {
     yourLists: '这些是你的列表',
     createList: '创建新列表',
     listName: '列表名称',
-    listType: '图书馆',
+    listTypeTemplate: '{{username}}的图书馆',
     create: '创建',
     searchPlaceholder: '搜索电影/系列...',
-    importPin: '使用PIN导入',
+    importPin: '通过PIN添加列表',
     copyUrl: '复制安装URL',
-    install: '安装到Stremio',
+    install: '安装到播放器',
     share: '分享',
     delete: '删除',
     selectListModal: '你想添加到哪个列表？',
@@ -312,21 +360,55 @@ const translations = {
     sharePinText: '分享此PIN以便其他人导入列表',
     copyPin: '复制PIN',
     close: '关闭',
-    deleteItem: '删除'
+    deleteItem: '删除',
+    rate: '评分',
+    rateTitle: '为此项目评分',
+    reviewPlaceholder: '写评论（可选）...',
+    submit: '提交',
+    ratingsTitle: '评分',
+    viewRatings: '评分'
   }
 };
 
-let currentLang = 'es';
+let currentLang = 'en';
 let currentUsername = '';
 let currentTmdbKey = '';
-let currentAddonName = 'CustomLibrary';
+let currentAddonName = '';
 let pendingItem = null;
 let currentListId = null;
+let currentItemId = null;
+let selectedRating = 0;
 
 const welcomeUsername = document.getElementById('welcomeUsername');
 const addonNameInput = document.getElementById('addonName');
 const welcomeTmdbKey = document.getElementById('welcomeTmdbKey');
 const startBtn = document.getElementById('startBtn');
+const langSelect = document.getElementById('langSelect');
+
+function updateAddonName() {
+  const t = translations[currentLang] || translations.en;
+  const username = welcomeUsername.value.trim();
+  if (username) {
+    addonNameInput.value = t.listTypeTemplate.replace('{{username}}', username);
+  }
+}
+
+function updateListTypePlaceholder() {
+  const t = translations[currentLang] || translations.en;
+  document.getElementById('listType').value = t.listTypeTemplate.replace('{{username}}', currentUsername);
+}
+
+langSelect.addEventListener('change', (e) => {
+  currentLang = e.target.value;
+  localStorage.setItem('lang', currentLang);
+  updateUI();
+  updateAddonName();
+});
+
+welcomeUsername.addEventListener('input', () => {
+  checkWelcomeForm();
+  updateAddonName();
+});
 
 function checkWelcomeForm() {
   const hasUsername = welcomeUsername.value.trim().length > 0;
@@ -334,42 +416,30 @@ function checkWelcomeForm() {
   startBtn.disabled = !(hasUsername && hasTmdbKey);
 }
 
-welcomeUsername.addEventListener('input', checkWelcomeForm);
 welcomeTmdbKey.addEventListener('input', checkWelcomeForm);
 
 startBtn.addEventListener('click', () => {
   currentUsername = welcomeUsername.value.trim();
   currentTmdbKey = welcomeTmdbKey.value.trim();
-  currentAddonName = addonNameInput.value.trim() || 'CustomLibrary';
+  currentAddonName = addonNameInput.value.trim();
   
   localStorage.setItem('username', currentUsername);
   localStorage.setItem('tmdbKey', currentTmdbKey);
   localStorage.setItem('addonName', currentAddonName);
   localStorage.setItem('lang', currentLang);
   
-  const t = translations[currentLang] || translations.es;
+  const t = translations[currentLang] || translations.en;
   document.getElementById('mainTitle').textContent = t.mainTitleTemplate.replace('{{username}}', currentUsername);
   
   document.getElementById('welcomeScreen').classList.remove('active');
   document.getElementById('mainScreen').classList.add('active');
   
   loadLists(currentUsername);
-});
-
-document.getElementById('langSelect').addEventListener('change', (e) => {
-  currentLang = e.target.value;
-  localStorage.setItem('lang', currentLang);
-  updateUI();
   updateListTypePlaceholder();
 });
 
-function updateListTypePlaceholder() {
-  const t = translations[currentLang] || translations.es;
-  document.getElementById('listType').value = t.listType;
-}
-
 function updateUI() {
-  const t = translations[currentLang] || translations.es;
+  const t = translations[currentLang] || translations.en;
   
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.getAttribute('data-i18n');
@@ -466,7 +536,7 @@ async function loadLists(username) {
   const res = await fetch(`/api/lists?username=${username}`);
   const lists = await res.json();
   
-  const t = translations[currentLang] || translations.es;
+  const t = translations[currentLang] || translations.en;
   const display = document.getElementById('listDisplay');
   display.innerHTML = lists.length === 0 
     ? '<p style="text-align:center; opacity:0.7;">No hay listas creadas aún</p>'
@@ -478,7 +548,7 @@ async function loadLists(username) {
       </div>
       <div class="list-actions">
         <button onclick="shareList('${list.id}', '${list.name}', '${list.pin}')">${t.share}</button>
-        <button onclick="deleteList('${list.id}')">${t.delete}</button>
+        <button onclick="deleteList('${list.id}')" ${!list.isOwner ? 'disabled style="opacity:0.3"' : ''}>${t.delete}</button>
         <div class="arrows">
           <button onclick="moveList('${list.id}', ${idx}, -1)" ${idx === 0 ? 'disabled' : ''}>▲</button>
           <button onclick="moveList('${list.id}', ${idx}, 1)" ${idx === lists.length - 1 ? 'disabled' : ''}>▼</button>
@@ -614,19 +684,25 @@ async function showListDetail(listId) {
   
   document.getElementById('listDetailTitle').textContent = list.name;
   
-  const t = translations[currentLang] || translations.es;
+  const t = translations[currentLang] || translations.en;
   const itemsContainer = document.getElementById('listDetailItems');
   itemsContainer.innerHTML = list.items.length === 0
     ? '<p style="text-align:center; opacity:0.7;">No hay elementos en esta lista</p>'
     : list.items.map(item => `
       <div class="detail-item">
-        <img src="${item.poster ? `https://image.tmdb.org/t/p/w200${item.poster}` : 'image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'80\' height=\'120\'%3E%3Crect fill=\'%23333\' width=\'80\' height=\'120\'/%3E%3C/svg%3E'}" alt="${item.title}">
-        <div class="detail-item-info">
-          <strong>${item.title}</strong>
-          ${item.rating ? `<div class="rating">${item.rating}</div>` : ''}
-          <div class="overview">${item.overview || 'Sin sinopsis'}</div>
+        <div style="display:flex; gap:12px; flex:1;">
+          <img src="${item.poster ? `https://image.tmdb.org/t/p/w200${item.poster}` : 'image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'80\' height=\'120\'%3E%3Crect fill=\'%23333\' width=\'80\' height=\'120\'/%3E%3C/svg%3E'}" alt="${item.title}">
+          <div class="detail-item-info">
+            <strong>${item.title}</strong>
+            ${item.rating ? `<div class="rating">${item.rating}</div>` : ''}
+            <div class="overview">${item.overview || 'Sin sinopsis'}</div>
+          </div>
         </div>
-        <button class="delete-btn" onclick="deleteItem('${listId}', '${item.id}')">${t.deleteItem}</button>
+        <div class="detail-item-actions">
+          <button onclick="openRatingModal('${item.id}')">${t.rate}</button>
+          <button onclick="viewRatings('${item.id}')">${item.avgRating ? '⭐ ' + item.avgRating : t.viewRatings}</button>
+          ${list.isOwner ? `<button class="delete-btn" onclick="deleteItem('${listId}', '${item.id}')">${t.deleteItem}</button>` : ''}
+        </div>
       </div>
     `).join('');
   
@@ -643,24 +719,105 @@ document.getElementById('backBtn').addEventListener('click', () => {
 async function deleteItem(listId, itemId) {
   if (!confirm('¿Eliminar este elemento?')) return;
   
-  await fetch(`/api/lists/${listId}/items/${itemId}`, { method: 'DELETE' });
+  await fetch(`/api/lists/${listId}/items/${itemId}?username=${currentUsername}`, { method: 'DELETE' });
   showListDetail(listId);
 }
+
+function openRatingModal(itemId) {
+  currentItemId = itemId;
+  selectedRating = 0;
+  document.querySelectorAll('.star').forEach(star => star.classList.remove('active'));
+  document.getElementById('reviewText').value = '';
+  document.getElementById('ratingModal').classList.add('active');
+}
+
+document.querySelectorAll('.star').forEach(star => {
+  star.addEventListener('click', function() {
+    selectedRating = parseInt(this.dataset.rating);
+    document.querySelectorAll('.star').forEach((s, idx) => {
+      if (idx < selectedRating) {
+        s.classList.add('active');
+      } else {
+        s.classList.remove('active');
+      }
+    });
+  });
+});
+
+document.getElementById('submitRatingBtn').addEventListener('click', async () => {
+  if (selectedRating === 0) {
+    alert('Por favor selecciona una calificación');
+    return;
+  }
+  
+  const review = document.getElementById('reviewText').value.trim();
+  
+  await fetch(`/api/items/${currentItemId}/rate`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username: currentUsername, stars: selectedRating, review })
+  });
+  
+  alert('¡Calificación guardada!');
+  document.getElementById('ratingModal').classList.remove('active');
+  showListDetail(currentListId);
+});
+
+document.getElementById('cancelRatingBtn').addEventListener('click', () => {
+  document.getElementById('ratingModal').classList.remove('active');
+});
+
+async function viewRatings(itemId) {
+  const res = await fetch(`/api/items/${itemId}/ratings`);
+  const ratings = await res.json();
+  
+  const t = translations[currentLang] || translations.en;
+  const display = document.getElementById('ratingsDisplay');
+  
+  if (ratings.length === 0) {
+    display.innerHTML = '<p style="text-align:center; opacity:0.7;">No hay calificaciones aún</p>';
+  } else {
+    display.innerHTML = ratings.map(r => `
+      <div class="rating-item">
+        <div class="rating-item-header">
+          <span class="rating-item-user">${r.username}</span>
+          <span class="rating-item-stars">${'★'.repeat(r.stars)}${'☆'.repeat(5 - r.stars)}</span>
+        </div>
+        ${r.review ? `<div class="rating-item-review">${r.review}</div>` : ''}
+      </div>
+    `).join('');
+  }
+  
+  document.getElementById('viewRatingsModal').classList.add('active');
+}
+
+document.getElementById('closeRatingsBtn').addEventListener('click', () => {
+  document.getElementById('viewRatingsModal').classList.remove('active');
+});
 
 let searchTimeout;
 document.getElementById('searchInput').addEventListener('input', (e) => {
   clearTimeout(searchTimeout);
+  const q = e.target.value.trim();
+  
+  if (q.length === 0) {
+    document.getElementById('searchResults').innerHTML = '';
+    return;
+  }
+  
+  if (q.length < 3 || !currentTmdbKey) return;
+  
   searchTimeout = setTimeout(async () => {
-    const q = e.target.value.trim();
-    if (q.length < 3 || !currentTmdbKey) return;
-    
     const langMap = { es: 'es-ES', en: 'en-US', fr: 'fr-FR', de: 'de-DE', it: 'it-IT', pt: 'pt-PT', ru: 'ru-RU', ja: 'ja-JP', zh: 'zh-CN' };
     const res = await fetch(`/api/tmdb/search?q=${q}&key=${currentTmdbKey}&lang=${langMap[currentLang] || 'en-US'}`);
     const data = await res.json();
     
-    document.getElementById('searchResults').innerHTML = (data.results || [])
+    const results = (data.results || [])
       .filter(item => item.media_type === 'movie' || item.media_type === 'tv')
-      .slice(0, 12)
+      .sort((a, b) => (b.vote_count || 0) - (a.vote_count || 0))
+      .slice(0, 12);
+    
+    document.getElementById('searchResults').innerHTML = results
       .map(item => {
         const title = item.title || item.name;
         const mediaType = item.media_type;
@@ -690,15 +847,15 @@ window.addEventListener('DOMContentLoaded', () => {
   
   if (savedLang) {
     currentLang = savedLang;
-    document.getElementById('langSelect').value = currentLang;
+    langSelect.value = currentLang;
   }
   
   if (savedUsername && savedKey) {
     currentUsername = savedUsername;
     currentTmdbKey = savedKey;
-    currentAddonName = savedAddonName || 'CustomLibrary';
+    currentAddonName = savedAddonName || '';
     
-    const t = translations[currentLang] || translations.es;
+    const t = translations[currentLang] || translations.en;
     document.getElementById('mainTitle').textContent = t.mainTitleTemplate.replace('{{username}}', currentUsername);
     
     document.getElementById('welcomeScreen').classList.remove('active');
@@ -707,5 +864,7 @@ window.addEventListener('DOMContentLoaded', () => {
   }
   
   updateUI();
-  updateListTypePlaceholder();
+  if (currentUsername) {
+    updateListTypePlaceholder();
+  }
 });
