@@ -1,1258 +1,1412 @@
 const translations = {
   en: {
     languageQuestionFirst: 'Hey, what language can we speak?',
-    welcomeQuestion: 'Welcome, what can I call you?',
+    welcomeTitle: 'Welcome to CustomLibrary',
+    helloQuestion: 'Hey, what\'s your name?',
     yourName: 'Your name',
     continue: 'Continue',
-    welcomeBack: 'Welcome back!',
-    enterPin: 'Enter your 4-digit PIN',
-    login: 'Login',
-    newUser: 'New user!',
-    addonNameQuestion: 'And what should I be called?',
-    addonNameHelp: 'This will be the addon name in your player',
-    tmdbQuestion: "I'll need your TMDB API Key",
-    tmdbKeyPlaceholder: 'TMDB API Key',
-    getTmdbKeyText: 'Get it',
-    here: 'HERE',
-    createPin: 'Create a 4-digit PIN',
-    pinHelp: 'Use it to access your account',
-    startButton: "Let's create your lists",
-    mainTitleTemplate: 'Alright {{username}}, what did you like?',
-    yourLists: 'These are your lists',
-    createList: 'Create new list',
+    loginTitle: 'Login',
+    registerTitle: 'Register',
+    username: 'Username',
+    password: 'Password',
+    loginBtn: 'Login',
+    registerBtn: 'Register',
+    noAccount: 'Don\'t have an account?',
+    hasAccount: 'Already have an account?',
+    registerLink: 'Register',
+    loginLink: 'Login',
+    myLibrary: 'My Library',
+    friends: 'Friends',
+    ratings: 'Ratings',
+    logout: 'Logout',
+    myLists: 'My Lists',
+    createList: 'Create List',
+    addItems: 'Add Items',
+    searchPlaceholder: 'Search movies/series',
+    madeWith: 'Made with',
+    createListModalTitle: 'Create New List',
     listName: 'List name',
-    listTypeTemplate: "{{username}}'s library",
+    customMessage: 'Custom message (optional)',
     create: 'Create',
-    searchPlaceholder: 'Search movies/series...',
-    importPin: 'Add list by PIN',
-    copyUrl: 'Copy install URL',
-    install: 'Install in your player',
-    share: 'Share',
-    delete: 'Delete',
-    selectListModal: 'Which list do you want to add this to?',
-    add: 'Add',
     cancel: 'Cancel',
-    back: 'Back',
-    importPinTitle: 'Enter the 6-digit PIN',
-    import: 'Import',
-    sharePinTitle: 'List PIN',
-    sharePinText: 'Share this PIN so others can import the list',
+    selectListModalTitle: 'Select List',
+    shareListModalTitle: 'Share List',
+    pinLabel: 'PIN:',
     copyPin: 'Copy PIN',
     close: 'Close',
-    deleteItem: 'Delete',
-    rate: 'Rate',
-    rateTitle: 'Rate this item',
-    reviewPlaceholder: 'Write a review (optional)...',
-    submit: 'Submit',
-    ratingsTitle: 'Ratings',
-    viewRatings: 'Ratings',
-    friends: 'Friends',
-    friendUsername: 'Username',
-    addFriend: 'Add friend',
-    removeFriend: 'Remove',
+    importModalTitle: 'Import List',
+    enterPin: 'Enter PIN',
+    import: 'Import',
+    friendsModalTitle: 'Friends',
+    myFriendsTab: 'My Friends',
+    addFriendTab: 'Add Friend',
+    addFriend: 'Add Friend',
+    ratingsModalTitle: 'Item Ratings',
+    allUsers: 'All Users',
+    friendsOnly: 'Friends Only',
+    rateModalTitle: 'Rate Item',
+    confirm: 'Confirm',
+    share: 'Share',
+    delete: 'Delete',
+    director: 'Director',
+    cast: 'Cast',
+    recentReviews: 'Recent Reviews',
+    trailer: 'Trailer',
+    addToList: 'Add to List',
+    friendRatings: 'Ratings',
     friendLists: 'Lists',
-    friendRatings: 'Recent ratings',
-    noFriends: 'No friends yet',
-    noLists: 'No lists created yet',
-    noItems: 'No items in this list'
+    importList: 'Import'
   },
   es: {
-    languageQuestionFirst: 'Ey, ¿en qué idioma podemos hablar?',
-    welcomeQuestion: 'Bienvenido, ¿cómo puedo llamarte?',
+    languageQuestionFirst: 'Hola, ¿qué idioma hablamos?',
+    welcomeTitle: 'Bienvenido a CustomLibrary',
+    helloQuestion: 'Hola, ¿cómo te llamas?',
     yourName: 'Tu nombre',
     continue: 'Continuar',
-    welcomeBack: '¡Bienvenido de nuevo!',
-    enterPin: 'Introduce tu PIN de 4 dígitos',
-    login: 'Iniciar sesión',
-    newUser: '¡Nuevo usuario!',
-    addonNameQuestion: '¿Y cómo me llamo yo?',
-    addonNameHelp: 'Este será el nombre del addon en tu reproductor',
-    tmdbQuestion: 'Voy a necesitar tu clave API de TMDB',
-    tmdbKeyPlaceholder: 'API Key de TMDB',
-    getTmdbKeyText: 'Esto lo consigues',
-    here: 'AQUÍ',
-    createPin: 'Crea un PIN de 4 dígitos',
-    pinHelp: 'Úsalo para acceder a tu cuenta',
-    startButton: 'Pasemos a crear tus listas',
-    mainTitleTemplate: 'De acuerdo {{username}}, ¿qué fue eso que te gustó?',
-    yourLists: 'Estas son tus listas',
-    createList: 'Crear nueva lista',
+    loginTitle: 'Iniciar sesión',
+    registerTitle: 'Registrarse',
+    username: 'Usuario',
+    password: 'Contraseña',
+    loginBtn: 'Entrar',
+    registerBtn: 'Registrarse',
+    noAccount: '¿No tienes cuenta?',
+    hasAccount: '¿Ya tienes cuenta?',
+    registerLink: 'Regístrate',
+    loginLink: 'Inicia sesión',
+    myLibrary: 'Mi Librería',
+    friends: 'Amigos',
+    ratings: 'Valoraciones',
+    logout: 'Salir',
+    myLists: 'Mis Listas',
+    createList: 'Crear Lista',
+    addItems: 'Añadir Ítems',
+    searchPlaceholder: 'Buscar películas/series',
+    madeWith: 'Hecho con',
+    createListModalTitle: 'Crear Nueva Lista',
     listName: 'Nombre de la lista',
-    listTypeTemplate: 'Librería de {{username}}',
+    customMessage: 'Mensaje personalizado (opcional)',
     create: 'Crear',
-    searchPlaceholder: 'Buscar películas/series...',
-    importPin: 'Añadir lista por PIN',
-    copyUrl: 'Copiar URL de instalación',
-    install: 'Instalar en tu reproductor',
-    share: 'Compartir',
-    delete: 'Eliminar',
-    selectListModal: '¿A qué lista quieres agregar esto?',
-    add: 'Agregar',
     cancel: 'Cancelar',
-    back: 'Volver',
-    importPinTitle: 'Introduce el PIN de 6 dígitos',
-    import: 'Importar',
-    sharePinTitle: 'PIN de la lista',
-    sharePinText: 'Comparte este PIN para que otros puedan importar la lista',
+    selectListModalTitle: 'Seleccionar Lista',
+    shareListModalTitle: 'Compartir Lista',
+    pinLabel: 'PIN:',
     copyPin: 'Copiar PIN',
     close: 'Cerrar',
-    deleteItem: 'Eliminar',
-    rate: 'Calificar',
-    rateTitle: 'Calificar este elemento',
-    reviewPlaceholder: 'Escribe una reseña (opcional)...',
-    submit: 'Enviar',
-    ratingsTitle: 'Calificaciones',
-    viewRatings: 'Calificaciones',
-    friends: 'Amigos',
-    friendUsername: 'Nombre de usuario',
-    addFriend: 'Añadir amigo',
-    removeFriend: 'Eliminar',
+    importModalTitle: 'Importar Lista',
+    enterPin: 'Introduce el PIN',
+    import: 'Importar',
+    friendsModalTitle: 'Amigos',
+    myFriendsTab: 'Mis Amigos',
+    addFriendTab: 'Añadir Amigo',
+    addFriend: 'Añadir Amigo',
+    ratingsModalTitle: 'Valoraciones del Ítem',
+    allUsers: 'Todos los Usuarios',
+    friendsOnly: 'Solo Amigos',
+    rateModalTitle: 'Valorar Ítem',
+    confirm: 'Confirmar',
+    share: 'Compartir',
+    delete: 'Eliminar',
+    director: 'Director',
+    cast: 'Reparto',
+    recentReviews: 'Reseñas Recientes',
+    trailer: 'Tráiler',
+    addToList: 'Añadir a Lista',
+    friendRatings: 'Valoraciones',
     friendLists: 'Listas',
-    friendRatings: 'Calificaciones recientes',
-    noFriends: 'Aún no tienes amigos',
-    noLists: 'No hay listas creadas aún',
-    noItems: 'No hay elementos en esta lista'
+    importList: 'Importar'
   },
   fr: {
-    languageQuestionFirst: 'Hé, quelle langue pouvons-nous parler?',
-    welcomeQuestion: 'Bienvenue, comment puis-je t\'appeler?',
+    languageQuestionFirst: 'Salut, quelle langue parlons-nous?',
+    welcomeTitle: 'Bienvenue à CustomLibrary',
+    helloQuestion: 'Salut, comment tu t\'appelles?',
     yourName: 'Ton nom',
     continue: 'Continuer',
-    welcomeBack: 'Bon retour!',
-    enterPin: 'Entre ton PIN à 4 chiffres',
-    login: 'Connexion',
-    newUser: 'Nouvel utilisateur!',
-    addonNameQuestion: 'Et comment je m\'appelle?',
-    addonNameHelp: 'Ce sera le nom de l\'addon dans ton lecteur',
-    tmdbQuestion: 'J\'aurai besoin de ta clé API TMDB',
-    tmdbKeyPlaceholder: 'Clé API TMDB',
-    getTmdbKeyText: 'Obtiens-la',
-    here: 'ICI',
-    createPin: 'Crée un PIN à 4 chiffres',
-    pinHelp: 'Utilise-le pour accéder à ton compte',
-    startButton: 'Créons tes listes',
-    mainTitleTemplate: "D'accord {{username}}, qu'as-tu aimé?",
-    yourLists: 'Voici tes listes',
-    createList: 'Créer une nouvelle liste',
+    loginTitle: 'Connexion',
+    registerTitle: 'S\'inscrire',
+    username: 'Nom d\'utilisateur',
+    password: 'Mot de passe',
+    loginBtn: 'Se connecter',
+    registerBtn: 'S\'inscrire',
+    noAccount: 'Pas de compte?',
+    hasAccount: 'Déjà un compte?',
+    registerLink: 'Inscris-toi',
+    loginLink: 'Connecte-toi',
+    myLibrary: 'Ma Bibliothèque',
+    friends: 'Amis',
+    ratings: 'Notes',
+    logout: 'Déconnexion',
+    myLists: 'Mes Listes',
+    createList: 'Créer Liste',
+    addItems: 'Ajouter Items',
+    searchPlaceholder: 'Rechercher films/séries',
+    madeWith: 'Fait avec',
+    createListModalTitle: 'Créer Nouvelle Liste',
     listName: 'Nom de la liste',
-    listTypeTemplate: 'Bibliothèque de {{username}}',
+    customMessage: 'Message personnalisé (optionnel)',
     create: 'Créer',
-    searchPlaceholder: 'Rechercher films/séries...',
-    importPin: 'Ajouter une liste par PIN',
-    copyUrl: 'Copier l\'URL d\'installation',
-    install: 'Installer dans ton lecteur',
+    cancel: 'Annuler',
+    selectListModalTitle: 'Sélectionner Liste',
+    shareListModalTitle: 'Partager Liste',
+    pinLabel: 'PIN:',
+    copyPin: 'Copier PIN',
+    close: 'Fermer',
+    importModalTitle: 'Importer Liste',
+    enterPin: 'Entrer le PIN',
+    import: 'Importer',
+    friendsModalTitle: 'Amis',
+    myFriendsTab: 'Mes Amis',
+    addFriendTab: 'Ajouter Ami',
+    addFriend: 'Ajouter Ami',
+    ratingsModalTitle: 'Notes de l\'Item',
+    allUsers: 'Tous les Utilisateurs',
+    friendsOnly: 'Amis Seulement',
+    rateModalTitle: 'Noter Item',
+    confirm: 'Confirmer',
     share: 'Partager',
     delete: 'Supprimer',
-    selectListModal: 'À quelle liste veux-tu ajouter ceci?',
-    add: 'Ajouter',
-    cancel: 'Annuler',
-    back: 'Retour',
-    importPinTitle: 'Entre le PIN à 6 chiffres',
-    import: 'Importer',
-    sharePinTitle: 'PIN de la liste',
-    sharePinText: 'Partage ce PIN pour que d\'autres puissent importer la liste',
-    copyPin: 'Copier le PIN',
-    close: 'Fermer',
-    deleteItem: 'Supprimer',
-    rate: 'Noter',
-    rateTitle: 'Noter cet élément',
-    reviewPlaceholder: 'Écris un avis (optionnel)...',
-    submit: 'Envoyer',
-    ratingsTitle: 'Notes',
-    viewRatings: 'Notes',
-    friends: 'Amis',
-    friendUsername: 'Nom d\'utilisateur',
-    addFriend: 'Ajouter un ami',
-    removeFriend: 'Supprimer',
+    director: 'Réalisateur',
+    cast: 'Distribution',
+    recentReviews: 'Avis Récents',
+    trailer: 'Bande-annonce',
+    addToList: 'Ajouter à la Liste',
+    friendRatings: 'Notes',
     friendLists: 'Listes',
-    friendRatings: 'Notes récentes',
-    noFriends: 'Pas encore d\'amis',
-    noLists: 'Aucune liste créée',
-    noItems: 'Aucun élément dans cette liste'
+    importList: 'Importer'
   },
   de: {
-    languageQuestionFirst: 'Hey, welche Sprache können wir sprechen?',
-    welcomeQuestion: 'Willkommen, wie kann ich dich nennen?',
+    languageQuestionFirst: 'Hey, welche Sprache sprechen wir?',
+    welcomeTitle: 'Willkommen bei CustomLibrary',
+    helloQuestion: 'Hey, wie heißt du?',
     yourName: 'Dein Name',
     continue: 'Weiter',
-    welcomeBack: 'Willkommen zurück!',
-    enterPin: 'Gib deine 4-stellige PIN ein',
-    login: 'Anmelden',
-    newUser: 'Neuer Benutzer!',
-    addonNameQuestion: 'Und wie soll ich heißen?',
-    addonNameHelp: 'Dies wird der Addon-Name in deinem Player sein',
-    tmdbQuestion: 'Ich brauche deinen TMDB API-Schlüssel',
-    tmdbKeyPlaceholder: 'TMDB API-Schlüssel',
-    getTmdbKeyText: 'Hol ihn dir',
-    here: 'HIER',
-    createPin: 'Erstelle eine 4-stellige PIN',
-    pinHelp: 'Verwende sie für den Zugriff auf dein Konto',
-    startButton: 'Lass uns deine Listen erstellen',
-    mainTitleTemplate: 'Ok {{username}}, was hat dir gefallen?',
-    yourLists: 'Das sind deine Listen',
-    createList: 'Neue Liste erstellen',
+    loginTitle: 'Anmelden',
+    registerTitle: 'Registrieren',
+    username: 'Benutzername',
+    password: 'Passwort',
+    loginBtn: 'Anmelden',
+    registerBtn: 'Registrieren',
+    noAccount: 'Kein Konto?',
+    hasAccount: 'Bereits ein Konto?',
+    registerLink: 'Registrieren',
+    loginLink: 'Anmelden',
+    myLibrary: 'Meine Bibliothek',
+    friends: 'Freunde',
+    ratings: 'Bewertungen',
+    logout: 'Abmelden',
+    myLists: 'Meine Listen',
+    createList: 'Liste Erstellen',
+    addItems: 'Items Hinzufügen',
+    searchPlaceholder: 'Filme/Serien suchen',
+    madeWith: 'Gemacht mit',
+    createListModalTitle: 'Neue Liste Erstellen',
     listName: 'Listenname',
-    listTypeTemplate: '{{username}}s Bibliothek',
+    customMessage: 'Benutzerdefinierte Nachricht (optional)',
     create: 'Erstellen',
-    searchPlaceholder: 'Filme/Serien suchen...',
-    importPin: 'Liste per PIN hinzufügen',
-    copyUrl: 'Installations-URL kopieren',
-    install: 'In deinem Player installieren',
+    cancel: 'Abbrechen',
+    selectListModalTitle: 'Liste Auswählen',
+    shareListModalTitle: 'Liste Teilen',
+    pinLabel: 'PIN:',
+    copyPin: 'PIN Kopieren',
+    close: 'Schließen',
+    importModalTitle: 'Liste Importieren',
+    enterPin: 'PIN Eingeben',
+    import: 'Importieren',
+    friendsModalTitle: 'Freunde',
+    myFriendsTab: 'Meine Freunde',
+    addFriendTab: 'Freund Hinzufügen',
+    addFriend: 'Freund Hinzufügen',
+    ratingsModalTitle: 'Item Bewertungen',
+    allUsers: 'Alle Benutzer',
+    friendsOnly: 'Nur Freunde',
+    rateModalTitle: 'Item Bewerten',
+    confirm: 'Bestätigen',
     share: 'Teilen',
     delete: 'Löschen',
-    selectListModal: 'Zu welcher Liste möchtest du dies hinzufügen?',
-    add: 'Hinzufügen',
-    cancel: 'Abbrechen',
-    back: 'Zurück',
-    importPinTitle: 'Gib die 6-stellige PIN ein',
-    import: 'Importieren',
-    sharePinTitle: 'Listen-PIN',
-    sharePinText: 'Teile diese PIN, damit andere die Liste importieren können',
-    copyPin: 'PIN kopieren',
-    close: 'Schließen',
-    deleteItem: 'Löschen',
-    rate: 'Bewerten',
-    rateTitle: 'Dieses Element bewerten',
-    reviewPlaceholder: 'Schreibe eine Bewertung (optional)...',
-    submit: 'Senden',
-    ratingsTitle: 'Bewertungen',
-    viewRatings: 'Bewertungen',
-    friends: 'Freunde',
-    friendUsername: 'Benutzername',
-    addFriend: 'Freund hinzufügen',
-    removeFriend: 'Entfernen',
+    director: 'Regisseur',
+    cast: 'Besetzung',
+    recentReviews: 'Aktuelle Rezensionen',
+    trailer: 'Trailer',
+    addToList: 'Zur Liste Hinzufügen',
+    friendRatings: 'Bewertungen',
     friendLists: 'Listen',
-    friendRatings: 'Aktuelle Bewertungen',
-    noFriends: 'Noch keine Freunde',
-    noLists: 'Noch keine Listen erstellt',
-    noItems: 'Keine Elemente in dieser Liste'
+    importList: 'Importieren'
   },
   it: {
-    languageQuestionFirst: 'Ehi, che lingua possiamo parlare?',
-    welcomeQuestion: 'Benvenuto, come posso chiamarti?',
+    languageQuestionFirst: 'Ciao, che lingua parliamo?',
+    welcomeTitle: 'Benvenuto a CustomLibrary',
+    helloQuestion: 'Ciao, come ti chiami?',
     yourName: 'Il tuo nome',
     continue: 'Continua',
-    welcomeBack: 'Bentornato!',
-    enterPin: 'Inserisci il tuo PIN a 4 cifre',
-    login: 'Accedi',
-    newUser: 'Nuovo utente!',
-    addonNameQuestion: 'E come mi chiamo io?',
-    addonNameHelp: 'Questo sarà il nome dell\'addon nel tuo lettore',
-    tmdbQuestion: 'Avrò bisogno della tua chiave API TMDB',
-    tmdbKeyPlaceholder: 'Chiave API TMDB',
-    getTmdbKeyText: 'Ottienila',
-    here: 'QUI',
-    createPin: 'Crea un PIN a 4 cifre',
-    pinHelp: 'Usalo per accedere al tuo account',
-    startButton: 'Creiamo le tue liste',
-    mainTitleTemplate: 'Va bene {{username}}, cosa ti è piaciuto?',
-    yourLists: 'Queste sono le tue liste',
-    createList: 'Crea nuova lista',
+    loginTitle: 'Accedi',
+    registerTitle: 'Registrati',
+    username: 'Nome utente',
+    password: 'Password',
+    loginBtn: 'Accedi',
+    registerBtn: 'Registrati',
+    noAccount: 'Non hai un account?',
+    hasAccount: 'Hai già un account?',
+    registerLink: 'Registrati',
+    loginLink: 'Accedi',
+    myLibrary: 'La Mia Libreria',
+    friends: 'Amici',
+    ratings: 'Valutazioni',
+    logout: 'Esci',
+    myLists: 'Le Mie Liste',
+    createList: 'Crea Lista',
+    addItems: 'Aggiungi Items',
+    searchPlaceholder: 'Cerca film/serie',
+    madeWith: 'Fatto con',
+    createListModalTitle: 'Crea Nuova Lista',
     listName: 'Nome della lista',
-    listTypeTemplate: 'Biblioteca di {{username}}',
+    customMessage: 'Messaggio personalizzato (opzionale)',
     create: 'Crea',
-    searchPlaceholder: 'Cerca film/serie...',
-    importPin: 'Aggiungi lista con PIN',
-    copyUrl: 'Copia URL di installazione',
-    install: 'Installa nel tuo lettore',
-    share: 'Condividi',
-    delete: 'Elimina',
-    selectListModal: 'A quale lista vuoi aggiungere questo?',
-    add: 'Aggiungi',
     cancel: 'Annulla',
-    back: 'Indietro',
-    importPinTitle: 'Inserisci il PIN a 6 cifre',
-    import: 'Importa',
-    sharePinTitle: 'PIN della lista',
-    sharePinText: 'Condividi questo PIN affinché altri possano importare la lista',
+    selectListModalTitle: 'Seleziona Lista',
+    shareListModalTitle: 'Condividi Lista',
+    pinLabel: 'PIN:',
     copyPin: 'Copia PIN',
     close: 'Chiudi',
-    deleteItem: 'Elimina',
-    rate: 'Vota',
-    rateTitle: 'Vota questo elemento',
-    reviewPlaceholder: 'Scrivi una recensione (opzionale)...',
-    submit: 'Invia',
-    ratingsTitle: 'Valutazioni',
-    viewRatings: 'Valutazioni',
-    friends: 'Amici',
-    friendUsername: 'Nome utente',
-    addFriend: 'Aggiungi amico',
-    removeFriend: 'Rimuovi',
+    importModalTitle: 'Importa Lista',
+    enterPin: 'Inserisci PIN',
+    import: 'Importa',
+    friendsModalTitle: 'Amici',
+    myFriendsTab: 'I Miei Amici',
+    addFriendTab: 'Aggiungi Amico',
+    addFriend: 'Aggiungi Amico',
+    ratingsModalTitle: 'Valutazioni Item',
+    allUsers: 'Tutti gli Utenti',
+    friendsOnly: 'Solo Amici',
+    rateModalTitle: 'Valuta Item',
+    confirm: 'Conferma',
+    share: 'Condividi',
+    delete: 'Elimina',
+    director: 'Regista',
+    cast: 'Cast',
+    recentReviews: 'Recensioni Recenti',
+    trailer: 'Trailer',
+    addToList: 'Aggiungi alla Lista',
+    friendRatings: 'Valutazioni',
     friendLists: 'Liste',
-    friendRatings: 'Valutazioni recenti',
-    noFriends: 'Nessun amico ancora',
-    noLists: 'Nessuna lista creata',
-    noItems: 'Nessun elemento in questa lista'
+    importList: 'Importa'
   },
   pt: {
-    languageQuestionFirst: 'Ei, que idioma podemos falar?',
-    welcomeQuestion: 'Bem-vindo, como posso te chamar?',
-    yourName: 'Seu nome',
+    languageQuestionFirst: 'Olá, que idioma falamos?',
+    welcomeTitle: 'Bem-vindo ao CustomLibrary',
+    helloQuestion: 'Olá, qual é o teu nome?',
+    yourName: 'O teu nome',
     continue: 'Continuar',
-    welcomeBack: 'Bem-vindo de volta!',
-    enterPin: 'Digite seu PIN de 4 dígitos',
-    login: 'Entrar',
-    newUser: 'Novo usuário!',
-    addonNameQuestion: 'E como eu me chamo?',
-    addonNameHelp: 'Este será o nome do addon no seu player',
-    tmdbQuestion: 'Vou precisar da sua chave API TMDB',
-    tmdbKeyPlaceholder: 'Chave API TMDB',
-    getTmdbKeyText: 'Consiga',
-    here: 'AQUI',
-    createPin: 'Crie um PIN de 4 dígitos',
-    pinHelp: 'Use-o para acessar sua conta',
-    startButton: 'Vamos criar suas listas',
-    mainTitleTemplate: 'Certo {{username}}, do que você gostou?',
-    yourLists: 'Estas são suas listas',
-    createList: 'Criar nova lista',
+    loginTitle: 'Entrar',
+    registerTitle: 'Registar',
+    username: 'Nome de utilizador',
+    password: 'Palavra-passe',
+    loginBtn: 'Entrar',
+    registerBtn: 'Registar',
+    noAccount: 'Não tens conta?',
+    hasAccount: 'Já tens conta?',
+    registerLink: 'Regista-te',
+    loginLink: 'Entra',
+    myLibrary: 'A Minha Biblioteca',
+    friends: 'Amigos',
+    ratings: 'Avaliações',
+    logout: 'Sair',
+    myLists: 'As Minhas Listas',
+    createList: 'Criar Lista',
+    addItems: 'Adicionar Items',
+    searchPlaceholder: 'Procurar filmes/séries',
+    madeWith: 'Feito com',
+    createListModalTitle: 'Criar Nova Lista',
     listName: 'Nome da lista',
-    listTypeTemplate: 'Biblioteca de {{username}}',
+    customMessage: 'Mensagem personalizada (opcional)',
     create: 'Criar',
-    searchPlaceholder: 'Pesquisar filmes/séries...',
-    importPin: 'Adicionar lista por PIN',
-    copyUrl: 'Copiar URL de instalação',
-    install: 'Instalar no seu player',
-    share: 'Compartilhar',
-    delete: 'Excluir',
-    selectListModal: 'A qual lista você quer adicionar isto?',
-    add: 'Adicionar',
     cancel: 'Cancelar',
-    back: 'Voltar',
-    importPinTitle: 'Digite o PIN de 6 dígitos',
-    import: 'Importar',
-    sharePinTitle: 'PIN da lista',
-    sharePinText: 'Compartilhe este PIN para que outros possam importar a lista',
+    selectListModalTitle: 'Selecionar Lista',
+    shareListModalTitle: 'Partilhar Lista',
+    pinLabel: 'PIN:',
     copyPin: 'Copiar PIN',
     close: 'Fechar',
-    deleteItem: 'Excluir',
-    rate: 'Avaliar',
-    rateTitle: 'Avaliar este item',
-    reviewPlaceholder: 'Escreva uma avaliação (opcional)...',
-    submit: 'Enviar',
-    ratingsTitle: 'Avaliações',
-    viewRatings: 'Avaliações',
-    friends: 'Amigos',
-    friendUsername: 'Nome de usuário',
-    addFriend: 'Adicionar amigo',
-    removeFriend: 'Remover',
+    importModalTitle: 'Importar Lista',
+    enterPin: 'Inserir PIN',
+    import: 'Importar',
+    friendsModalTitle: 'Amigos',
+    myFriendsTab: 'Os Meus Amigos',
+    addFriendTab: 'Adicionar Amigo',
+    addFriend: 'Adicionar Amigo',
+    ratingsModalTitle: 'Avaliações do Item',
+    allUsers: 'Todos os Utilizadores',
+    friendsOnly: 'Apenas Amigos',
+    rateModalTitle: 'Avaliar Item',
+    confirm: 'Confirmar',
+    share: 'Partilhar',
+    delete: 'Eliminar',
+    director: 'Realizador',
+    cast: 'Elenco',
+    recentReviews: 'Avaliações Recentes',
+    trailer: 'Trailer',
+    addToList: 'Adicionar à Lista',
+    friendRatings: 'Avaliações',
     friendLists: 'Listas',
-    friendRatings: 'Avaliações recentes',
-    noFriends: 'Ainda sem amigos',
-    noLists: 'Nenhuma lista criada',
-    noItems: 'Nenhum item nesta lista'
+    importList: 'Importar'
   },
   ru: {
-    languageQuestionFirst: 'Эй, на каком языке мы можем говорить?',
-    welcomeQuestion: 'Добро пожаловать, как мне тебя называть?',
-    yourName: 'Твое имя',
+    languageQuestionFirst: 'Привет, на каком языке говорим?',
+    welcomeTitle: 'Добро пожаловать в CustomLibrary',
+    helloQuestion: 'Привет, как тебя зовут?',
+    yourName: 'Твоё имя',
     continue: 'Продолжить',
-    welcomeBack: 'С возвращением!',
-    enterPin: 'Введи свой 4-значный PIN',
-    login: 'Войти',
-    newUser: 'Новый пользователь!',
-    addonNameQuestion: 'А как меня зовут?',
-    addonNameHelp: 'Это будет имя аддона в твоем плеере',
-    tmdbQuestion: 'Мне понадобится твой API ключ TMDB',
-    tmdbKeyPlaceholder: 'API ключ TMDB',
-    getTmdbKeyText: 'Получи его',
-    here: 'ЗДЕСЬ',
-    createPin: 'Создай 4-значный PIN',
-    pinHelp: 'Используй его для доступа к аккаунту',
-    startButton: 'Давай создадим твои списки',
-    mainTitleTemplate: 'Хорошо {{username}}, что тебе понравилось?',
-    yourLists: 'Вот твои списки',
-    createList: 'Создать новый список',
+    loginTitle: 'Вход',
+    registerTitle: 'Регистрация',
+    username: 'Имя пользователя',
+    password: 'Пароль',
+    loginBtn: 'Войти',
+    registerBtn: 'Зарегистрироваться',
+    noAccount: 'Нет аккаунта?',
+    hasAccount: 'Уже есть аккаунт?',
+    registerLink: 'Зарегистрируйся',
+    loginLink: 'Войди',
+    myLibrary: 'Моя Библиотека',
+    friends: 'Друзья',
+    ratings: 'Оценки',
+    logout: 'Выход',
+    myLists: 'Мои Списки',
+    createList: 'Создать Список',
+    addItems: 'Добавить Items',
+    searchPlaceholder: 'Искать фильмы/сериалы',
+    madeWith: 'Сделано с',
+    createListModalTitle: 'Создать Новый Список',
     listName: 'Название списка',
-    listTypeTemplate: 'Библиотека {{username}}',
+    customMessage: 'Персональное сообщение (необязательно)',
     create: 'Создать',
-    searchPlaceholder: 'Искать фильмы/сериалы...',
-    importPin: 'Добавить список по PIN',
-    copyUrl: 'Копировать URL установки',
-    install: 'Установить в твой плеер',
-    share: 'Поделиться',
-    delete: 'Удалить',
-    selectListModal: 'В какой список добавить это?',
-    add: 'Добавить',
-    cancel: 'Отменить',
-    back: 'Назад',
-    importPinTitle: 'Введите 6-значный PIN',
-    import: 'Импортировать',
-    sharePinTitle: 'PIN списка',
-    sharePinText: 'Поделитесь этим PIN, чтобы другие могли импортировать список',
+    cancel: 'Отмена',
+    selectListModalTitle: 'Выбрать Список',
+    shareListModalTitle: 'Поделиться Списком',
+    pinLabel: 'PIN:',
     copyPin: 'Копировать PIN',
     close: 'Закрыть',
-    deleteItem: 'Удалить',
-    rate: 'Оценить',
-    rateTitle: 'Оценить этот элемент',
-    reviewPlaceholder: 'Напишите отзыв (необязательно)...',
-    submit: 'Отправить',
-    ratingsTitle: 'Оценки',
-    viewRatings: 'Оценки',
-    friends: 'Друзья',
-    friendUsername: 'Имя пользователя',
-    addFriend: 'Добавить друга',
-    removeFriend: 'Удалить',
+    importModalTitle: 'Импортировать Список',
+    enterPin: 'Введите PIN',
+    import: 'Импортировать',
+    friendsModalTitle: 'Друзья',
+    myFriendsTab: 'Мои Друзья',
+    addFriendTab: 'Добавить Друга',
+    addFriend: 'Добавить Друга',
+    ratingsModalTitle: 'Оценки Item',
+    allUsers: 'Все Пользователи',
+    friendsOnly: 'Только Друзья',
+    rateModalTitle: 'Оценить Item',
+    confirm: 'Подтвердить',
+    share: 'Поделиться',
+    delete: 'Удалить',
+    director: 'Режиссёр',
+    cast: 'Актёры',
+    recentReviews: 'Последние Отзывы',
+    trailer: 'Трейлер',
+    addToList: 'Добавить в Список',
+    friendRatings: 'Оценки',
     friendLists: 'Списки',
-    friendRatings: 'Недавние оценки',
-    noFriends: 'Пока нет друзей',
-    noLists: 'Списков еще не создано',
-    noItems: 'В этом списке нет элементов'
+    importList: 'Импортировать'
   },
   ja: {
-    languageQuestionFirst: 'やあ、何語で話せますか？',
-    welcomeQuestion: 'ようこそ、何と呼べばいいですか？',
+    languageQuestionFirst: 'こんにちは、何語を話しますか？',
+    welcomeTitle: 'CustomLibraryへようこそ',
+    helloQuestion: 'こんにちは、お名前は？',
     yourName: 'あなたの名前',
     continue: '続ける',
-    welcomeBack: 'おかえりなさい！',
-    enterPin: '4桁のPINを入力',
-    login: 'ログイン',
-    newUser: '新しいユーザー！',
-    addonNameQuestion: '私の名前は？',
-    addonNameHelp: 'これがあなたのプレーヤーのアドオン名になります',
-    tmdbQuestion: 'TMDB APIキーが必要です',
-    tmdbKeyPlaceholder: 'TMDB APIキー',
-    getTmdbKeyText: 'こちらで取得',
-    here: 'ここ',
-    createPin: '4桁のPINを作成',
-    pinHelp: 'アカウントにアクセスするために使用',
-    startButton: 'リストを作成しましょう',
-    mainTitleTemplate: 'わかりました{{username}}さん、何が好きでしたか？',
-    yourLists: 'あなたのリスト',
-    createList: '新しいリストを作成',
+    loginTitle: 'ログイン',
+    registerTitle: '登録',
+    username: 'ユーザー名',
+    password: 'パスワード',
+    loginBtn: 'ログイン',
+    registerBtn: '登録',
+    noAccount: 'アカウントがありませんか？',
+    hasAccount: 'すでにアカウントをお持ちですか？',
+    registerLink: '登録',
+    loginLink: 'ログイン',
+    myLibrary: 'マイライブラリ',
+    friends: '友達',
+    ratings: '評価',
+    logout: 'ログアウト',
+    myLists: 'マイリスト',
+    createList: 'リスト作成',
+    addItems: 'アイテム追加',
+    searchPlaceholder: '映画/シリーズを検索',
+    madeWith: '作成者',
+    createListModalTitle: '新しいリストを作成',
     listName: 'リスト名',
-    listTypeTemplate: '{{username}}のライブラリ',
+    customMessage: 'カスタムメッセージ（オプション）',
     create: '作成',
-    searchPlaceholder: '映画/シリーズを検索...',
-    importPin: 'PINでリストを追加',
-    copyUrl: 'インストールURLをコピー',
-    install: 'プレーヤーにインストール',
-    share: '共有',
-    delete: '削除',
-    selectListModal: 'どのリストに追加しますか？',
-    add: '追加',
     cancel: 'キャンセル',
-    back: '戻る',
-    importPinTitle: '6桁のPINを入力',
-    import: 'インポート',
-    sharePinTitle: 'リストのPIN',
-    sharePinText: 'このPINを共有して他の人がリストをインポートできるようにします',
+    selectListModalTitle: 'リストを選択',
+    shareListModalTitle: 'リストを共有',
+    pinLabel: 'PIN:',
     copyPin: 'PINをコピー',
     close: '閉じる',
-    deleteItem: '削除',
-    rate: '評価',
-    rateTitle: 'このアイテムを評価',
-    reviewPlaceholder: 'レビューを書く（オプション）...',
-    submit: '送信',
-    ratingsTitle: '評価',
-    viewRatings: '評価',
-    friends: '友達',
-    friendUsername: 'ユーザー名',
+    importModalTitle: 'リストをインポート',
+    enterPin: 'PINを入力',
+    import: 'インポート',
+    friendsModalTitle: '友達',
+    myFriendsTab: 'マイフレンド',
+    addFriendTab: '友達を追加',
     addFriend: '友達を追加',
-    removeFriend: '削除',
+    ratingsModalTitle: 'アイテムの評価',
+    allUsers: 'すべてのユーザー',
+    friendsOnly: '友達のみ',
+    rateModalTitle: 'アイテムを評価',
+    confirm: '確認',
+    share: '共有',
+    delete: '削除',
+    director: '監督',
+    cast: 'キャスト',
+    recentReviews: '最近のレビュー',
+    trailer: '予告編',
+    addToList: 'リストに追加',
+    friendRatings: '評価',
     friendLists: 'リスト',
-    friendRatings: '最近の評価',
-    noFriends: 'まだ友達がいません',
-    noLists: 'リストがまだ作成されていません',
-    noItems: 'このリストにアイテムがありません'
+    importList: 'インポート'
   },
   zh: {
-    languageQuestionFirst: '嘿，我们可以说什么语言？',
-    welcomeQuestion: '欢迎，我该怎么称呼你？',
+    languageQuestionFirst: '你好，我们说什么语言？',
+    welcomeTitle: '欢迎来到CustomLibrary',
+    helloQuestion: '你好，你叫什么名字？',
     yourName: '你的名字',
     continue: '继续',
-    welcomeBack: '欢迎回来！',
-    enterPin: '输入你的4位PIN',
-    login: '登录',
-    newUser: '新用户！',
-    addonNameQuestion: '我叫什么名字？',
-    addonNameHelp: '这将是你播放器中的插件名称',
-    tmdbQuestion: '我需要你的TMDB API密钥',
-    tmdbKeyPlaceholder: 'TMDB API密钥',
-    getTmdbKeyText: '在这里获取',
-    here: '这里',
-    createPin: '创建4位PIN',
-    pinHelp: '用它访问你的账户',
-    startButton: '让我们创建你的列表',
-    mainTitleTemplate: '好的{{username}}，你喜欢什么？',
-    yourLists: '这些是你的列表',
-    createList: '创建新列表',
+    loginTitle: '登录',
+    registerTitle: '注册',
+    username: '用户名',
+    password: '密码',
+    loginBtn: '登录',
+    registerBtn: '注册',
+    noAccount: '没有账户？',
+    hasAccount: '已有账户？',
+    registerLink: '注册',
+    loginLink: '登录',
+    myLibrary: '我的图书馆',
+    friends: '朋友',
+    ratings: '评分',
+    logout: '登出',
+    myLists: '我的列表',
+    createList: '创建列表',
+    addItems: '添加项目',
+    searchPlaceholder: '搜索电影/剧集',
+    madeWith: '制作者',
+    createListModalTitle: '创建新列表',
     listName: '列表名称',
-    listTypeTemplate: '{{username}}的图书馆',
+    customMessage: '自定义消息（可选）',
     create: '创建',
-    searchPlaceholder: '搜索电影/系列...',
-    importPin: '通过PIN添加列表',
-    copyUrl: '复制安装URL',
-    install: '安装到播放器',
-    share: '分享',
-    delete: '删除',
-    selectListModal: '你想添加到哪个列表？',
-    add: '添加',
     cancel: '取消',
-    back: '返回',
-    importPinTitle: '输入6位PIN',
-    import: '导入',
-    sharePinTitle: '列表PIN',
-    sharePinText: '分享此PIN以便其他人导入列表',
+    selectListModalTitle: '选择列表',
+    shareListModalTitle: '分享列表',
+    pinLabel: 'PIN:',
     copyPin: '复制PIN',
     close: '关闭',
-    deleteItem: '删除',
-    rate: '评分',
-    rateTitle: '为此项目评分',
-    reviewPlaceholder: '写评论（可选）...',
-    submit: '提交',
-    ratingsTitle: '评分',
-    viewRatings: '评分',
-    friends: '朋友',
-    friendUsername: '用户名',
+    importModalTitle: '导入列表',
+    enterPin: '输入PIN',
+    import: '导入',
+    friendsModalTitle: '朋友',
+    myFriendsTab: '我的朋友',
+    addFriendTab: '添加朋友',
     addFriend: '添加朋友',
-    removeFriend: '删除',
+    ratingsModalTitle: '项目评分',
+    allUsers: '所有用户',
+    friendsOnly: '仅朋友',
+    rateModalTitle: '评分项目',
+    confirm: '确认',
+    share: '分享',
+    delete: '删除',
+    director: '导演',
+    cast: '演员',
+    recentReviews: '最近评论',
+    trailer: '预告片',
+    addToList: '添加到列表',
+    friendRatings: '评分',
     friendLists: '列表',
-    friendRatings: '最近的评分',
-    noFriends: '还没有朋友',
-    noLists: '还没有创建列表',
-    noItems: '此列表中没有项目'
+    importList: '导入'
   }
 };
 
-let currentLang = 'en';
-let currentUsername = '';
-let currentTmdbKey = '';
-let currentAddonName = '';
-let pendingItem = null;
-let currentListId = null;
-let currentItemId = null;
-let selectedRating = 0;
-let tempUsername = '';
+let currentLanguage = 'en';
+let currentUser = null;
+let displayName = '';
+let allLists = [];
+let currentSearchResults = [];
+let currentDetailIndex = 0;
+let currentRatingFilter = 'all';
 
-const welcomeUsername = document.getElementById('welcomeUsername');
-const checkUserBtn = document.getElementById('checkUserBtn');
-const langSelect = document.getElementById('langSelect');
-const loginPin = document.getElementById('loginPin');
-const loginBtn = document.getElementById('loginBtn');
-const backToUsernameBtn = document.getElementById('backToUsernameBtn');
-const addonNameInput = document.getElementById('addonName');
-const registerTmdbKey = document.getElementById('registerTmdbKey');
-const registerPin = document.getElementById('registerPin');
-const registerBtn = document.getElementById('registerBtn');
+const API_URL = window.location.origin;
+const TMDB_API_KEY = 'TU_API_KEY_DE_TMDB'; // Reemplaza con tu API key
 
-function updateAddonName() {
-  const t = translations[currentLang] || translations.en;
-  const username = tempUsername || welcomeUsername.value.trim();
-  if (username) {
-    addonNameInput.value = t.listTypeTemplate.replace('{{username}}', username);
-  }
+function t(key) {
+  return translations[currentLanguage][key] || key;
 }
 
-function updateListTypePlaceholder() {
-  const t = translations[currentLang] || translations.en;
-  document.getElementById('listType').value = t.listTypeTemplate.replace('{{username}}', currentUsername);
+function applyTranslations() {
+  document.getElementById('welcomeTitle').textContent = t('welcomeTitle');
+  document.getElementById('languageQuestionLabel').textContent = t('languageQuestionFirst');
+  document.getElementById('nameQuestionLabel').textContent = t('helloQuestion');
+  document.getElementById('nameInput').placeholder = t('yourName');
+  document.getElementById('continueBtn').textContent = t('continue');
+  
+  document.getElementById('loginTitle').textContent = t('loginTitle');
+  document.getElementById('registerTitle').textContent = t('registerTitle');
+  document.getElementById('loginUsername').placeholder = t('username');
+  document.getElementById('loginPassword').placeholder = t('password');
+  document.getElementById('registerUsername').placeholder = t('username');
+  document.getElementById('registerPassword').placeholder = t('password');
+  document.getElementById('loginBtn').textContent = t('loginBtn');
+  document.getElementById('registerBtn').textContent = t('registerBtn');
+  document.getElementById('loginSwitch').innerHTML = `${t('noAccount')} <span id="goToRegister">${t('registerLink')}</span>`;
+  document.getElementById('registerSwitch').innerHTML = `${t('hasAccount')} <span id="goToLogin">${t('loginLink')}</span>`;
+  
+  document.getElementById('mainTitle').textContent = t('myLibrary');
+  document.getElementById('friendsBtnText').textContent = t('friends');
+  document.getElementById('ratingsBtnText').textContent = t('ratings');
+  document.getElementById('logoutBtnText').textContent = t('logout');
+  document.getElementById('listsTitle').textContent = t('myLists');
+  document.getElementById('createListBtnText').textContent = t('createList');
+  document.getElementById('searchTitle').textContent = t('addItems');
+  document.getElementById('searchInput').placeholder = t('searchPlaceholder');
+  document.getElementById('footerMadeWith').textContent = t('madeWith');
+  
+  document.getElementById('createListModalTitle').textContent = t('createListModalTitle');
+  document.getElementById('newListName').placeholder = t('listName');
+  document.getElementById('newListMessage').placeholder = t('customMessage');
+  document.getElementById('confirmCreateBtn').textContent = t('create');
+  document.getElementById('cancelCreateBtn').textContent = t('cancel');
+  
+  document.getElementById('selectListModalTitle').textContent = t('selectListModalTitle');
+  document.getElementById('cancelSelectBtn').textContent = t('cancel');
+  
+  document.getElementById('shareModalTitle').textContent = t('shareListModalTitle');
+  document.getElementById('sharePinLabel').textContent = t('pinLabel');
+  document.getElementById('copyPinBtn').textContent = `📋 ${t('copyPin')}`;
+  document.getElementById('closePinBtn').textContent = t('close');
+  
+  document.getElementById('importModalTitle').textContent = t('importModalTitle');
+  document.getElementById('importPinInput').placeholder = t('enterPin');
+  document.getElementById('confirmImportBtn').textContent = t('import');
+  document.getElementById('cancelImportBtn').textContent = t('cancel');
+  
+  document.getElementById('friendsModalTitle').textContent = t('friendsModalTitle');
+  document.getElementById('myFriendsTab').textContent = t('myFriendsTab');
+  document.getElementById('addFriendTab').textContent = t('addFriendTab');
+  document.getElementById('friendUsernameInput').placeholder = t('username');
+  document.getElementById('addFriendBtn').textContent = t('addFriend');
+  document.getElementById('closeFriendsBtn').textContent = t('close');
+  
+  document.getElementById('ratingsModalTitle').textContent = t('ratingsModalTitle');
+  document.getElementById('allRatingsBtn').textContent = t('allUsers');
+  document.getElementById('friendsRatingsBtn').textContent = t('friendsOnly');
+  document.getElementById('closeRatingsBtn').textContent = t('close');
+  
+  document.getElementById('rateModalTitle').textContent = t('rateModalTitle');
+  document.getElementById('confirmRatingBtn').textContent = t('confirm');
+  document.getElementById('cancelRatingBtn').textContent = t('cancel');
+  
+  document.getElementById('detailDirectorLabel').textContent = t('director');
+  document.getElementById('detailCastLabel').textContent = t('cast');
+  document.getElementById('detailReviewsLabel').textContent = t('recentReviews');
+  document.getElementById('detailTrailerText').textContent = t('trailer');
+  document.getElementById('detailAddText').textContent = t('addToList');
+  
+  document.getElementById('friendRatingsLabel').textContent = t('friendRatings');
+  document.getElementById('friendListsLabel').textContent = t('friendLists');
+  document.getElementById('closeFriendProfileBtn').textContent = t('close');
+  
+  document.getElementById('goToRegister').onclick = () => switchScreen('registerScreen');
+  document.getElementById('goToLogin').onclick = () => switchScreen('loginScreen');
 }
 
-langSelect.addEventListener('change', (e) => {
-  currentLang = e.target.value;
-  updateUI();
-  updateAddonName();
-});
+// CONTINÚA EN LA SIGUIENTE PARTE...
 
-welcomeUsername.addEventListener('input', () => {
-  checkUserBtn.disabled = welcomeUsername.value.trim().length === 0;
-});
-
-checkUserBtn.addEventListener('click', async () => {
-  tempUsername = welcomeUsername.value.trim();
-  if (!tempUsername) return;
+// ========== INICIALIZACIÓN ==========
+document.addEventListener('DOMContentLoaded', () => {
+  applyTranslations();
   
-  const res = await fetch('/api/auth/check-user', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ username: tempUsername })
+  document.getElementById('languageSelect').addEventListener('change', (e) => {
+    currentLanguage = e.target.value;
+    applyTranslations();
   });
   
-  const data = await res.json();
-  
-  if (data.exists) {
-    currentLang = data.user.language || 'en';
-    langSelect.value = currentLang;
-    updateUI();
-    
-    document.getElementById('welcomeScreen').classList.remove('active');
-    document.getElementById('loginScreen').classList.add('active');
-    document.getElementById('welcomeBackText').textContent = `${translations[currentLang].welcomeBack} ${tempUsername}!`;
-  } else {
-    updateAddonName();
-    document.getElementById('welcomeScreen').classList.remove('active');
-    document.getElementById('registerScreen').classList.add('active');
-  }
-});
-
-backToUsernameBtn.addEventListener('click', () => {
-  document.getElementById('loginScreen').classList.remove('active');
-  document.getElementById('welcomeScreen').classList.add('active');
-  loginPin.value = '';
-  tempUsername = '';
-});
-
-loginPin.addEventListener('input', () => {
-  loginBtn.disabled = loginPin.value.length !== 4;
-});
-
-loginBtn.addEventListener('click', async () => {
-  const pin = loginPin.value.trim();
-  if (pin.length !== 4) return;
-  
-  const res = await fetch('/api/auth/login', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ username: tempUsername, pin })
+  document.getElementById('continueBtn').onclick = showNameInput;
+  document.getElementById('nameInput').addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') continueToMain();
   });
   
-  const data = await res.json();
+  document.getElementById('loginBtn').onclick = login;
+  document.getElementById('registerBtn').onclick = register;
   
-  if (data.success) {
-    currentUsername = tempUsername;
-    currentTmdbKey = data.user.tmdb_key;
-    currentAddonName = data.user.addon_name;
-    currentLang = data.user.language || 'en';
-    
-    localStorage.setItem('username', currentUsername);
-    localStorage.setItem('pin', pin);
-    
-    const t = translations[currentLang] || translations.en;
-    document.getElementById('mainTitle').textContent = t.mainTitleTemplate.replace('{{username}}', currentUsername);
-    
-    document.getElementById('loginScreen').classList.remove('active');
-    document.getElementById('mainScreen').classList.add('active');
-    
-    loadLists(currentUsername);
-    loadFriends(currentUsername);
-    updateListTypePlaceholder();
-    updateUI();
-  } else {
-    alert(data.error || 'PIN incorrecto');
-    loginPin.value = '';
-  }
-});
-
-registerPin.addEventListener('input', () => {
-  const hasAddonName = addonNameInput.value.trim().length > 0;
-  const hasTmdbKey = registerTmdbKey.value.trim().length > 0;
-  const hasPin = registerPin.value.length === 4;
-  registerBtn.disabled = !(hasAddonName && hasTmdbKey && hasPin);
-});
-
-registerTmdbKey.addEventListener('input', () => {
-  const hasAddonName = addonNameInput.value.trim().length > 0;
-  const hasTmdbKey = registerTmdbKey.value.trim().length > 0;
-  const hasPin = registerPin.value.length === 4;
-  registerBtn.disabled = !(hasAddonName && hasTmdbKey && hasPin);
-});
-
-addonNameInput.addEventListener('input', () => {
-  const hasAddonName = addonNameInput.value.trim().length > 0;
-  const hasTmdbKey = registerTmdbKey.value.trim().length > 0;
-  const hasPin = registerPin.value.length === 4;
-  registerBtn.disabled = !(hasAddonName && hasTmdbKey && hasPin);
-});
-
-registerBtn.addEventListener('click', async () => {
-  const addonName = addonNameInput.value.trim();
-  const tmdbKey = registerTmdbKey.value.trim();
-  const pin = registerPin.value.trim();
+  document.getElementById('logoutBtn').onclick = logout;
+  document.getElementById('friendsBtn').onclick = showFriendsModal;
+  document.getElementById('ratingsBtn').onclick = showGlobalRatings;
   
-  if (!addonName || !tmdbKey || pin.length !== 4) return;
-  
-  const res = await fetch('/api/auth/register', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ 
-      username: tempUsername, 
-      pin, 
-      addonName, 
-      tmdbKey,
-      language: currentLang
-    })
+  document.getElementById('searchBtn').onclick = searchItems;
+  document.getElementById('searchInput').addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') searchItems();
   });
   
-  const data = await res.json();
+  document.getElementById('createListBtn').onclick = showCreateListModal;
   
-  if (data.success) {
-    currentUsername = tempUsername;
-    currentTmdbKey = tmdbKey;
-    currentAddonName = addonName;
-    
-    localStorage.setItem('username', currentUsername);
-    localStorage.setItem('pin', pin);
-    
-    const t = translations[currentLang] || translations.en;
-    document.getElementById('mainTitle').textContent = t.mainTitleTemplate.replace('{{username}}', currentUsername);
-    
-    document.getElementById('registerScreen').classList.remove('active');
-    document.getElementById('mainScreen').classList.add('active');
-    
-    loadLists(currentUsername);
-    loadFriends(currentUsername);
-    updateListTypePlaceholder();
-  } else {
-    alert(data.error || 'Error al registrar');
-  }
-});
-
-document.getElementById('changeUserBtn').addEventListener('click', () => {
-  if (!confirm('¿Cerrar sesión?')) return;
+  // Modales
+  document.getElementById('cancelCreateBtn').onclick = hideCreateListModal;
+  document.getElementById('confirmCreateBtn').onclick = createList;
+  document.getElementById('cancelSelectBtn').onclick = hideSelectListModal;
+  document.getElementById('closePinBtn').onclick = hideShareModal;
+  document.getElementById('cancelImportBtn').onclick = hideImportModal;
+  document.getElementById('closeFriendsBtn').onclick = hideFriendsModal;
+  document.getElementById('closeRatingsBtn').onclick = hideRatingsModal;
+  document.getElementById('cancelRatingBtn').onclick = hideRateModal;
+  document.getElementById('confirmRatingBtn').onclick = submitRating;
   
-  localStorage.removeItem('username');
-  localStorage.removeItem('pin');
-  
-  currentUsername = '';
-  currentTmdbKey = '';
-  currentAddonName = '';
-  tempUsername = '';
-  
-  welcomeUsername.value = '';
-  loginPin.value = '';
-  registerPin.value = '';
-  registerTmdbKey.value = '';
-  
-  document.getElementById('mainScreen').classList.remove('active');
-  document.getElementById('welcomeScreen').classList.add('active');
-});
-
-function updateUI() {
-  const t = translations[currentLang] || translations.en;
-  
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.getAttribute('data-i18n');
-    if (t[key]) {
-      if (key === 'mainTitleTemplate') {
-        el.textContent = t[key].replace('{{username}}', currentUsername);
-      } else {
-        el.textContent = t[key];
-      }
-    }
+  // Modales backdrop
+  document.querySelectorAll('.modal').forEach(modal => {
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) modal.classList.remove('active');
+    });
   });
   
-  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-    const key = el.getAttribute('data-i18n-placeholder');
-    if (t[key]) el.placeholder = t[key];
-  });
+  showWelcomeScreen();
+});
+
+// ========== PANTALLAS ==========
+function showWelcomeScreen() {
+  switchScreen('welcomeScreen');
 }
 
-document.getElementById('newListForm').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const name = document.getElementById('listName').value.trim();
-  const type = document.getElementById('listType').value.trim();
-  
-  if (!name || !type) return;
-  
-  const res = await fetch('/api/lists', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ username: currentUsername, list: { name, type } })
-  });
-  
-  if (res.ok) {
-    loadLists(currentUsername);
-    e.target.reset();
-    updateListTypePlaceholder();
-  }
-});
+function showNameInput() {
+  document.getElementById('languageSelectDiv').style.display = 'none';
+  document.getElementById('nameInputDiv').style.display = 'block';
+  document.getElementById('nameInput').focus();
+}
 
-async function getOptimalId(tmdbId, mediaType) {
+async function continueToMain() {
+  displayName = document.getElementById('nameInput').value.trim();
+  if (!displayName) return;
+  
+  await registerUser(displayName);
+  showLoginScreen();
+}
+
+function switchScreen(screenId) {
+  document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active'));
+  document.getElementById(screenId).classList.add('active');
+}
+
+function showLoginScreen() {
+  switchScreen('loginScreen');
+  document.getElementById('loginUsername').focus();
+}
+
+function showMainScreen() {
+  switchScreen('mainScreen');
+  updateAddonUrl();
+  loadLists();
+}
+
+// ========== AUTENTICACIÓN ==========
+async function registerUser(displayName) {
   try {
-    if (!currentTmdbKey) return `tmdb:${tmdbId}`;
+    const response = await fetch(`${API_URL}/api/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        username: displayName.toLowerCase().replace(/[^a-z0-9]/g, ''),
+        password: 'auto-generated', // No se usa realmente
+        displayName
+      })
+    });
     
-    const url = `https://api.themoviedb.org/3/${mediaType === 'tv' ? 'tv' : 'movie'}/${tmdbId}/external_ids?api_key=${currentTmdbKey}`;
-    const res = await fetch(url);
-    const data = await res.json();
-    
-    return data.imdb_id || `tmdb:${tmdbId}`;
-  } catch (e) {
-    return `tmdb:${tmdbId}`;
+    if (!response.ok) {
+      currentUser = displayName.toLowerCase().replace(/[^a-z0-9]/g, '');
+      await fetchUserData();
+    }
+  } catch (err) {
+    console.error('Register error:', err);
   }
 }
 
-function showListModal(item) {
-  pendingItem = item;
-  const modal = document.getElementById('listModal');
-  modal.classList.add('active');
+async function login() {
+  const username = document.getElementById('loginUsername').value.trim();
+  const password = document.getElementById('loginPassword').value;
+  
+  try {
+    const response = await fetch(`${API_URL}/api/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password })
+    });
+    
+    const data = await response.json();
+    if (data.success) {
+      currentUser = username;
+      displayName = data.displayName || username;
+      showMainScreen();
+    } else {
+      alert('Invalid credentials');
+    }
+  } catch (err) {
+    console.error('Login error:', err);
+    alert('Login failed');
+  }
 }
 
-document.getElementById('modalCancelBtn').addEventListener('click', () => {
-  document.getElementById('listModal').classList.remove('active');
-  pendingItem = null;
-});
-
-document.getElementById('modalAddBtn').addEventListener('click', async () => {
-  const listId = document.getElementById('modalListSelect').value;
-  if (!listId || !pendingItem) return;
-
-  const optimalId = await getOptimalId(pendingItem.tmdbId, pendingItem.mediaType);
-
-  await fetch(`/api/lists/${listId}/items`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ 
-      username: currentUsername, 
-      item: { 
-        tmdbId: pendingItem.tmdbId, 
-        imdbId: optimalId, 
-        mediaType: pendingItem.mediaType, 
-        title: pendingItem.title, 
-        poster: pendingItem.poster, 
-        overview: pendingItem.overview, 
-        rating: pendingItem.rating 
-      } 
-    })
-  });
+async function register() {
+  const username = document.getElementById('registerUsername').value.trim();
+  const password = document.getElementById('registerPassword').value;
   
-  alert('¡Añadido correctamente!');
-  document.getElementById('listModal').classList.remove('active');
-  pendingItem = null;
-  loadLists(currentUsername);
-});
-
-async function loadLists(username) {
-  const res = await fetch(`/api/lists?username=${username}`);
-  const lists = await res.json();
+  if (!username || !password) return alert('Please fill all fields');
   
-  const t = translations[currentLang] || translations.en;
-  const display = document.getElementById('listDisplay');
-  display.innerHTML = lists.length === 0 
-    ? `<p style="text-align:center; opacity:0.7;">${t.noLists}</p>`
-    : lists.map((list, idx) => `
-    <div class="list-item" draggable="true" data-id="${list.id}" data-index="${idx}">
-      <div class="list-info" onclick="showListDetail('${list.id}')">
-        <strong>${escapeHtml(list.name)}</strong> <span style="opacity:0.8">(${escapeHtml(list.type)})</span><br>
-        <small>${list.items?.length || 0} elementos</small>
-      </div>
-      <div class="list-actions">
-        <button onclick="shareList('${list.id}', '${escapeHtml(list.name)}', '${list.pin}')">${t.share}</button>
-        <button onclick="deleteList('${list.id}')" ${!list.isOwner ? 'disabled style="opacity:0.3"' : ''}>${t.delete}</button>
-        <div class="arrows">
-          <button onclick="moveList('${list.id}', ${idx}, -1)" ${idx === 0 ? 'disabled' : ''}>▲</button>
-          <button onclick="moveList('${list.id}', ${idx}, 1)" ${idx === lists.length - 1 ? 'disabled' : ''}>▼</button>
+  try {
+    const response = await fetch(`${API_URL}/api/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password, displayName: username })
+    });
+    
+    const data = await response.json();
+    if (data.success) {
+      currentUser = username;
+      displayName = username;
+      showMainScreen();
+    } else {
+      alert(data.error || 'Registration failed');
+    }
+  } catch (err) {
+    console.error('Register error:', err);
+    alert('Registration failed');
+  }
+}
+
+function logout() {
+  currentUser = null;
+  displayName = '';
+  showWelcomeScreen();
+}
+
+async function fetchUserData() {
+  try {
+    const response = await fetch(`${API_URL}/${currentUser}/manifest.json`);
+    const manifest = await response.json();
+    document.getElementById('mainTitle').textContent = manifest.name;
+  } catch (err) {
+    console.error('Fetch user data error:', err);
+  }
+}
+
+// ========== LISTAS ==========
+async function loadLists() {
+  try {
+    const response = await fetch(`${API_URL}/api/lists/${currentUser}`);
+    const data = await response.json();
+    allLists = data.lists;
+    renderLists();
+  } catch (err) {
+    console.error('Load lists error:', err);
+  }
+}
+
+function renderLists() {
+  const container = document.getElementById('listsContainer');
+  container.innerHTML = '';
+  
+  allLists.forEach((list, index) => {
+    const listEl = document.createElement('div');
+    listEl.className = 'list-item';
+    listEl.draggable = true;
+    listEl.dataset.listId = list.id;
+    
+    listEl.innerHTML = `
+      <div class="list-header">
+        <h3>${list.name}</h3>
+        <div>
+          <button onclick="toggleListContent('${list.id}')">▼</button>
+          <button onclick="showShareModal('${list.id}')">📤</button>
+          <button onclick="deleteList('${list.id}')">🗑️</button>
         </div>
       </div>
-    </div>
-  `).join('');
+      <p>${list.message || ''}</p>
+      <div class="list-actions">
+        <button onclick="showSelectListModal('${list.id}')">➕</button>
+        <div class="arrows">
+          <button onclick="moveList('${list.id}', -1)">⬅️</button>
+          <button onclick="moveList('${list.id}', 1)">➡️</button>
+        </div>
+        <button onclick="deleteList('${list.id}')">🗑️</button>
+      </div>
+      <div class="list-content" id="list-content-${list.id}">
+        <div class="list-items" id="list-items-${list.id}"></div>
+      </div>
+    `;
+    
+    container.appendChild(listEl);
+  });
   
-  document.querySelectorAll('.list-item').forEach(item => {
+  // Drag and drop
+  const listItems = container.querySelectorAll('.list-item');
+  listItems.forEach(item => {
     item.addEventListener('dragstart', handleDragStart);
     item.addEventListener('dragover', handleDragOver);
     item.addEventListener('drop', handleDrop);
-    item.addEventListener('dragend', handleDragEnd);
   });
-  
-  const modalListSelect = document.getElementById('modalListSelect');
-  modalListSelect.innerHTML = lists.map(l => `<option value="${l.id}">${escapeHtml(l.name)}</option>`).join('');
 }
 
-async function loadFriends(username) {
-  const res = await fetch(`/api/friends?username=${username}`);
-  const friends = await res.json();
-  
-  const t = translations[currentLang] || translations.en;
-  const display = document.getElementById('friendsDisplay');
-  
-  if (friends.length === 0) {
-    display.innerHTML = `<p style="text-align:center; opacity:0.7;">${t.noFriends}</p>`;
-  } else {
-    display.innerHTML = friends.map(f => `
-      <div class="friend-item">
-        <div class="friend-info" onclick="showFriendDetail('${escapeHtml(f.friend_username)}')">
-          <strong>${escapeHtml(f.friend_username)}</strong>
-        </div>
-        <button onclick="removeFriend('${escapeHtml(f.friend_username)}')">${t.removeFriend}</button>
-      </div>
-    `).join('');
+function toggleListContent(listId) {
+  const content = document.getElementById(`list-content-${listId}`);
+  content.classList.toggle('active');
+  loadListItems(listId);
+}
+
+async function loadListItems(listId) {
+  try {
+    const response = await fetch(`${API_URL}/api/lists/${listId}/items`);
+    const data = await response.json();
+    const container = document.getElementById(`list-items-${listId}`);
+    container.innerHTML = '';
+    
+    data.items.forEach(item => {
+      const itemEl = document.createElement('div');
+      itemEl.className = 'item-card';
+      itemEl.innerHTML = `
+        <img src="${item.poster}" alt="${item.title}">
+        <div class="item-title">${item.title}</div>
+        <button class="remove-btn" onclick="removeItem('${item.id}')">×</button>
+        <button class="rate-btn" onclick="showRateModal('${item.tmdb_id}', '${item.title}', '${item.poster}')">⭐ ${item.rating || '?'}</button>
+      `;
+      container.appendChild(itemEl);
+    });
+  } catch (err) {
+    console.error('Load items error:', err);
   }
 }
 
-document.getElementById('addFriendForm').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const friendUsername = document.getElementById('friendUsername').value.trim();
-  
-  if (!friendUsername || friendUsername === currentUsername) {
-    alert('Usuario inválido');
-    return;
-  }
-  
-  const res = await fetch('/api/friends/add', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ username: currentUsername, friendUsername })
-  });
-  
-  if (res.ok) {
-    loadFriends(currentUsername);
-    e.target.reset();
-  } else {
-    const data = await res.json();
-    alert(data.error || 'Error al añadir amigo');
-  }
-});
-
-async function removeFriend(friendUsername) {
-  if (!confirm(`¿Eliminar a ${friendUsername}?`)) return;
-  
-  await fetch(`/api/friends/${friendUsername}?username=${currentUsername}`, { method: 'DELETE' });
-  loadFriends(currentUsername);
-}
-
-async function showFriendDetail(friendUsername) {
-  document.getElementById('friendDetailTitle').textContent = friendUsername;
-  
-  const listsRes = await fetch(`/api/lists?username=${friendUsername}`);
-  const lists = await listsRes.json();
-  
-  const t = translations[currentLang] || translations.en;
-  const listsDisplay = document.getElementById('friendListsDisplay');
-  
-  listsDisplay.innerHTML = lists.length === 0
-    ? `<p style="opacity:0.7;">${t.noLists}</p>`
-    : lists.map(list => `
-      <div class="list-item">
-        <div class="list-info">
-          <strong>${escapeHtml(list.name)}</strong> <span style="opacity:0.8">(${escapeHtml(list.type)})</span><br>
-          <small>${list.items?.length || 0} elementos</small>
-        </div>
-      </div>
-    `).join('');
-  
-  document.getElementById('friendRatingsDisplay').innerHTML = '<p style="opacity:0.7;">Próximamente...</p>';
-  
-  document.getElementById('mainScreen').classList.remove('active');
-  document.getElementById('friendDetailScreen').classList.add('active');
-}
-
-document.getElementById('backFromFriendBtn').addEventListener('click', () => {
-  document.getElementById('friendDetailScreen').classList.remove('active');
-  document.getElementById('mainScreen').classList.add('active');
-});
-
-function escapeHtml(text) {
-  const div = document.createElement('div');
-  div.textContent = text;
-  return div.innerHTML;
-}
-
-let draggedElement = null;
+// ========== DRAG & DROP ==========
+let draggedItem = null;
 
 function handleDragStart(e) {
-  draggedElement = this;
-  this.classList.add('dragging');
+  draggedItem = this;
   e.dataTransfer.effectAllowed = 'move';
+  setTimeout(() => this.style.display = 'none', 0);
 }
 
 function handleDragOver(e) {
-  if (e.preventDefault) e.preventDefault();
-  this.classList.add('drag-over');
+  e.preventDefault();
   e.dataTransfer.dropEffect = 'move';
   return false;
 }
 
-function handleDrop(e) {
-  if (e.stopPropagation) e.stopPropagation();
-  
-  if (draggedElement !== this) {
-    const fromIndex = parseInt(draggedElement.dataset.index);
-    const toIndex = parseInt(this.dataset.index);
-    
-    moveList(draggedElement.dataset.id, fromIndex, toIndex - fromIndex);
+async function handleDrop(e) {
+  e.preventDefault();
+  if (draggedItem !== this) {
+    const listIds = Array.from(document.querySelectorAll('.list-item')).map(item => item.dataset.listId);
+    await fetch(`${API_URL}/api/lists/reorder`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ listIds })
+    });
+    loadLists();
   }
+  draggedItem.style.display = 'block';
+  draggedItem = null;
+}
+
+// ========== MODALES DE LISTAS ==========
+function showCreateListModal() {
+  document.getElementById('createListModal').classList.add('active');
+  document.getElementById('newListName').focus();
+}
+
+function hideCreateListModal() {
+  document.getElementById('createListModal').classList.remove('active');
+}
+
+async function createList() {
+  const name = document.getElementById('newListName').value.trim();
+  const message = document.getElementById('newListMessage').value;
   
-  return false;
+  if (!name) return;
+  
+  try {
+    const response = await fetch(`${API_URL}/api/lists`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: currentUser, name, message })
+    });
+    
+    const data = await response.json();
+    if (data.success) {
+      hideCreateListModal();
+      loadLists();
+    }
+  } catch (err) {
+    console.error('Create list error:', err);
+  }
 }
 
-function handleDragEnd() {
-  document.querySelectorAll('.list-item').forEach(item => {
-    item.classList.remove('dragging', 'drag-over');
+function showSelectListModal(listId) {
+  const modal = document.getElementById('selectListModal');
+  const options = document.getElementById('selectListOptions');
+  options.innerHTML = '';
+  
+  allLists.filter(list => list.id !== listId).forEach(list => {
+    const btn = document.createElement('button');
+    btn.textContent = list.name;
+    btn.onclick = () => addItemToList(listId, list.id);
+    options.appendChild(btn);
   });
+  
+  modal.classList.add('active');
 }
 
-async function shareList(id, name, pin) {
-  document.getElementById('pinDisplay').textContent = pin;
-  document.getElementById('showPinModal').classList.add('active');
+function hideSelectListModal() {
+  document.getElementById('selectListModal').classList.remove('active');
 }
 
-document.getElementById('copyPinBtn').addEventListener('click', () => {
-  const pin = document.getElementById('pinDisplay').textContent;
-  navigator.clipboard.writeText(pin);
-  alert('¡PIN copiado!');
-});
-
-document.getElementById('closePinBtn').addEventListener('click', () => {
-  document.getElementById('showPinModal').classList.remove('active');
-});
-
-async function deleteList(id) {
-  if (!confirm('¿Eliminar esta lista?')) return;
-  await fetch(`/api/lists/${id}?username=${currentUsername}`, { method: 'DELETE' });
-  loadLists(currentUsername);
+function showShareModal(listId) {
+  const list = allLists.find(l => l.id === listId);
+  document.getElementById('sharePinInput').value = list.pin;
+  document.getElementById('shareModal').classList.add('active');
 }
 
-async function moveList(id, currentIndex, direction) {
-  const newOrder = currentIndex + direction;
-  await fetch(`/api/lists/${id}/reorder`, {
+function hideShareModal() {
+  document.getElementById('shareModal').classList.remove('active');
+}
+
+async function deleteList(listId) {
+  if (!confirm('Delete this list?')) return;
+  
+  try {
+    await fetch(`${API_URL}/api/lists/${listId}`, { method: 'DELETE' });
+    loadLists();
+  } catch (err) {
+    console.error('Delete list error:', err);
+  }
+}
+
+async function moveList(listId, direction) {
+  const lists = [...allLists];
+  const currentIndex = lists.findIndex(l => l.id === listId);
+  const newIndex = currentIndex + direction;
+  
+  if (newIndex < 0 || newIndex >= lists.length) return;
+  
+  [lists[currentIndex], lists[newIndex]] = [lists[newIndex], lists[currentIndex]];
+  allLists = lists;
+  
+  const listIds = lists.map(l => l.id);
+  await fetch(`${API_URL}/api/lists/reorder`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ username: currentUsername, newOrder })
+    body: JSON.stringify({ listIds })
   });
-  loadLists(currentUsername);
+  
+  renderLists();
 }
 
-document.getElementById('importBtn').addEventListener('click', () => {
-  document.getElementById('pinModal').classList.add('active');
-});
-
-document.getElementById('pinCancelBtn').addEventListener('click', () => {
-  document.getElementById('pinModal').classList.remove('active');
-  document.getElementById('pinInput').value = '';
-});
-
-document.getElementById('pinImportBtn').addEventListener('click', async () => {
-  const pin = document.getElementById('pinInput').value.trim();
-  if (pin.length !== 6) {
-    alert('El PIN debe tener 6 dígitos');
-    return;
+async function removeItem(itemId) {
+  if (!confirm('Remove this item?')) return;
+  
+  try {
+    await fetch(`${API_URL}/api/lists/${listId}/items/${itemId}`, { method: 'DELETE' });
+    loadListItems(currentListId); // Necesitas currentListId en contexto
+  } catch (err) {
+    console.error('Remove item error:', err);
   }
+}
+
+// CONTINÚA EN LA SIGUIENTE PARTE...
+// ========== BÚSQUEDA FULLSCREEN ==========
+async function searchItems() {
+  const query = document.getElementById('searchInput').value.trim();
+  if (!query) return;
   
-  const res = await fetch('/api/lists/import-pin', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ username: currentUsername, pin })
-  });
-  
-  if (res.ok) {
-    alert('¡Lista importada correctamente!');
-    document.getElementById('pinModal').classList.remove('active');
-    document.getElementById('pinInput').value = '';
-    loadLists(currentUsername);
-  } else {
-    const data = await res.json();
-    alert(data.error || 'PIN no válido');
+  try {
+    // Búsqueda TMDB
+    const response = await fetch(
+      `https://api.themoviedb.org/3/search/multi?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(query)}&language=${currentLanguage}&page=1`
+    );
+    
+    const data = await response.json();
+    currentSearchResults = data.results.slice(0, 20); // Limitar a 20 resultados
+    currentDetailIndex = 0;
+    
+    if (currentSearchResults.length > 0) {
+      showItemDetailModal(0);
+    }
+  } catch (err) {
+    console.error('Search error:', err);
+    alert('Search failed');
   }
-});
+}
 
-document.getElementById('copyInstallBtn').addEventListener('click', () => {
-  const url = `${window.location.origin}/manifest.json?username=${currentUsername}&addonName=${encodeURIComponent(currentAddonName)}`;
-  navigator.clipboard.writeText(url);
-  alert('¡URL copiada!');
-});
-
-document.getElementById('installBtn').addEventListener('click', () => {
-  const url = `stremio://${window.location.host}/manifest.json?username=${currentUsername}&addonName=${encodeURIComponent(currentAddonName)}`;
-  window.open(url, '_blank');
-});
-
-async function showListDetail(listId) {
-  currentListId = listId;
-  const res = await fetch(`/api/lists/${listId}?username=${currentUsername}`);
-  const list = await res.json();
+function showItemDetailModal(index) {
+  if (index < 0 || index >= currentSearchResults.length) return;
   
-  document.getElementById('listDetailTitle').textContent = list.name;
+  currentDetailIndex = index;
+  const item = currentSearchResults[index];
+  const detailModal = document.getElementById('itemDetailModal');
   
-  const t = translations[currentLang] || translations.en;
-  const itemsContainer = document.getElementById('listDetailItems');
-  itemsContainer.innerHTML = list.items.length === 0
-    ? `<p style="text-align:center; opacity:0.7;">${t.noItems}</p>`
-    : list.items.map(item => `
-      <div class="detail-item">
-        <div class="detail-item-content">
-          <img src="${item.poster ? `https://image.tmdb.org/t/p/w200${item.poster}` : 'image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'80\' height=\'120\'%3E%3Crect fill=\'%23333\' width=\'80\' height=\'120\'/%3E%3C/svg%3E'}" alt="${escapeHtml(item.title)}">
-          <div class="detail-item-info">
-            <div class="detail-item-title">
-              <strong>${escapeHtml(item.title)}</strong>
-              ${item.rating ? `<span class="rating">${escapeHtml(item.rating)}</span>` : ''}
-            </div>
-            <div class="overview">${escapeHtml(item.overview) || 'Sin sinopsis'}</div>
-          </div>
-        </div>
-        <div class="detail-item-actions">
-          <button onclick="openRatingModal('${item.id}')">${t.rate}</button>
-          <button onclick="viewRatings('${item.id}')">${item.avgRating ? '⭐ ' + item.avgRating : t.viewRatings}</button>
-          ${list.isOwner ? `<button class="delete-btn" onclick="deleteItem('${listId}', '${item.id}')">${t.deleteItem}</button>` : ''}
-        </div>
+  document.getElementById('detailTitle').textContent = item.title || item.name || 'Unknown';
+  document.getElementById('detailPoster').src = `https://image.tmdb.org/t/p/w500${item.poster_path}`;
+  document.getElementById('detailPoster').alt = item.title || item.name;
+  document.getElementById('detailBackdrop').style.backgroundImage = `url(https://image.tmdb.org/t/p/original${item.backdrop_path || item.poster_path})`;
+  
+  // Meta info
+  document.getElementById('detailRating').textContent = `⭐ ${item.vote_average ? (item.vote_average / 2).toFixed(1) : '--'}`;
+  document.getElementById('detailYear').textContent = item.release_date?.substring(0, 4) || item.first_air_date?.substring(0, 4) || '----';
+  document.getElementById('detailRuntime').textContent = item.runtime ? `${item.runtime} min` : '-- min';
+  document.getElementById('detailOverview').textContent = item.overview || 'No description available';
+  
+  // Director y cast (simplificado)
+  document.getElementById('detailDirector').textContent = 'Various';
+  document.getElementById('detailCast').textContent = 'Multiple actors';
+  
+  // Reviews simuladas (en producción conectar a BD)
+  renderReviews();
+  
+  detailModal.classList.add('active');
+}
+
+function renderReviews() {
+  const reviewsContainer = document.getElementById('detailReviews');
+  const sampleReviews = [
+    { user: 'john_doe', rating: 8, text: 'Great movie! Highly recommended.', time: '2h ago' },
+    { user: 'mary_smith', rating: 7, text: 'Good but predictable plot.', time: '5h ago' },
+    { user: 'fan123', rating: 9, text: 'Masterpiece! Best of the year.', time: '1d ago' }
+  ];
+  
+  reviewsContainer.innerHTML = sampleReviews.map(review => `
+    <div class="review-item">
+      <div class="review-header">
+        <span>${review.user}</span>
+        <span>⭐ ${review.rating}/10 ${review.time}</span>
       </div>
-    `).join('');
-  
-  document.getElementById('mainScreen').classList.remove('active');
-  document.getElementById('listDetailScreen').classList.add('active');
+      <div class="review-text">${review.text}</div>
+    </div>
+  `).join('');
 }
 
-document.getElementById('backBtn').addEventListener('click', () => {
-  document.getElementById('listDetailScreen').classList.remove('active');
-  document.getElementById('mainScreen').classList.add('active');
-  loadLists(currentUsername);
-});
+document.getElementById('closeDetailBtn').onclick = () => {
+  document.getElementById('itemDetailModal').classList.remove('active');
+};
 
-async function deleteItem(listId, itemId) {
-  if (!confirm('¿Eliminar este elemento?')) return;
+document.getElementById('prevItemBtn').onclick = () => showItemDetailModal(currentDetailIndex - 1);
+document.getElementById('nextItemBtn').onclick = () => showItemDetailModal(currentDetailIndex + 1);
+
+document.getElementById('detailTrailerBtn').onclick = async () => {
+  const item = currentSearchResults[currentDetailIndex];
+  const tmdbId = item.id;
+  const mediaType = item.media_type || (item.title ? 'movie' : 'tv');
   
-  await fetch(`/api/lists/${listId}/items/${itemId}?username=${currentUsername}`, { method: 'DELETE' });
-  showListDetail(listId);
-}
+  try {
+    const response = await fetch(
+      `https://api.themoviedb.org/3/${mediaType}/${tmdbId}/videos?api_key=${TMDB_API_KEY}&language=${currentLanguage}`
+    );
+    const data = await response.json();
+    const trailer = data.results.find(v => v.type === 'Trailer' && v.site === 'YouTube');
+    
+    if (trailer) {
+      window.open(`https://www.youtube.com/watch?v=${trailer.key}`, '_blank');
+    } else {
+      alert('No trailer found');
+    }
+  } catch (err) {
+    console.error('Trailer error:', err);
+    alert('Trailer search failed');
+  }
+};
 
-function openRatingModal(itemId) {
-  currentItemId = itemId;
-  selectedRating = 0;
-  document.querySelectorAll('.star').forEach(star => star.classList.remove('active'));
-  document.getElementById('reviewText').value = '';
-  document.getElementById('ratingModal').classList.add('active');
+document.getElementById('detailAddBtn').onclick = () => {
+  const item = currentSearchResults[currentDetailIndex];
+  showSelectListModalForItem(item);
+};
+
+// ========== SISTEMA DE RATINGS 1-10 ESTRELLAS ==========
+function showRateModal(tmdbId, title, poster) {
+  document.getElementById('rateItemName').textContent = title;
+  document.querySelector('.star-rating').dataset.tmdbId = tmdbId;
+  document.querySelector('.star-rating').dataset.title = title;
+  document.querySelector('.star-rating').dataset.poster = poster;
+  document.getElementById('rateModal').classList.add('active');
+  
+  // Reset stars
+  document.querySelectorAll('.star').forEach(star => {
+    star.classList.remove('active');
+  });
 }
 
 document.querySelectorAll('.star').forEach(star => {
-  star.addEventListener('click', function() {
-    selectedRating = parseInt(this.dataset.rating);
-    document.querySelectorAll('.star').forEach((s, idx) => {
-      if (idx < selectedRating) {
+  star.onclick = (e) => {
+    const value = parseInt(e.target.dataset.value);
+    document.getElementById('ratingValue').textContent = `${value}/10`;
+    
+    document.querySelectorAll('.star').forEach((s, index) => {
+      if (index < value) {
         s.classList.add('active');
       } else {
         s.classList.remove('active');
       }
     });
-  });
+  };
 });
 
-document.getElementById('submitRatingBtn').addEventListener('click', async () => {
-  if (selectedRating === 0) {
-    alert('Por favor selecciona una calificación');
-    return;
-  }
+async function submitRating() {
+  const stars = document.querySelectorAll('.star.active');
+  const rating = stars.length;
+  const starContainer = document.querySelector('.star-rating');
+  const tmdbId = starContainer.dataset.tmdbId;
+  const title = starContainer.dataset.title;
+  const poster = starContainer.dataset.poster;
   
-  const review = document.getElementById('reviewText').value.trim();
+  if (!rating) return;
   
-  await fetch(`/api/items/${currentItemId}/rate`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ username: currentUsername, stars: selectedRating, review })
-  });
-  
-  alert('¡Calificación guardada!');
-  document.getElementById('ratingModal').classList.remove('active');
-  showListDetail(currentListId);
-});
-
-document.getElementById('cancelRatingBtn').addEventListener('click', () => {
-  document.getElementById('ratingModal').classList.remove('active');
-});
-
-async function viewRatings(itemId) {
-  const res = await fetch(`/api/items/${itemId}/ratings`);
-  const ratings = await res.json();
-  
-  const t = translations[currentLang] || translations.en;
-  const display = document.getElementById('ratingsDisplay');
-  
-  if (ratings.length === 0) {
-    display.innerHTML = '<p style="text-align:center; opacity:0.7;">No hay calificaciones aún</p>';
-  } else {
-    display.innerHTML = ratings.map(r => `
-      <div class="rating-item">
-        <div class="rating-item-header">
-          <span class="rating-item-user">${escapeHtml(r.username)}</span>
-          <span class="rating-item-stars">${'★'.repeat(r.stars)}${'☆'.repeat(5 - r.stars)}</span>
-        </div>
-        ${r.review ? `<div class="rating-item-review">${escapeHtml(r.review)}</div>` : ''}
-      </div>
-    `).join('');
-  }
-  
-  document.getElementById('viewRatingsModal').classList.add('active');
-}
-
-document.getElementById('closeRatingsBtn').addEventListener('click', () => {
-  document.getElementById('viewRatingsModal').classList.remove('active');
-});
-
-let searchTimeout;
-document.getElementById('searchInput').addEventListener('input', (e) => {
-  clearTimeout(searchTimeout);
-  const q = e.target.value.trim();
-  
-  if (q.length === 0) {
-    document.getElementById('searchResults').innerHTML = '';
-    return;
-  }
-  
-  if (q.length < 3 || !currentTmdbKey) return;
-  
-  searchTimeout = setTimeout(async () => {
-    const langMap = { es: 'es-ES', en: 'en-US', fr: 'fr-FR', de: 'de-DE', it: 'it-IT', pt: 'pt-PT', ru: 'ru-RU', ja: 'ja-JP', zh: 'zh-CN' };
-    const res = await fetch(`/api/tmdb/search?q=${encodeURIComponent(q)}&key=${currentTmdbKey}&lang=${langMap[currentLang] || 'en-US'}`);
-    const data = await res.json();
-    
-    const results = (data.results || [])
-      .filter(item => item.media_type === 'movie' || item.media_type === 'tv')
-      .sort((a, b) => (b.vote_count || 0) - (a.vote_count || 0))
-      .slice(0, 12);
-    
-    document.getElementById('searchResults').innerHTML = results
-      .map(item => {
-        const title = item.title || item.name;
-        const mediaType = item.media_type;
-        const overview = item.overview || 'No hay sinopsis disponible';
-        const rating = item.vote_average ? `⭐ ${item.vote_average.toFixed(1)}` : '';
-        const poster = item.poster_path || '';
-        
-        const itemData = {
-          tmdbId: item.id,
-          mediaType: mediaType,
-          title: title,
-          poster: poster,
-          overview: overview,
-          rating: rating
-        };
-        
-        const itemDataStr = JSON.stringify(itemData).replace(/"/g, '&quot;');
-        
-        return `
-          <div class="search-item" onclick='showListModal(${itemDataStr})'>
-            <img src="https://image.tmdb.org/t/p/w200${poster}" alt="${escapeHtml(title)}" onerror="this.src='image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'80\\' height=\\'120\\'%3E%3Crect fill=\\'%23333\\' width=\\'80\\' height=\\'120\\'/%3E%3C/svg%3E'">
-            <div class="search-item-info">
-              <strong>${escapeHtml(title)}</strong>
-              <small>${mediaType.toUpperCase()}</small>
-              ${rating ? `<div class="rating">${rating}</div>` : ''}
-              <div class="overview">${escapeHtml(overview)}</div>
-            </div>
-          </div>
-        `;
-      }).join('');
-  }, 600);
-});
-
-window.addEventListener('DOMContentLoaded', () => {
-  const savedUsername = localStorage.getItem('username');
-  const savedPin = localStorage.getItem('pin');
-  
-  if (savedUsername && savedPin) {
-    fetch('/api/auth/login', {
+  try {
+    await fetch(`${API_URL}/api/ratings`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username: savedUsername, pin: savedPin })
-    })
-    .then(res => res.json())
-    .then(data => {
-      if (data.success) {
-        currentUsername = savedUsername;
-        currentTmdbKey = data.user.tmdb_key;
-        currentAddonName = data.user.addon_name;
-        currentLang = data.user.language || 'en';
-        langSelect.value = currentLang;
-        
-        const t = translations[currentLang] || translations.en;
-        document.getElementById('mainTitle').textContent = t.mainTitleTemplate.replace('{{username}}', currentUsername);
-        
-        document.getElementById('welcomeScreen').classList.remove('active');
-        document.getElementById('mainScreen').classList.add('active');
-        
-        loadLists(currentUsername);
-        loadFriends(currentUsername);
-        updateListTypePlaceholder();
-        updateUI();
-      }
+      body: JSON.stringify({
+        username: currentUser,
+        tmdbId,
+        mediaType: 'movie', // Simplificado
+        title,
+        poster,
+        rating
+      })
     });
+    
+    hideRateModal();
+    alert('Rating saved!');
+  } catch (err) {
+    console.error('Submit rating error:', err);
+    alert('Rating failed');
+  }
+}
+
+function hideRateModal() {
+  document.getElementById('rateModal').classList.remove('active');
+}
+
+// ========== AMIGOS ==========
+async function showFriendsModal() {
+  await loadFriends();
+  document.getElementById('friendsModal').classList.add('active');
+}
+
+async function loadFriends() {
+  try {
+    const response = await fetch(`${API_URL}/api/friends/${currentUser}`);
+    const data = await response.json();
+    
+    const friendsList = document.getElementById('friendsList');
+    friendsList.innerHTML = '';
+    
+    data.friends.forEach(friend => {
+      const friendEl = document.createElement('div');
+      friendEl.className = 'friend-item';
+      friendEl.onclick = () => showFriendProfile(friend);
+      friendEl.innerHTML = `
+        <span>${friend}</span>
+        <span>👤</span>
+      `;
+      friendsList.appendChild(friendEl);
+    });
+  } catch (err) {
+    console.error('Load friends error:', err);
+  }
+}
+
+document.getElementById('addFriendBtn').onclick = async () => {
+  const friendUsername = document.getElementById('friendUsernameInput').value.trim();
+  if (!friendUsername) return;
+  
+  try {
+    await fetch(`${API_URL}/api/friends`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: currentUser, friendUsername })
+    });
+    
+    document.getElementById('friendUsernameInput').value = '';
+    loadFriends();
+  } catch (err) {
+    console.error('Add friend error:', err);
+    alert('Friend already added or not found');
+  }
+};
+
+async function showFriendProfile(username) {
+  document.getElementById('friendProfileName').textContent = username;
+  
+  // Load ratings
+  try {
+    const ratingsResponse = await fetch(`${API_URL}/api/ratings/user/${username}`);
+    const ratingsData = await ratingsResponse.json();
+    
+    const ratingsContainer = document.getElementById('friendRatingsList');
+    ratingsContainer.innerHTML = '';
+    
+    ratingsData.ratings.slice(0, 10).forEach(rating => {
+      const ratingEl = document.createElement('div');
+      ratingEl.className = 'rating-item';
+      ratingEl.innerHTML = `
+        <div>
+          <strong>${rating.title}</strong><br>
+          <span>⭐ ${rating.rating}/10</span>
+        </div>
+      `;
+      ratingsContainer.appendChild(ratingEl);
+    });
+  } catch (err) {
+    console.error('Load friend ratings error:', err);
   }
   
-  updateUI();
+  // Load lists
+  try {
+    const listsResponse = await fetch(`${API_URL}/api/friends/${username}/lists`);
+    const listsData = await listsResponse.json();
+    
+    const listsContainer = document.getElementById('friendListsContainer');
+    listsContainer.innerHTML = '';
+    
+    listsData.lists.forEach(list => {
+      const listEl = document.createElement('div');
+      listEl.className = 'friend-list-item';
+      listEl.innerHTML = `
+        <span>${list.name}</span>
+        <button onclick="importFriendList('${username}', '${list.id}')">${t('importList')}</button>
+      `;
+      listsContainer.appendChild(listEl);
+    });
+  } catch (err) {
+    console.error('Load friend lists error:', err);
+  }
+  
+  document.getElementById('friendProfileModal').classList.add('active');
+}
+
+function hideFriendsModal() {
+  document.getElementById('friendsModal').classList.remove('active');
+}
+
+// ========== IMPORTAR LISTA DE AMIGO ==========
+async function importFriendList(friendUsername, listId) {
+  if (!confirm('Import this list?')) return;
+  
+  try {
+    const response = await fetch(`${API_URL}/api/lists/import`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: currentUser, pin: 'friend' }) // En producción usar PIN real
+    });
+    
+    const data = await response.json();
+    if (data.success) {
+      loadLists();
+      alert('List imported!');
+    }
+  } catch (err) {
+    console.error('Import friend list error:', err);
+    alert('Import failed');
+  }
+}
+
+// ========== URL DEL ADDON ==========
+function updateAddonUrl() {
+  const addonUrl = `${API_URL}/${currentUser}`;
+  document.getElementById('addonUrl').textContent = addonUrl;
+  document.getElementById('addonUrl').title = 'Copy to install in Stremio';
+  
+  document.getElementById('addonUrl').onclick = () => {
+    navigator.clipboard.writeText(addonUrl);
+    alert('Addon URL copied!');
+  };
+}
+
+// ========== FUNCIONES AUXILIARES ==========
+async function addItemToList(listId, targetListId) {
+  const item = currentSearchResults[currentDetailIndex];
+  
+  try {
+    await fetch(`${API_URL}/api/lists/${targetListId}/items`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        username: currentUser,
+        item: {
+          tmdbId: item.id,
+          imdbId: item.imdb_id || '',
+          mediaType: item.media_type || (item.title ? 'movie' : 'tv'),
+          title: item.title || item.name,
+          poster: `https://image.tmdb.org/t/p/w500${item.poster_path}`,
+          overview: item.overview,
+          rating: item.vote_average,
+          releaseDate: item.release_date || item.first_air_date,
+          runtime: item.runtime,
+          genres: item.genre_ids?.join(', '),
+          director: '',
+          cast: ''
+        }
+      })
+    });
+    
+    hideSelectListModal();
+    document.getElementById('itemDetailModal').classList.remove('active');
+    loadListItems(targetListId);
+    alert('Item added!');
+  } catch (err) {
+    console.error('Add item error:', err);
+    alert('Failed to add item');
+  }
+}
+
+function hideFriendProfile() {
+  document.getElementById('friendProfileModal').classList.remove('active');
+}
+
+// Event listeners para tabs de amigos
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.onclick = () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab + 'Content').classList.add('active');
+  };
 });
+
+// Filter ratings
+document.getElementById('allRatingsBtn').onclick = () => filterRatings('all');
+document.getElementById('friendsRatingsBtn').onclick = () => filterRatings('friends');
+
+async function showGlobalRatings() {
+  currentRatingFilter = 'all';
+  await loadRatings();
+  document.getElementById('ratingsModal').classList.add('active');
+}
+
+async function loadRatings() {
+  // En producción cargar ratings populares o recientes
+  const ratingsList = document.getElementById('ratingsList');
+  ratingsList.innerHTML = `
+    <div class="rating-item">
+      <strong>Inception</strong><br>
+      <span>Average: ⭐ 8.7/10 (124 ratings)</span>
+      <button onclick="showRatingsForItem('tt1375666')">View ratings</button>
+    </div>
+  `;
+}
+
+function filterRatings(filter) {
+  currentRatingFilter = filter;
+  document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+  event.target.classList.add('active');
+  // Reload ratings with filter
+  loadRatings();
+}
+
+function showRatingsForItem(imdbId) {
+  // Mostrar ratings específicos del item
+}
+
+// Añadir event listeners faltantes
+document.getElementById('closeFriendProfileBtn').onclick = hideFriendProfile;
+document.getElementById('closeDetailBtn').onclick = () => document.getElementById('itemDetailModal').classList.remove('active');
+
+console.log('✅ CustomLibrary Frontend loaded');
