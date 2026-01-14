@@ -14,32 +14,31 @@ const pool = new Pool({
 });
 
 async function initDB() {
+  const client = await pool.connect();
   try {
     console.log('🔥 Initializing database...');
     
-    // FORCE RESET: Cambia a true SOLO LA PRIMERA VEZ, luego vuelve a false
-    const forceReset = true; // ⚠️ CAMBIAR A false DESPUÉS DEL PRIMER DEPLOY
+    const forceReset = true;
     
     if (forceReset) {
       console.log('⚠️  FORCE RESET ENABLED - Dropping all tables...');
-      await pool.query('DROP TABLE IF EXISTS watched_items CASCADE');
-      await pool.query('DROP TABLE IF EXISTS activity_feed CASCADE');
-      await pool.query('DROP TABLE IF EXISTS user_achievements CASCADE');
-      await pool.query('DROP TABLE IF EXISTS list_comments CASCADE');
-      await pool.query('DROP TABLE IF EXISTS list_votes CASCADE');
-      await pool.query('DROP TABLE IF EXISTS item_ratings CASCADE');
-      await pool.query('DROP TABLE IF EXISTS item_notes CASCADE');
-      await pool.query('DROP TABLE IF EXISTS item_tags CASCADE');
-      await pool.query('DROP TABLE IF EXISTS list_items CASCADE');
-      await pool.query('DROP TABLE IF EXISTS list_collaborators CASCADE');
-      await pool.query('DROP TABLE IF EXISTS lists CASCADE');
-      await pool.query('DROP TABLE IF EXISTS user_friends CASCADE');
-      await pool.query('DROP TABLE IF EXISTS users CASCADE');
+      await client.query('DROP TABLE IF EXISTS watched_items CASCADE');
+      await client.query('DROP TABLE IF EXISTS activity_feed CASCADE');
+      await client.query('DROP TABLE IF EXISTS user_achievements CASCADE');
+      await client.query('DROP TABLE IF EXISTS list_comments CASCADE');
+      await client.query('DROP TABLE IF EXISTS list_votes CASCADE');
+      await client.query('DROP TABLE IF EXISTS item_ratings CASCADE');
+      await client.query('DROP TABLE IF EXISTS item_notes CASCADE');
+      await client.query('DROP TABLE IF EXISTS item_tags CASCADE');
+      await client.query('DROP TABLE IF EXISTS list_items CASCADE');
+      await client.query('DROP TABLE IF EXISTS list_collaborators CASCADE');
+      await client.query('DROP TABLE IF EXISTS lists CASCADE');
+      await client.query('DROP TABLE IF EXISTS user_friends CASCADE');
+      await client.query('DROP TABLE IF EXISTS users CASCADE');
       console.log('✅ All tables dropped successfully');
     }
     
-    // Crear USERS con TODAS las columnas desde el inicio
-    await pool.query(`
+    await client.query(`
       CREATE TABLE IF NOT EXISTS users (
         username VARCHAR(255) PRIMARY KEY,
         pin VARCHAR(4) NOT NULL,
@@ -49,21 +48,21 @@ async function initDB() {
         theme VARCHAR(20) DEFAULT 'dark',
         streaming_services TEXT[] DEFAULT '{}',
         created_at TIMESTAMP DEFAULT NOW()
-      );
+      )
     `);
     console.log('✅ Users table created');
     
-    await pool.query(`
+    await client.query(`
       CREATE TABLE IF NOT EXISTS user_friends (
         username VARCHAR(255) REFERENCES users(username) ON DELETE CASCADE,
         friend_username VARCHAR(255),
         added_at TIMESTAMP DEFAULT NOW(),
         PRIMARY KEY (username, friend_username)
-      );
+      )
     `);
     console.log('✅ User friends table created');
     
-    await pool.query(`
+    await client.query(`
       CREATE TABLE IF NOT EXISTS lists (
         id UUID PRIMARY KEY,
         owner VARCHAR(255) REFERENCES users(username) ON DELETE CASCADE,
@@ -73,21 +72,21 @@ async function initDB() {
         pin VARCHAR(6) UNIQUE,
         is_collaborative BOOLEAN DEFAULT false,
         created_at TIMESTAMP DEFAULT NOW()
-      );
+      )
     `);
     console.log('✅ Lists table created');
     
-    await pool.query(`
+    await client.query(`
       CREATE TABLE IF NOT EXISTS list_collaborators (
         list_id UUID REFERENCES lists(id) ON DELETE CASCADE,
         username VARCHAR(255),
         added_at TIMESTAMP DEFAULT NOW(),
         PRIMARY KEY (list_id, username)
-      );
+      )
     `);
     console.log('✅ List collaborators table created');
     
-    await pool.query(`
+    await client.query(`
       CREATE TABLE IF NOT EXISTS list_items (
         id UUID PRIMARY KEY,
         list_id UUID REFERENCES lists(id) ON DELETE CASCADE,
@@ -104,24 +103,24 @@ async function initDB() {
         runtime INTEGER,
         genres TEXT[],
         director VARCHAR(255),
-        cast TEXT[]
-      );
+        cast_members TEXT[]
+      )
     `);
     console.log('✅ List items table created');
     
-    await pool.query(`
+    await client.query(`
       CREATE TABLE IF NOT EXISTS item_tags (
         id UUID PRIMARY KEY,
         item_id UUID REFERENCES list_items(id) ON DELETE CASCADE,
         username VARCHAR(255),
         tag VARCHAR(100),
-        created_at TIMESTAMP DEFAULT NOW(),
-        UNIQUE(item_id, username, tag)
-      );
+        created_at TIMESTAMP DEFAULT NOW()
+      )
     `);
+    await client.query(`CREATE UNIQUE INDEX IF NOT EXISTS idx_item_tags_unique ON item_tags(item_id, username, tag)`);
     console.log('✅ Item tags table created');
     
-    await pool.query(`
+    await client.query(`
       CREATE TABLE IF NOT EXISTS item_notes (
         id UUID PRIMARY KEY,
         item_id UUID REFERENCES list_items(id) ON DELETE CASCADE,
@@ -129,39 +128,39 @@ async function initDB() {
         note TEXT,
         is_private BOOLEAN DEFAULT true,
         created_at TIMESTAMP DEFAULT NOW(),
-        updated_at TIMESTAMP DEFAULT NOW(),
-        UNIQUE(item_id, username)
-      );
+        updated_at TIMESTAMP DEFAULT NOW()
+      )
     `);
+    await client.query(`CREATE UNIQUE INDEX IF NOT EXISTS idx_item_notes_unique ON item_notes(item_id, username)`);
     console.log('✅ Item notes table created');
     
-    await pool.query(`
+    await client.query(`
       CREATE TABLE IF NOT EXISTS item_ratings (
         id UUID PRIMARY KEY,
         item_id UUID REFERENCES list_items(id) ON DELETE CASCADE,
         username VARCHAR(255),
         stars INTEGER CHECK (stars >= 1 AND stars <= 5),
         review TEXT,
-        created_at TIMESTAMP DEFAULT NOW(),
-        UNIQUE(item_id, username)
-      );
+        created_at TIMESTAMP DEFAULT NOW()
+      )
     `);
+    await client.query(`CREATE UNIQUE INDEX IF NOT EXISTS idx_item_ratings_unique ON item_ratings(item_id, username)`);
     console.log('✅ Item ratings table created');
     
-    await pool.query(`
+    await client.query(`
       CREATE TABLE IF NOT EXISTS list_votes (
         id UUID PRIMARY KEY,
         list_id UUID REFERENCES lists(id) ON DELETE CASCADE,
         item_id UUID REFERENCES list_items(id) ON DELETE CASCADE,
         username VARCHAR(255),
         vote INTEGER CHECK (vote IN (-1, 1)),
-        created_at TIMESTAMP DEFAULT NOW(),
-        UNIQUE(list_id, item_id, username)
-      );
+        created_at TIMESTAMP DEFAULT NOW()
+      )
     `);
+    await client.query(`CREATE UNIQUE INDEX IF NOT EXISTS idx_list_votes_unique ON list_votes(list_id, item_id, username)`);
     console.log('✅ List votes table created');
     
-    await pool.query(`
+    await client.query(`
       CREATE TABLE IF NOT EXISTS list_comments (
         id UUID PRIMARY KEY,
         list_id UUID REFERENCES lists(id) ON DELETE CASCADE,
@@ -169,22 +168,22 @@ async function initDB() {
         username VARCHAR(255),
         comment TEXT,
         created_at TIMESTAMP DEFAULT NOW()
-      );
+      )
     `);
     console.log('✅ List comments table created');
     
-    await pool.query(`
+    await client.query(`
       CREATE TABLE IF NOT EXISTS user_achievements (
         id UUID PRIMARY KEY,
         username VARCHAR(255),
         achievement_key VARCHAR(100),
-        earned_at TIMESTAMP DEFAULT NOW(),
-        UNIQUE(username, achievement_key)
-      );
+        earned_at TIMESTAMP DEFAULT NOW()
+      )
     `);
+    await client.query(`CREATE UNIQUE INDEX IF NOT EXISTS idx_user_achievements_unique ON user_achievements(username, achievement_key)`);
     console.log('✅ User achievements table created');
     
-    await pool.query(`
+    await client.query(`
       CREATE TABLE IF NOT EXISTS activity_feed (
         id UUID PRIMARY KEY,
         username VARCHAR(255),
@@ -193,24 +192,26 @@ async function initDB() {
         target_id UUID,
         metadata JSONB,
         created_at TIMESTAMP DEFAULT NOW()
-      );
+      )
     `);
     console.log('✅ Activity feed table created');
     
-    await pool.query(`
+    await client.query(`
       CREATE TABLE IF NOT EXISTS watched_items (
         id UUID PRIMARY KEY,
         username VARCHAR(255),
         item_id UUID REFERENCES list_items(id) ON DELETE CASCADE,
-        watched_at TIMESTAMP DEFAULT NOW(),
-        UNIQUE(username, item_id)
-      );
+        watched_at TIMESTAMP DEFAULT NOW()
+      )
     `);
+    await client.query(`CREATE UNIQUE INDEX IF NOT EXISTS idx_watched_items_unique ON watched_items(username, item_id)`);
     console.log('✅ Watched items table created');
     
     console.log('🎉 Database initialized successfully with all tables');
   } catch (err) {
     console.error('❌ Database initialization error:', err);
+  } finally {
+    client.release();
   }
 }
 
@@ -227,6 +228,7 @@ app.post('/api/auth/check-user', async (req, res) => {
       res.json({ exists: false });
     }
   } catch (err) {
+    console.error('Error in check-user:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -241,6 +243,7 @@ app.post('/api/auth/login', async (req, res) => {
       res.json({ success: false, error: 'PIN incorrecto' });
     }
   } catch (err) {
+    console.error('Error in login:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -254,6 +257,7 @@ app.post('/api/auth/register', async (req, res) => {
     );
     res.json({ success: true });
   } catch (err) {
+    console.error('Error in register:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -265,6 +269,7 @@ app.put('/api/users/:username/theme', async (req, res) => {
     await pool.query('UPDATE users SET theme = $1 WHERE username = $2', [theme, username]);
     res.json({ success: true });
   } catch (err) {
+    console.error('Error updating theme:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -277,6 +282,7 @@ app.get('/api/tmdb/search', async (req, res) => {
     const response = await fetch(url);
     res.json(await response.json());
   } catch (e) {
+    console.error('TMDB search error:', e);
     res.status(500).json({ error: 'TMDB request failed' });
   }
 });
@@ -289,6 +295,7 @@ app.get('/api/tmdb/recommendations/:tmdbId', async (req, res) => {
     const response = await fetch(url);
     res.json(await response.json());
   } catch (e) {
+    console.error('TMDB recommendations error:', e);
     res.status(500).json({ error: 'TMDB request failed' });
   }
 });
@@ -301,6 +308,7 @@ app.get('/api/tmdb/details/:tmdbId', async (req, res) => {
     const response = await fetch(url);
     res.json(await response.json());
   } catch (e) {
+    console.error('TMDB details error:', e);
     res.status(500).json({ error: 'TMDB request failed' });
   }
 });
@@ -315,6 +323,7 @@ app.get('/api/friends', async (req, res) => {
     );
     res.json(result.rows);
   } catch (err) {
+    console.error('Error getting friends:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -333,6 +342,7 @@ app.post('/api/friends/add', async (req, res) => {
     );
     res.json({ success: true });
   } catch (err) {
+    console.error('Error adding friend:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -344,6 +354,7 @@ app.delete('/api/friends/:friendUsername', async (req, res) => {
     await pool.query('DELETE FROM user_friends WHERE username = $1 AND friend_username = $2', [username, friendUsername]);
     res.json({ success: true });
   } catch (err) {
+    console.error('Error deleting friend:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -369,6 +380,7 @@ app.get('/api/lists', async (req, res) => {
     
     res.json(lists);
   } catch (err) {
+    console.error('Error getting lists:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -419,6 +431,7 @@ app.get('/api/lists/:id', async (req, res) => {
     
     res.json({ ...list, items: itemsWithExtras, isOwner });
   } catch (err) {
+    console.error('Error getting list details:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -426,6 +439,8 @@ app.get('/api/lists/:id', async (req, res) => {
 app.post('/api/lists', async (req, res) => {
   const { username, list } = req.body;
   const id = uuidv4();
+  
+  console.log('📝 Creating list:', { username, list, id });
   
   try {
     let pin;
@@ -447,14 +462,15 @@ app.post('/api/lists', async (req, res) => {
       [id, username, list.name, list.type, nextOrder, pin, list.isCollaborative || false]
     );
     
-    // Activity feed
     await pool.query(
       'INSERT INTO activity_feed (id, username, action_type, target_type, target_id, metadata) VALUES ($1, $2, $3, $4, $5, $6)',
       [uuidv4(), username, 'create_list', 'list', id, JSON.stringify({ listName: list.name })]
     );
     
-    res.json({ id, pin });
+    console.log('✅ List created successfully:', { id, pin });
+    res.json({ success: true, id, pin });
   } catch (err) {
+    console.error('❌ Error creating list:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -467,6 +483,7 @@ app.delete('/api/lists/:id', async (req, res) => {
     await pool.query('DELETE FROM lists WHERE id = $1 AND owner = $2', [id, username]);
     res.json({ success: true });
   } catch (err) {
+    console.error('Error deleting list:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -489,6 +506,7 @@ app.post('/api/lists/import-pin', async (req, res) => {
     
     res.json({ success: true, list });
   } catch (err) {
+    console.error('Error importing list:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -501,6 +519,7 @@ app.put('/api/lists/:id/reorder', async (req, res) => {
     await pool.query('UPDATE lists SET list_order = $1 WHERE id = $2', [newOrder, id]);
     res.json({ success: true });
   } catch (err) {
+    console.error('Error reordering list:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -511,20 +530,23 @@ app.post('/api/lists/:id/items', async (req, res) => {
   const { username, item } = req.body;
   const itemId = uuidv4();
   
+  console.log('📝 Adding item to list:', { listId: id, itemId, username, item });
+  
   try {
     await pool.query(
-      'INSERT INTO list_items (id, list_id, tmdb_id, imdb_id, media_type, title, poster, overview, rating, added_by, release_date, runtime, genres, director, cast) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)',
+      'INSERT INTO list_items (id, list_id, tmdb_id, imdb_id, media_type, title, poster, overview, rating, added_by, release_date, runtime, genres, director, cast_members) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)',
       [itemId, id, item.tmdbId, item.imdbId, item.mediaType, item.title, item.poster, item.overview, item.rating, username, item.releaseDate, item.runtime, item.genres, item.director, item.cast]
     );
     
-    // Activity feed
     await pool.query(
       'INSERT INTO activity_feed (id, username, action_type, target_type, target_id, metadata) VALUES ($1, $2, $3, $4, $5, $6)',
       [uuidv4(), username, 'add_item', 'item', itemId, JSON.stringify({ title: item.title, listId: id })]
     );
     
-    res.json({ success: true });
+    console.log('✅ Item added successfully');
+    res.json({ success: true, itemId });
   } catch (err) {
+    console.error('❌ Error adding item:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -546,6 +568,7 @@ app.delete('/api/lists/:listId/items/:itemId', async (req, res) => {
     await pool.query('DELETE FROM list_items WHERE id = $1 AND list_id = $2', [itemId, listId]);
     res.json({ success: true });
   } catch (err) {
+    console.error('Error deleting item:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -558,12 +581,17 @@ app.post('/api/items/:itemId/tags', async (req, res) => {
   
   try {
     await pool.query(
-      'INSERT INTO item_tags (id, item_id, username, tag) VALUES ($1, $2, $3, $4) ON CONFLICT DO NOTHING',
+      'INSERT INTO item_tags (id, item_id, username, tag) VALUES ($1, $2, $3, $4)',
       [id, itemId, username, tag.toLowerCase()]
     );
     res.json({ success: true });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    if (err.code === '23505') {
+      res.json({ success: true });
+    } else {
+      console.error('Error adding tag:', err);
+      res.status(500).json({ error: err.message });
+    }
   }
 });
 
@@ -575,6 +603,7 @@ app.delete('/api/items/:itemId/tags/:tag', async (req, res) => {
     await pool.query('DELETE FROM item_tags WHERE item_id = $1 AND username = $2 AND tag = $3', [itemId, username, tag]);
     res.json({ success: true });
   } catch (err) {
+    console.error('Error deleting tag:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -586,12 +615,17 @@ app.post('/api/items/:itemId/note', async (req, res) => {
   const id = uuidv4();
   
   try {
-    await pool.query(
-      'INSERT INTO item_notes (id, item_id, username, note) VALUES ($1, $2, $3, $4) ON CONFLICT (item_id, username) DO UPDATE SET note = $4, updated_at = NOW()',
-      [id, itemId, username, note]
-    );
+    const existing = await pool.query('SELECT id FROM item_notes WHERE item_id = $1 AND username = $2', [itemId, username]);
+    
+    if (existing.rows.length > 0) {
+      await pool.query('UPDATE item_notes SET note = $1, updated_at = NOW() WHERE item_id = $2 AND username = $3', [note, itemId, username]);
+    } else {
+      await pool.query('INSERT INTO item_notes (id, item_id, username, note) VALUES ($1, $2, $3, $4)', [id, itemId, username, note]);
+    }
+    
     res.json({ success: true });
   } catch (err) {
+    console.error('Error saving note:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -603,12 +637,17 @@ app.post('/api/items/:itemId/rate', async (req, res) => {
   const ratingId = uuidv4();
   
   try {
-    await pool.query(
-      'INSERT INTO item_ratings (id, item_id, username, stars, review) VALUES ($1, $2, $3, $4, $5) ON CONFLICT (item_id, username) DO UPDATE SET stars = $4, review = $5, created_at = NOW()',
-      [ratingId, itemId, username, stars, review]
-    );
+    const existing = await pool.query('SELECT id FROM item_ratings WHERE item_id = $1 AND username = $2', [itemId, username]);
+    
+    if (existing.rows.length > 0) {
+      await pool.query('UPDATE item_ratings SET stars = $1, review = $2, created_at = NOW() WHERE item_id = $3 AND username = $4', [stars, review, itemId, username]);
+    } else {
+      await pool.query('INSERT INTO item_ratings (id, item_id, username, stars, review) VALUES ($1, $2, $3, $4, $5)', [ratingId, itemId, username, stars, review]);
+    }
+    
     res.json({ success: true });
   } catch (err) {
+    console.error('Error saving rating:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -623,6 +662,7 @@ app.get('/api/items/:itemId/ratings', async (req, res) => {
     );
     res.json(result.rows);
   } catch (err) {
+    console.error('Error getting ratings:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -634,12 +674,17 @@ app.post('/api/lists/:listId/items/:itemId/vote', async (req, res) => {
   const id = uuidv4();
   
   try {
-    await pool.query(
-      'INSERT INTO list_votes (id, list_id, item_id, username, vote) VALUES ($1, $2, $3, $4, $5) ON CONFLICT (list_id, item_id, username) DO UPDATE SET vote = $5',
-      [id, listId, itemId, username, vote]
-    );
+    const existing = await pool.query('SELECT id FROM list_votes WHERE list_id = $1 AND item_id = $2 AND username = $3', [listId, itemId, username]);
+    
+    if (existing.rows.length > 0) {
+      await pool.query('UPDATE list_votes SET vote = $1 WHERE list_id = $2 AND item_id = $3 AND username = $4', [vote, listId, itemId, username]);
+    } else {
+      await pool.query('INSERT INTO list_votes (id, list_id, item_id, username, vote) VALUES ($1, $2, $3, $4, $5)', [id, listId, itemId, username, vote]);
+    }
+    
     res.json({ success: true });
   } catch (err) {
+    console.error('Error saving vote:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -657,6 +702,7 @@ app.post('/api/items/:itemId/comments', async (req, res) => {
     );
     res.json({ success: true });
   } catch (err) {
+    console.error('Error adding comment:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -669,12 +715,17 @@ app.post('/api/items/:itemId/watched', async (req, res) => {
   
   try {
     await pool.query(
-      'INSERT INTO watched_items (id, username, item_id) VALUES ($1, $2, $3) ON CONFLICT DO NOTHING',
+      'INSERT INTO watched_items (id, username, item_id) VALUES ($1, $2, $3)',
       [id, username, itemId]
     );
     res.json({ success: true });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    if (err.code === '23505') {
+      res.json({ success: true });
+    } else {
+      console.error('Error marking as watched:', err);
+      res.status(500).json({ error: err.message });
+    }
   }
 });
 
@@ -691,6 +742,7 @@ app.get('/api/watched', async (req, res) => {
     `, [username]);
     res.json(result.rows);
   } catch (err) {
+    console.error('Error getting watched items:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -712,6 +764,7 @@ app.get('/api/feed', async (req, res) => {
     `, [username]);
     res.json(result.rows);
   } catch (err) {
+    console.error('Error getting feed:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -760,6 +813,7 @@ app.get('/api/stats/:username', async (req, res) => {
       monthlyActivity: monthlyActivity.rows
     });
   } catch (err) {
+    console.error('Error getting stats:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -769,7 +823,6 @@ app.get('/api/recommendations', async (req, res) => {
   const { username, key, lang = 'es-ES' } = req.query;
   
   try {
-    // Obtener todos los items del usuario
     const items = await pool.query(`
       SELECT DISTINCT li.tmdb_id, li.media_type FROM list_items li
       JOIN lists l ON li.list_id = l.id
@@ -782,7 +835,6 @@ app.get('/api/recommendations', async (req, res) => {
       return res.json({ results: [] });
     }
     
-    // Obtener recomendaciones para cada item
     const recommendations = new Map();
     
     for (const item of items.rows.slice(0, 3)) {
@@ -801,6 +853,7 @@ app.get('/api/recommendations', async (req, res) => {
     
     res.json({ results: Array.from(recommendations.values()).slice(0, 20) });
   } catch (err) {
+    console.error('Error getting recommendations:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -833,6 +886,7 @@ app.get('/manifest.json', async (req, res) => {
       logo: `${req.protocol}://${req.get('host')}/icon.svg`
     });
   } catch (err) {
+    console.error('Error generating manifest:', err);
     res.status(500).json({ error: err.message });
   }
 });
@@ -855,6 +909,7 @@ app.get('/catalog/:type/:id.json', async (req, res) => {
     
     res.json({ metas });
   } catch (err) {
+    console.error('Error getting catalog:', err);
     res.status(500).json({ error: err.message });
   }
 });
