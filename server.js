@@ -8,13 +8,11 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
 
-// ✅ PostgreSQL Connection
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
 });
 
-// ✅ Inicializar base de datos
 async function initDB() {
   try {
     await pool.query(`
@@ -28,11 +26,21 @@ async function initDB() {
     await pool.query(`
       CREATE TABLE IF NOT EXISTS lists (
         id UUID PRIMARY KEY,
-        username VARCHAR(255) REFERENCES users(username) ON DELETE CASCADE,
+        owner VARCHAR(255) REFERENCES users(username) ON DELETE CASCADE,
         name VARCHAR(255) NOT NULL,
         type VARCHAR(50) NOT NULL,
         list_order INTEGER DEFAULT 0,
+        pin VARCHAR(6) UNIQUE,
         created_at TIMESTAMP DEFAULT NOW()
+      );
+    `);
+    
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS list_collaborators (
+        list_id UUID REFERENCES lists(id) ON DELETE CASCADE,
+        username VARCHAR(255) REFERENCES users(username) ON DELETE CASCADE,
+        added_at TIMESTAMP DEFAULT NOW(),
+        PRIMARY KEY (list_id, username)
       );
     `);
     
@@ -60,7 +68,9 @@ async function initDB() {
 
 initDB();
 
-// ===== ENDPOINTS =====
+function generatePIN() {
+  return Math.floor(100000 + Math.random() * 900000).toString();
+}
 
 app.get('/api/tmdb/search', async (req, res) => {
   const { q, key, lang = 'es-ES' } = req.query;
@@ -76,10 +86,12 @@ app.get('/api/tmdb/search', async (req, res) => {
 app.get('/api/lists', async (req, res) => {
   const { username } = req.query;
   try {
-    const result = await pool.query(
-      'SELECT * FROM lists WHERE username = $1 ORDER BY list_order ASC',
-      [username]
-    );
+    const result = await pool.query(`
+      SELECT DISTINCT l.* FROM lists l
+      LEFT JOIN list_collaborators lc ON l.id = lc.list_id
+      WHERE l.owner = $1 OR lc.username = $1
+      ORDER BY l.list_order ASC
+    `, [username]);
     
     const lists = await Promise.all(result.rows.map(async (list) => {
       const items = await pool.query(
@@ -95,37 +107,66 @@ app.get('/api/lists', async (req, res) => {
   }
 });
 
-app.post('/api/lists', async (req, res) => {
-  const { username, list } = req.body;
-  const id = uuidv4();
+app.get('/api/lists/:id', async (req, res) => {
+  const { id } = req.params;
+  const { username } = req.query;
   
   try {
-    await pool.query('INSERT INTO users (username) VALUES ($1) ON CONFLICT DO NOTHING', [username]);
+    const listResult = await pool.query('SELECT * FROM lists WHERE id = $1', [id]);
+    if (listResult.rows.length === 0) return res.status(404).json({ error: 'List not found' });
     
-    const orderResult = await pool.query('SELECT COALESCE(MAX(list_order), -1) + 1 AS next_order FROM lists WHERE username = $1', [username]);
-    const nextOrder = orderResult.rows[0].next_order;
-    
-    await pool.query(
-      'INSERT INTO lists (id, username, name, type, list_order) VALUES ($1, $2, $3, $4, $5)',
-      [id, username, list.name, list.type, nextOrder]
+    const itemsResult = await pool.query(
+      'SELECT * FROM list_items WHERE list_id = $1 ORDER BY added_at DESC',
+      [id]
     );
     
-    res.json({ id });
+    res.json({ ...listResult.rows[0], items: itemsResult.rows });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-app.put('/api/lists/:id', async (req, res) => {
-  const { id } = req.params;
+app.post('/api/lists', async (req, res) => {
   const { username, list } = req.body;
+  const id = uuidv4();
+  const pin = generatePIN();
   
   try {
+    await pool.query('INSERT INTO users (username) VALUES ($1) ON CONFLICT DO NOTHING', [username]);
+    
+    const orderResult = await pool.query('SELECT COALESCE(MAX(list_order), -1) + 1 AS next_order FROM lists WHERE owner = $1', [username]);
+    const nextOrder = orderResult.rows[0].next_order;
+    
     await pool.query(
-      'UPDATE lists SET name = $1, type = $2 WHERE id = $3 AND username = $4',
-      [list.name, list.type, id, username]
+      'INSERT INTO lists (id, owner, name, type, list_order, pin) VALUES ($1, $2, $3, $4, $5, $6)',
+      [id, username, list.name, list.type, nextOrder, pin]
     );
-    res.json({ success: true });
+    
+    res.json({ id, pin });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/api/lists/import-pin', async (req, res) => {
+  const { username, pin } = req.body;
+  
+  try {
+    await pool.query('INSERT INTO users (username) VALUES ($1) ON CONFLICT DO NOTHING', [username]);
+    
+    const listResult = await pool.query('SELECT * FROM lists WHERE pin = $1', [pin]);
+    if (listResult.rows.length === 0) {
+      return res.status(404).json({ error: 'PIN no válido' });
+    }
+    
+    const list = listResult.rows[0];
+    
+    await pool.query(
+      'INSERT INTO list_collaborators (list_id, username) VALUES ($1, $2) ON CONFLICT DO NOTHING',
+      [list.id, username]
+    );
+    
+    res.json({ success: true, list });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -136,7 +177,7 @@ app.delete('/api/lists/:id', async (req, res) => {
   const { username } = req.query;
   
   try {
-    await pool.query('DELETE FROM lists WHERE id = $1 AND username = $2', [id, username]);
+    await pool.query('DELETE FROM lists WHERE id = $1 AND owner = $2', [id, username]);
     res.json({ success: true });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -159,48 +200,26 @@ app.post('/api/lists/:id/items', async (req, res) => {
   }
 });
 
-app.put('/api/lists/:id/reorder', async (req, res) => {
-  const { id } = req.params;
-  const { username, newOrder } = req.body;
+app.delete('/api/lists/:listId/items/:itemId', async (req, res) => {
+  const { listId, itemId } = req.params;
   
   try {
-    await pool.query(
-      'UPDATE lists SET list_order = $1 WHERE id = $2 AND username = $3',
-      [newOrder, id, username]
-    );
+    await pool.query('DELETE FROM list_items WHERE id = $1 AND list_id = $2', [itemId, listId]);
     res.json({ success: true });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-app.post('/api/lists/import', async (req, res) => {
-  const { username, lists } = req.body;
+app.put('/api/lists/:id/reorder', async (req, res) => {
+  const { id } = req.params;
+  const { username, newOrder } = req.body;
   
   try {
-    await pool.query('INSERT INTO users (username) VALUES ($1) ON CONFLICT DO NOTHING', [username]);
-    
-    const orderResult = await pool.query('SELECT COALESCE(MAX(list_order), -1) + 1 AS next_order FROM lists WHERE username = $1', [username]);
-    let nextOrder = orderResult.rows[0].next_order;
-    
-    for (const list of lists) {
-      const listId = uuidv4();
-      await pool.query(
-        'INSERT INTO lists (id, username, name, type, list_order) VALUES ($1, $2, $3, $4, $5)',
-        [listId, username, list.name, list.type, nextOrder++]
-      );
-      
-      if (list.items) {
-        for (const item of list.items) {
-          const itemId = uuidv4();
-          await pool.query(
-            'INSERT INTO list_items (id, list_id, tmdb_id, imdb_id, media_type, title, poster, overview, rating, added_by) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)',
-            [itemId, listId, item.tmdbId || item.tmdb_id, item.imdbId || item.imdb_id, item.mediaType || item.media_type, item.title, item.poster, item.overview, item.rating, username]
-          );
-        }
-      }
-    }
-    
+    await pool.query(
+      'UPDATE lists SET list_order = $1 WHERE id = $2',
+      [newOrder, id]
+    );
     res.json({ success: true });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -212,10 +231,12 @@ app.get('/manifest.json', async (req, res) => {
   if (!username) return res.status(400).json({ error: 'username required' });
   
   try {
-    const result = await pool.query(
-      'SELECT * FROM lists WHERE username = $1 ORDER BY list_order ASC',
-      [username]
-    );
+    const result = await pool.query(`
+      SELECT DISTINCT l.* FROM lists l
+      LEFT JOIN list_collaborators lc ON l.id = lc.list_id
+      WHERE l.owner = $1 OR lc.username = $1
+      ORDER BY l.list_order ASC
+    `, [username]);
     
     const types = [...new Set(result.rows.map(l => l.type))];
     const catalogs = result.rows.map(l => ({ id: l.id, type: l.type, name: l.name }));
@@ -242,7 +263,7 @@ app.get('/catalog/:type/:id.json', async (req, res) => {
   if (!username) return res.status(400).json({ error: 'username required' });
   
   try {
-    const listResult = await pool.query('SELECT * FROM lists WHERE id = $1 AND username = $2', [id, username]);
+    const listResult = await pool.query('SELECT * FROM lists WHERE id = $1', [id]);
     if (listResult.rows.length === 0 || listResult.rows[0].type !== type) {
       return res.json({ metas: [] });
     }
