@@ -6,7 +6,7 @@
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  background: #000;
   color: #f0f0f0;
   min-height: 100vh;
 }
@@ -27,22 +27,16 @@ body {
 .welcome-container {
   max-width: 500px;
   text-align: center;
-  background: #222;
+  background: #1a1a1a;
   padding: 40px;
   border-radius: 12px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  box-shadow: 0 8px 32px rgba(255,255,255,0.1);
 }
 
 .logo {
-  width: 120px;
-  height: 120px;
-  margin-bottom: 20px;
-}
-
-.welcome-container h1 {
-  font-size: 2.5em;
+  width: 80px;
+  height: 80px;
   margin-bottom: 30px;
-  color: #fff;
 }
 
 .lang-selector {
@@ -54,7 +48,7 @@ body {
   font-size: 16px;
   border-radius: 8px;
   border: 1px solid #555;
-  background: #333;
+  background: #222;
   color: #f0f0f0;
   cursor: pointer;
   width: 100%;
@@ -69,14 +63,14 @@ body {
 }
 
 .welcome-form label {
-  font-size: 1.1em;
+  font-size: 1em;
   font-weight: 600;
   color: #fff;
   margin-top: 10px;
 }
 
 .welcome-form small {
-  font-size: 0.9em;
+  font-size: 0.85em;
   color: #aaa;
 }
 
@@ -84,7 +78,7 @@ body {
   padding: 12px;
   border-radius: 8px;
   border: 1px solid #555;
-  background: #333;
+  background: #222;
   color: #f0f0f0;
   font-size: 16px;
 }
@@ -142,65 +136,94 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 40px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid #444;
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #333;
+  gap: 15px;
 }
 
-header h1 {
-  font-size: 2em;
-  color: #fff;
+.logo-small {
+  width: 40px;
+  height: 40px;
+}
+
+header select {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #444;
+  background: #222;
+  color: #f0f0f0;
 }
 
 section {
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 }
 
 h2 {
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   color: #fff;
-  font-size: 1.5em;
+  font-size: 1.1em;
+  font-weight: 600;
 }
 
 /* ===== LISTS ===== */
 #listDisplay {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 .list-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px;
-  background: #2a2a2a;
+  padding: 14px;
+  background: #1a1a1a;
   border-radius: 8px;
-  border: 1px solid #444;
+  border: 1px solid #333;
 }
 
 .list-info strong {
-  font-size: 1.1em;
+  font-size: 1em;
   color: #fff;
 }
 
 .list-actions {
   display: flex;
   gap: 8px;
+  align-items: center;
 }
 
 .list-actions button {
-  padding: 8px 12px;
+  padding: 6px 10px;
   border: none;
-  background: #444;
+  background: transparent;
   color: #fff;
   border-radius: 5px;
   cursor: pointer;
   transition: background 0.2s;
+  font-size: 1.2em;
+  position: relative;
 }
 
 .list-actions button:hover:not(:disabled) {
-  background: #666;
+  background: #333;
+}
+
+.list-actions button:hover:not(:disabled)::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #333;
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.7em;
+  white-space: nowrap;
+  margin-bottom: 5px;
+  z-index: 10;
 }
 
 .list-actions button:disabled {
@@ -220,8 +243,8 @@ form input {
   min-width: 200px;
   padding: 12px;
   border-radius: 8px;
-  border: 1px solid #555;
-  background: #333;
+  border: 1px solid #444;
+  background: #222;
   color: #f0f0f0;
   font-size: 14px;
 }
@@ -229,7 +252,7 @@ form input {
 form button {
   padding: 12px 24px;
   border: none;
-  background: #666;
+  background: #444;
   color: #fff;
   border-radius: 8px;
   cursor: pointer;
@@ -238,13 +261,15 @@ form button {
 }
 
 form button:hover {
-  background: #888;
+  background: #666;
 }
 
 /* ===== SEARCH ===== */
 .search-section input {
   width: 100%;
   margin-bottom: 12px;
+  padding: 14px;
+  font-size: 16px;
 }
 
 .search-section select {
@@ -252,8 +277,8 @@ form button:hover {
   padding: 12px;
   margin-bottom: 20px;
   border-radius: 8px;
-  border: 1px solid #555;
-  background: #333;
+  border: 1px solid #444;
+  background: #222;
   color: #f0f0f0;
   font-size: 14px;
 }
@@ -268,16 +293,16 @@ form button:hover {
   display: flex;
   gap: 12px;
   padding: 12px;
-  background: #2a2a2a;
+  background: #1a1a1a;
   border-radius: 8px;
-  border: 1px solid #444;
+  border: 1px solid #333;
   cursor: pointer;
   transition: all 0.2s;
   align-items: flex-start;
 }
 
 .search-item:hover {
-  border-color: #888;
+  border-color: #666;
   transform: translateY(-2px);
 }
 
@@ -318,7 +343,7 @@ form button:hover {
 
 .search-item-info small {
   font-size: 0.85em;
-  color: #888;
+  color: #666;
 }
 
 /* ===== FOOTER ===== */
@@ -328,13 +353,14 @@ footer {
   justify-content: center;
   margin-top: 40px;
   padding-top: 20px;
-  border-top: 1px solid #444;
+  border-top: 1px solid #333;
+  flex-wrap: wrap;
 }
 
 footer button {
   padding: 12px 24px;
   border: none;
-  background: #444;
+  background: #333;
   color: #fff;
   border-radius: 8px;
   cursor: pointer;
@@ -343,7 +369,7 @@ footer button {
 }
 
 footer button:hover {
-  background: #666;
+  background: #555;
   transform: translateY(-2px);
 }
 
@@ -353,11 +379,6 @@ footer button:hover {
   }
   
   header {
-    flex-direction: column;
-    gap: 15px;
-  }
-  
-  footer {
-    flex-direction: column;
+    flex-wrap: wrap;
   }
 }
