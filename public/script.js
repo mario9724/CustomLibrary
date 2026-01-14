@@ -14,11 +14,10 @@ const translations = {
     yourLists: 'Estas son tus listas',
     createList: 'Crear Nueva Lista',
     listName: 'Nombre de la lista',
-    listType: 'Tipo: movie, series...',
+    listType: 'Librería',
     create: 'Crear',
     searchPlaceholder: 'Buscar películas/series...',
-    export: 'Exportar Listas',
-    import: 'Importar Listas',
+    importPin: 'Importar con PIN',
     copyUrl: 'Copiar URL de Instalación',
     install: 'Instalar en Stremio',
     share: 'Compartir',
@@ -26,7 +25,14 @@ const translations = {
     selectListModal: '¿A qué lista quieres agregar esto?',
     add: 'Agregar',
     cancel: 'Cancelar',
-    shareTemplate: '{{username}} te recomienda esta lista "{{listName}}"'
+    back: 'Volver',
+    importPinTitle: 'Introduce el PIN de 6 dígitos',
+    import: 'Importar',
+    sharePinTitle: 'PIN de la lista',
+    sharePinText: 'Comparte este PIN para que otros puedan importar la lista',
+    copyPin: 'Copiar PIN',
+    close: 'Cerrar',
+    deleteItem: 'Eliminar'
   },
   en: {
     helloQuestion: "Hello, what's your name?",
@@ -43,11 +49,10 @@ const translations = {
     yourLists: 'These are your lists',
     createList: 'Create New List',
     listName: 'List name',
-    listType: 'Type: movie, series...',
+    listType: 'Library',
     create: 'Create',
     searchPlaceholder: 'Search movies/series...',
-    export: 'Export Lists',
-    import: 'Import Lists',
+    importPin: 'Import with PIN',
     copyUrl: 'Copy Install URL',
     install: 'Install in Stremio',
     share: 'Share',
@@ -55,7 +60,14 @@ const translations = {
     selectListModal: 'Which list do you want to add this to?',
     add: 'Add',
     cancel: 'Cancel',
-    shareTemplate: '{{username}} recommends this list "{{listName}}"'
+    back: 'Back',
+    importPinTitle: 'Enter the 6-digit PIN',
+    import: 'Import',
+    sharePinTitle: 'List PIN',
+    sharePinText: 'Share this PIN so others can import the list',
+    copyPin: 'Copy PIN',
+    close: 'Close',
+    deleteItem: 'Delete'
   },
   fr: {
     helloQuestion: 'Bonjour, comment tu t\'appelles ?',
@@ -72,11 +84,10 @@ const translations = {
     yourLists: 'Voici tes listes',
     createList: 'Créer une Nouvelle Liste',
     listName: 'Nom de la liste',
-    listType: 'Type : film, série...',
+    listType: 'Bibliothèque',
     create: 'Créer',
     searchPlaceholder: 'Rechercher films/séries...',
-    export: 'Exporter les Listes',
-    import: 'Importer des Listes',
+    importPin: 'Importer avec PIN',
     copyUrl: 'Copier l\'URL d\'Installation',
     install: 'Installer dans Stremio',
     share: 'Partager',
@@ -84,7 +95,14 @@ const translations = {
     selectListModal: 'À quelle liste veux-tu ajouter ceci ?',
     add: 'Ajouter',
     cancel: 'Annuler',
-    shareTemplate: '{{username}} te recommande cette liste "{{listName}}"'
+    back: 'Retour',
+    importPinTitle: 'Entre le PIN à 6 chiffres',
+    import: 'Importer',
+    sharePinTitle: 'PIN de la liste',
+    sharePinText: 'Partage ce PIN pour que d\'autres puissent importer la liste',
+    copyPin: 'Copier le PIN',
+    close: 'Fermer',
+    deleteItem: 'Supprimer'
   },
   de: {
     helloQuestion: 'Hallo, wie heißt du?',
@@ -101,11 +119,10 @@ const translations = {
     yourLists: 'Das sind deine Listen',
     createList: 'Neue Liste erstellen',
     listName: 'Listenname',
-    listType: 'Typ: Film, Serie...',
+    listType: 'Bibliothek',
     create: 'Erstellen',
     searchPlaceholder: 'Filme/Serien suchen...',
-    export: 'Listen exportieren',
-    import: 'Listen importieren',
+    importPin: 'Mit PIN importieren',
     copyUrl: 'Installations-URL kopieren',
     install: 'In Stremio installieren',
     share: 'Teilen',
@@ -113,7 +130,14 @@ const translations = {
     selectListModal: 'Zu welcher Liste möchtest du dies hinzufügen?',
     add: 'Hinzufügen',
     cancel: 'Abbrechen',
-    shareTemplate: '{{username}} empfiehlt dir diese Liste "{{listName}}"'
+    back: 'Zurück',
+    importPinTitle: 'Gib die 6-stellige PIN ein',
+    import: 'Importieren',
+    sharePinTitle: 'Listen-PIN',
+    sharePinText: 'Teile diese PIN, damit andere die Liste importieren können',
+    copyPin: 'PIN kopieren',
+    close: 'Schließen',
+    deleteItem: 'Löschen'
   },
   it: {
     helloQuestion: 'Ciao, come ti chiami?',
@@ -130,11 +154,10 @@ const translations = {
     yourLists: 'Queste sono le tue liste',
     createList: 'Crea Nuova Lista',
     listName: 'Nome della lista',
-    listType: 'Tipo: film, serie...',
+    listType: 'Biblioteca',
     create: 'Crea',
     searchPlaceholder: 'Cerca film/serie...',
-    export: 'Esporta Liste',
-    import: 'Importa Liste',
+    importPin: 'Importa con PIN',
     copyUrl: 'Copia URL di Installazione',
     install: 'Installa in Stremio',
     share: 'Condividi',
@@ -142,7 +165,14 @@ const translations = {
     selectListModal: 'A quale lista vuoi aggiungere questo?',
     add: 'Aggiungi',
     cancel: 'Annulla',
-    shareTemplate: '{{username}} ti consiglia questa lista "{{listName}}"'
+    back: 'Indietro',
+    importPinTitle: 'Inserisci il PIN a 6 cifre',
+    import: 'Importa',
+    sharePinTitle: 'PIN della lista',
+    sharePinText: 'Condividi questo PIN affinché altri possano importare la lista',
+    copyPin: 'Copia PIN',
+    close: 'Chiudi',
+    deleteItem: 'Elimina'
   },
   pt: {
     helloQuestion: 'Olá, qual é o seu nome?',
@@ -159,11 +189,10 @@ const translations = {
     yourLists: 'Estas são suas listas',
     createList: 'Criar Nova Lista',
     listName: 'Nome da lista',
-    listType: 'Tipo: filme, série...',
+    listType: 'Biblioteca',
     create: 'Criar',
     searchPlaceholder: 'Pesquisar filmes/séries...',
-    export: 'Exportar Listas',
-    import: 'Importar Listas',
+    importPin: 'Importar com PIN',
     copyUrl: 'Copiar URL de Instalação',
     install: 'Instalar no Stremio',
     share: 'Compartilhar',
@@ -171,7 +200,14 @@ const translations = {
     selectListModal: 'A qual lista você quer adicionar isto?',
     add: 'Adicionar',
     cancel: 'Cancelar',
-    shareTemplate: '{{username}} recomenda esta lista "{{listName}}"'
+    back: 'Voltar',
+    importPinTitle: 'Digite o PIN de 6 dígitos',
+    import: 'Importar',
+    sharePinTitle: 'PIN da lista',
+    sharePinText: 'Compartilhe este PIN para que outros possam importar a lista',
+    copyPin: 'Copiar PIN',
+    close: 'Fechar',
+    deleteItem: 'Excluir'
   },
   ru: {
     helloQuestion: 'Привет, как тебя зовут?',
@@ -188,11 +224,10 @@ const translations = {
     yourLists: 'Вот твои списки',
     createList: 'Создать Новый Список',
     listName: 'Название списка',
-    listType: 'Тип: фильм, сериал...',
+    listType: 'Библиотека',
     create: 'Создать',
     searchPlaceholder: 'Искать фильмы/сериалы...',
-    export: 'Экспортировать Списки',
-    import: 'Импортировать Списки',
+    importPin: 'Импортировать с PIN',
     copyUrl: 'Копировать URL Установки',
     install: 'Установить в Stremio',
     share: 'Поделиться',
@@ -200,7 +235,14 @@ const translations = {
     selectListModal: 'В какой список добавить это?',
     add: 'Добавить',
     cancel: 'Отменить',
-    shareTemplate: '{{username}} рекомендует этот список "{{listName}}"'
+    back: 'Назад',
+    importPinTitle: 'Введите 6-значный PIN',
+    import: 'Импортировать',
+    sharePinTitle: 'PIN списка',
+    sharePinText: 'Поделитесь этим PIN, чтобы другие могли импортировать список',
+    copyPin: 'Копировать PIN',
+    close: 'Закрыть',
+    deleteItem: 'Удалить'
   },
   ja: {
     helloQuestion: 'こんにちは、お名前は？',
@@ -217,11 +259,10 @@ const translations = {
     yourLists: 'あなたのリスト',
     createList: '新しいリストを作成',
     listName: 'リスト名',
-    listType: 'タイプ：映画、シリーズ...',
+    listType: 'ライブラリ',
     create: '作成',
     searchPlaceholder: '映画/シリーズを検索...',
-    export: 'リストをエクスポート',
-    import: 'リストをインポート',
+    importPin: 'PINでインポート',
     copyUrl: 'インストールURLをコピー',
     install: 'Stremioにインストール',
     share: '共有',
@@ -229,7 +270,14 @@ const translations = {
     selectListModal: 'どのリストに追加しますか？',
     add: '追加',
     cancel: 'キャンセル',
-    shareTemplate: '{{username}}がこのリスト「{{listName}}」をお勧めします'
+    back: '戻る',
+    importPinTitle: '6桁のPINを入力',
+    import: 'インポート',
+    sharePinTitle: 'リストのPIN',
+    sharePinText: 'このPINを共有して他の人がリストをインポートできるようにします',
+    copyPin: 'PINをコピー',
+    close: '閉じる',
+    deleteItem: '削除'
   },
   zh: {
     helloQuestion: '你好，你叫什么名字？',
@@ -246,11 +294,10 @@ const translations = {
     yourLists: '这些是你的列表',
     createList: '创建新列表',
     listName: '列表名称',
-    listType: '类型：电影，系列...',
+    listType: '图书馆',
     create: '创建',
     searchPlaceholder: '搜索电影/系列...',
-    export: '导出列表',
-    import: '导入列表',
+    importPin: '使用PIN导入',
     copyUrl: '复制安装URL',
     install: '安装到Stremio',
     share: '分享',
@@ -258,7 +305,14 @@ const translations = {
     selectListModal: '你想添加到哪个列表？',
     add: '添加',
     cancel: '取消',
-    shareTemplate: '{{username}}推荐这个列表"{{listName}}"'
+    back: '返回',
+    importPinTitle: '输入6位PIN',
+    import: '导入',
+    sharePinTitle: '列表PIN',
+    sharePinText: '分享此PIN以便其他人导入列表',
+    copyPin: '复制PIN',
+    close: '关闭',
+    deleteItem: '删除'
   }
 };
 
@@ -267,6 +321,7 @@ let currentUsername = '';
 let currentTmdbKey = '';
 let currentAddonName = 'CustomLibrary';
 let pendingItem = null;
+let currentListId = null;
 
 const welcomeUsername = document.getElementById('welcomeUsername');
 const addonNameInput = document.getElementById('addonName');
@@ -290,6 +345,7 @@ startBtn.addEventListener('click', () => {
   localStorage.setItem('username', currentUsername);
   localStorage.setItem('tmdbKey', currentTmdbKey);
   localStorage.setItem('addonName', currentAddonName);
+  localStorage.setItem('lang', currentLang);
   
   const t = translations[currentLang] || translations.es;
   document.getElementById('mainTitle').textContent = t.mainTitleTemplate.replace('{{username}}', currentUsername);
@@ -302,8 +358,15 @@ startBtn.addEventListener('click', () => {
 
 document.getElementById('langSelect').addEventListener('change', (e) => {
   currentLang = e.target.value;
+  localStorage.setItem('lang', currentLang);
   updateUI();
+  updateListTypePlaceholder();
 });
+
+function updateListTypePlaceholder() {
+  const t = translations[currentLang] || translations.es;
+  document.getElementById('listType').value = t.listType;
+}
 
 function updateUI() {
   const t = translations[currentLang] || translations.es;
@@ -341,6 +404,7 @@ document.getElementById('newListForm').addEventListener('submit', async (e) => {
   if (res.ok) {
     loadLists(currentUsername);
     e.target.reset();
+    updateListTypePlaceholder();
   }
 });
 
@@ -408,22 +472,21 @@ async function loadLists(username) {
     ? '<p style="text-align:center; opacity:0.7;">No hay listas creadas aún</p>'
     : lists.map((list, idx) => `
     <div class="list-item" draggable="true" data-id="${list.id}" data-index="${idx}">
-      <div class="list-info">
+      <div class="list-info" onclick="showListDetail('${list.id}')">
         <strong>${list.name}</strong> <span style="opacity:0.8">(${list.type})</span><br>
         <small>${list.items?.length || 0} elementos</small>
       </div>
       <div class="list-actions">
-        <button class="text-btn" onclick="shareList('${list.id}', '${list.name}')">${t.share}</button>
+        <button onclick="shareList('${list.id}', '${list.name}', '${list.pin}')">${t.share}</button>
+        <button onclick="deleteList('${list.id}')">${t.delete}</button>
         <div class="arrows">
           <button onclick="moveList('${list.id}', ${idx}, -1)" ${idx === 0 ? 'disabled' : ''}>▲</button>
           <button onclick="moveList('${list.id}', ${idx}, 1)" ${idx === lists.length - 1 ? 'disabled' : ''}>▼</button>
         </div>
-        <button class="text-btn" onclick="deleteList('${list.id}')">${t.delete}</button>
       </div>
     </div>
   `).join('');
   
-  // Setup drag & drop
   document.querySelectorAll('.list-item').forEach(item => {
     item.addEventListener('dragstart', handleDragStart);
     item.addEventListener('dragover', handleDragOver);
@@ -469,18 +532,20 @@ function handleDragEnd() {
   });
 }
 
-async function shareList(id, name) {
-  const t = translations[currentLang] || translations.es;
-  const text = t.shareTemplate.replace('{{username}}', currentUsername).replace('{{listName}}', name);
-  const url = `${window.location.origin}/manifest.json?username=${currentUsername}&addonName=${encodeURIComponent(currentAddonName)}`;
-  
-  if (navigator.share) {
-    await navigator.share({ title: name, text, url });
-  } else {
-    navigator.clipboard.writeText(`${text}\n${url}`);
-    alert('¡URL copiada!');
-  }
+async function shareList(id, name, pin) {
+  document.getElementById('pinDisplay').textContent = pin;
+  document.getElementById('showPinModal').classList.add('active');
 }
+
+document.getElementById('copyPinBtn').addEventListener('click', () => {
+  const pin = document.getElementById('pinDisplay').textContent;
+  navigator.clipboard.writeText(pin);
+  alert('¡PIN copiado!');
+});
+
+document.getElementById('closePinBtn').addEventListener('click', () => {
+  document.getElementById('showPinModal').classList.remove('active');
+});
 
 async function deleteList(id) {
   if (!confirm('¿Eliminar esta lista?')) return;
@@ -499,44 +564,36 @@ async function moveList(id, currentIndex, direction) {
 }
 
 document.getElementById('importBtn').addEventListener('click', () => {
-  document.getElementById('importFile').click();
+  document.getElementById('pinModal').classList.add('active');
 });
 
-document.getElementById('importFile').addEventListener('change', async (e) => {
-  const file = e.target.files[0];
-  if (!file) return;
+document.getElementById('pinCancelBtn').addEventListener('click', () => {
+  document.getElementById('pinModal').classList.remove('active');
+  document.getElementById('pinInput').value = '';
+});
+
+document.getElementById('pinImportBtn').addEventListener('click', async () => {
+  const pin = document.getElementById('pinInput').value.trim();
+  if (pin.length !== 6) {
+    alert('El PIN debe tener 6 dígitos');
+    return;
+  }
   
-  const reader = new FileReader();
-  reader.onload = async (event) => {
-    try {
-      const data = JSON.parse(event.target.result);
-      const res = await fetch('/api/lists/import', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: currentUsername, lists: data.lists })
-      });
-      
-      if (res.ok) {
-        alert('¡Listas importadas correctamente!');
-        loadLists(currentUsername);
-      }
-    } catch (err) {
-      alert('Error al importar archivo');
-    }
-  };
-  reader.readAsText(file);
-  e.target.value = '';
-});
-
-document.getElementById('exportBtn').addEventListener('click', async () => {
-  const res = await fetch(`/api/lists?username=${currentUsername}`);
-  const lists = await res.json();
-  const blob = new Blob([JSON.stringify({ username: currentUsername, lists }, null, 2)], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `customlibrary-${currentUsername}.json`;
-  a.click();
+  const res = await fetch('/api/lists/import-pin', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username: currentUsername, pin })
+  });
+  
+  if (res.ok) {
+    alert('¡Lista importada correctamente!');
+    document.getElementById('pinModal').classList.remove('active');
+    document.getElementById('pinInput').value = '';
+    loadLists(currentUsername);
+  } else {
+    const data = await res.json();
+    alert(data.error || 'PIN no válido');
+  }
 });
 
 document.getElementById('copyInstallBtn').addEventListener('click', () => {
@@ -549,6 +606,46 @@ document.getElementById('installBtn').addEventListener('click', () => {
   const url = `stremio://${window.location.host}/manifest.json?username=${currentUsername}&addonName=${encodeURIComponent(currentAddonName)}`;
   window.open(url, '_blank');
 });
+
+async function showListDetail(listId) {
+  currentListId = listId;
+  const res = await fetch(`/api/lists/${listId}?username=${currentUsername}`);
+  const list = await res.json();
+  
+  document.getElementById('listDetailTitle').textContent = list.name;
+  
+  const t = translations[currentLang] || translations.es;
+  const itemsContainer = document.getElementById('listDetailItems');
+  itemsContainer.innerHTML = list.items.length === 0
+    ? '<p style="text-align:center; opacity:0.7;">No hay elementos en esta lista</p>'
+    : list.items.map(item => `
+      <div class="detail-item">
+        <img src="${item.poster ? `https://image.tmdb.org/t/p/w200${item.poster}` : 'image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'80\' height=\'120\'%3E%3Crect fill=\'%23333\' width=\'80\' height=\'120\'/%3E%3C/svg%3E'}" alt="${item.title}">
+        <div class="detail-item-info">
+          <strong>${item.title}</strong>
+          ${item.rating ? `<div class="rating">${item.rating}</div>` : ''}
+          <div class="overview">${item.overview || 'Sin sinopsis'}</div>
+        </div>
+        <button class="delete-btn" onclick="deleteItem('${listId}', '${item.id}')">${t.deleteItem}</button>
+      </div>
+    `).join('');
+  
+  document.getElementById('mainScreen').classList.remove('active');
+  document.getElementById('listDetailScreen').classList.add('active');
+}
+
+document.getElementById('backBtn').addEventListener('click', () => {
+  document.getElementById('listDetailScreen').classList.remove('active');
+  document.getElementById('mainScreen').classList.add('active');
+  loadLists(currentUsername);
+});
+
+async function deleteItem(listId, itemId) {
+  if (!confirm('¿Eliminar este elemento?')) return;
+  
+  await fetch(`/api/lists/${listId}/items/${itemId}`, { method: 'DELETE' });
+  showListDetail(listId);
+}
 
 let searchTimeout;
 document.getElementById('searchInput').addEventListener('input', (e) => {
@@ -589,6 +686,12 @@ window.addEventListener('DOMContentLoaded', () => {
   const savedUsername = localStorage.getItem('username');
   const savedKey = localStorage.getItem('tmdbKey');
   const savedAddonName = localStorage.getItem('addonName');
+  const savedLang = localStorage.getItem('lang');
+  
+  if (savedLang) {
+    currentLang = savedLang;
+    document.getElementById('langSelect').value = currentLang;
+  }
   
   if (savedUsername && savedKey) {
     currentUsername = savedUsername;
@@ -604,4 +707,5 @@ window.addEventListener('DOMContentLoaded', () => {
   }
   
   updateUI();
+  updateListTypePlaceholder();
 });
