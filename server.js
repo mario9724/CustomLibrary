@@ -114,14 +114,14 @@ let db;
 
   // ========== STREMIO ENDPOINTS ==========
 
-  // Manifest dinámico
+  // Manifest dinámico (SOLO catalog)
   app.get('/manifest.json', (req, res) => {
     const { username } = req.query;
     if (!username) return res.status(400).json({ error: 'username required' });
     
     const userLists = db.data.users[username]?.lists || {};
     const types = [...new Set(Object.values(userLists).map(l => l.type))];
-    
+
     const catalogs = Object.values(userLists)
       .sort((a, b) => (a.order || 0) - (b.order || 0))
       .map(l => ({
@@ -134,23 +134,21 @@ let db;
       id: `com.customlibrary.${username}`,
       version: '1.0.0',
       name: `CustomLibrary - ${username}`,
-      description: 'Biblioteca personalizada multilingüe',
-      resources: ['catalog'],
+      description: 'Biblioteca personalizada (usa tu AIO Metadata)',
+      resources: ['catalog'],  // ← SOLO catalog!
       types: types.length > 0 ? types : ['movie', 'series'],
-      idPrefixes: ['tt'],
+      idPrefixes: ['tt', 'tmdb'],
       catalogs,
       logo: `${req.protocol}://${req.get('host')}/icon.svg`
     });
   });
 
-  // **CORRECCIÓN CRÍTICA**: Endpoint de catálogo para Stremio
+  // ✅ CATÁLOGO PURAMENTE BÁSICO (AIO Metadata provee todo)
   app.get('/catalog/:type/:id.json', (req, res) => {
     const { type, id } = req.params;
     const { username } = req.query;
 
-    if (!username) {
-      return res.status(400).json({ error: 'username required' });
-    }
+    if (!username) return res.status(400).json({ error: 'username required' });
 
     const userLists = db.data.users[username]?.lists || {};
     const list = userLists[id];
@@ -159,27 +157,21 @@ let db;
       return res.json({ metas: [] });
     }
 
-    const metas = (list.items || []).map(item => ({
-      id: item.tmdbId ? `tt${item.tmdbId}` : `custom_${item.id}`,
-      type: item.mediaType || type,
-      name: item.title || item.name || 'Sin título',
-      poster: item.poster ? `https://image.tmdb.org/t/p/w500${item.poster}` : undefined,
-      description: item.addedBy ? `Recomendado por ${item.addedBy}` : undefined
-    }));
+    // ✅ SOLO IDs reales → AIO Metadata hace el resto
+    const metas = (list.items || []).slice(0, 20).map(item => {
+      let metaId = item.imdbId || 
+                   (item.tmdbId ? `tmdb:${item.tmdbId}` : `tt${item.tmdbId}`) || 
+                   `custom_${item.id}`;
+
+      return {
+        id: metaId,      // ID para AIO Metadata/Cinemeta
+        type: item.mediaType || type,
+        name: item.title || item.name || 'Sin título'
+        // ¡SIN poster/description! → Providers externos
+      };
+    });
 
     res.json({ metas });
-  });
-
-  // Meta endpoint (opcional pero recomendado)
-  app.get('/meta/:type/:id.json', (req, res) => {
-    res.json({
-      meta: {
-        id: req.params.id,
-        type: req.params.type,
-        name: 'Custom Item',
-        description: 'Item de CustomLibrary'
-      }
-    });
   });
 
   const port = process.env.PORT || 3000;
