@@ -7,270 +7,200 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- WELCOME SCREEN -->
-  <div id="welcomeScreen" class="screen active">
-    <div class="welcome-container">
-      <svg class="logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="100" cy="100" r="80" fill="none" stroke="url(#grad1)" stroke-width="8"/>
-        <defs>
-          <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" style="stop-color:#7b2cbf;stop-opacity:1" />
-            <stop offset="100%" style="stop-color:#c77dff;stop-opacity:1" />
-          </linearGradient>
-        </defs>
-        <path d="M 70 80 L 130 100 L 70 120 Z" fill="#c77dff"/>
-        <rect x="130" y="90" width="10" height="20" fill="#c77dff"/>
-      </svg>
-      <h1 id="welcomeTitle">Welcome to CustomLibrary</h1>
-      <div id="languageSelectDiv" class="input-group">
-        <label id="languageQuestionLabel">What language can we speak?</label>
-        <select id="languageSelect">
-          <option value="en">English 🇬🇧</option>
-          <option value="es">Español 🇪🇸</option>
-          <option value="fr">Français 🇫🇷</option>
-          <option value="de">Deutsch 🇩🇪</option>
-          <option value="it">Italiano 🇮🇹</option>
-          <option value="pt">Português 🇵🇹</option>
-          <option value="ru">Русский 🇷🇺</option>
-          <option value="ja">日本語 🇯🇵</option>
-          <option value="zh">中文 🇨🇳</option>
+  <div id="app">
+    <!-- WELCOME SCREEN -->
+    <div class="screen active" id="welcomeScreen">
+      <div class="container">
+        <h1 data-i18n="languageQuestionFirst">Hey, what language can we speak?</h1>
+        <select id="langSelect" class="input">
+          <option value="en">🇬🇧 English</option>
+          <option value="es">🇪🇸 Español</option>
+          <option value="fr">🇫🇷 Français</option>
+          <option value="de">🇩🇪 Deutsch</option>
+          <option value="it">🇮🇹 Italiano</option>
+          <option value="pt">🇵🇹 Português</option>
+          <option value="ru">🇷🇺 Русский</option>
+          <option value="ja">🇯🇵 日本語</option>
+          <option value="zh">🇨🇳 中文</option>
         </select>
-      </div>
-      <div id="nameInputDiv" class="input-group" style="display:none;">
-        <label id="nameQuestionLabel">Hey, what's your name?</label>
-        <input type="text" id="nameInput" placeholder="Your name">
-        <button id="continueBtn">Continue</button>
+        <h2 data-i18n="welcomeQuestion">Welcome, what can I call you?</h2>
+        <input type="text" id="welcomeUsername" class="input" data-i18n-placeholder="yourName" placeholder="Your name" autocomplete="off">
+        <button id="checkUserBtn" class="button" data-i18n="continue" disabled>Continue</button>
       </div>
     </div>
-  </div>
 
-  <!-- LOGIN SCREEN -->
-  <div id="loginScreen" class="screen">
-    <div class="auth-container">
-      <h2 id="loginTitle">Login</h2>
-      <input type="text" id="loginUsername" placeholder="Username">
-      <input type="password" id="loginPassword" placeholder="Password">
-      <button id="loginBtn">Login</button>
-      <p id="loginSwitch">Don't have an account? <span id="goToRegister">Register</span></p>
-    </div>
-  </div>
-
-  <!-- REGISTER SCREEN -->
-  <div id="registerScreen" class="screen">
-    <div class="auth-container">
-      <h2 id="registerTitle">Register</h2>
-      <input type="text" id="registerUsername" placeholder="Username">
-      <input type="password" id="registerPassword" placeholder="Password">
-      <button id="registerBtn">Register</button>
-      <p id="registerSwitch">Already have an account? <span id="goToLogin">Login</span></p>
-    </div>
-  </div>
-
-  <!-- MAIN SCREEN -->
-  <div id="mainScreen" class="screen">
-    <header>
-      <div class="header-left">
-        <h1 id="mainTitle">My Library</h1>
-        <p id="addonUrl"></p>
+    <!-- LOGIN SCREEN -->
+    <div class="screen" id="loginScreen">
+      <div class="container">
+        <h2 id="welcomeBackText" data-i18n="welcomeBack">Welcome back!</h2>
+        <input type="text" id="loginPin" class="input" data-i18n-placeholder="enterPin" placeholder="Enter your 4-digit PIN" maxlength="4" pattern="[0-9]*" inputmode="numeric" autocomplete="off">
+        <button id="loginBtn" class="button" data-i18n="login" disabled>Login</button>
+        <button id="backToUsernameBtn" class="button secondary" data-i18n="back">Back</button>
       </div>
-      <div class="header-right">
-        <button id="friendsBtn">👥 <span id="friendsBtnText">Friends</span></button>
-        <button id="ratingsBtn">⭐ <span id="ratingsBtnText">Ratings</span></button>
-        <button id="logoutBtn">🚪 <span id="logoutBtnText">Logout</span></button>
-      </div>
-    </header>
+    </div>
 
-    <main>
-      <section id="listsSection">
-        <div class="section-header">
-          <h2 id="listsTitle">My Lists</h2>
-          <button id="createListBtn">+ <span id="createListBtnText">Create List</span></button>
+    <!-- REGISTER SCREEN -->
+    <div class="screen" id="registerScreen">
+      <div class="container">
+        <h2 data-i18n="newUser">New user!</h2>
+        <h3 data-i18n="addonNameQuestion">And what should I be called?</h3>
+        <p data-i18n="addonNameHelp">This will be the addon name in your player</p>
+        <input type="text" id="addonName" class="input" data-i18n-placeholder="addonNameHelp" placeholder="Addon name" autocomplete="off">
+        <h3 data-i18n="tmdbQuestion">I'll need your TMDB API Key</h3>
+        <p><span data-i18n="getTmdbKeyText">Get it</span> <a href="https://www.themoviedb.org/settings/api" target="_blank" data-i18n="here">HERE</a></p>
+        <input type="text" id="registerTmdbKey" class="input" data-i18n-placeholder="tmdbKeyPlaceholder" placeholder="TMDB API Key" autocomplete="off">
+        <h3 data-i18n="createPin">Create a 4-digit PIN</h3>
+        <p data-i18n="pinHelp">Use it to access your account</p>
+        <input type="text" id="registerPin" class="input" placeholder="1234" maxlength="4" pattern="[0-9]*" inputmode="numeric" autocomplete="off">
+        <button id="registerBtn" class="button" data-i18n="startButton" disabled>Let's create your lists</button>
+      </div>
+    </div>
+
+    <!-- MAIN SCREEN -->
+    <div class="screen" id="mainScreen">
+      <div class="container">
+        <div class="header">
+          <h1 id="mainTitle" data-i18n="mainTitleTemplate">Alright, what did you like?</h1>
+          <button id="changeUserBtn" class="button secondary small">👤</button>
         </div>
-        <div id="listsContainer"></div>
-      </section>
 
-      <section id="searchSection">
-        <h2 id="searchTitle">Add Items</h2>
-        <div class="search-bar">
-          <input type="text" id="searchInput" placeholder="Search movies/series">
-          <button id="searchBtn">🔍</button>
+        <input type="text" id="searchInput" class="input" data-i18n-placeholder="searchPlaceholder" placeholder="Search movies/series...">
+        <div id="searchResults" class="search-results"></div>
+
+        <div class="tabs">
+          <button class="tab active" data-tab="lists" data-i18n="yourLists">These are your lists</button>
+          <button class="tab" data-tab="friends" data-i18n="friends">Friends</button>
         </div>
-        <div id="searchResults"></div>
-      </section>
-    </main>
 
-    <footer>
-      <p>CustomLibrary v2.0 | <span id="footerMadeWith">Made with</span> ❤️</p>
-    </footer>
-  </div>
+        <div class="tab-content active" id="listsTab">
+          <form id="newListForm" class="form">
+            <input type="text" id="listName" class="input" data-i18n-placeholder="listName" placeholder="List name" required>
+            <input type="text" id="listType" class="input" data-i18n-placeholder="listTypeTemplate" placeholder="List type" required>
+            <div class="button-group">
+              <button type="submit" class="button" data-i18n="create">Create</button>
+              <button type="button" id="importBtn" class="button secondary" data-i18n="importPin">Add list by PIN</button>
+            </div>
+          </form>
+          <div id="listDisplay"></div>
+          <div class="button-group">
+            <button id="copyInstallBtn" class="button" data-i18n="copyUrl">Copy install URL</button>
+            <button id="installBtn" class="button" data-i18n="install">Install in your player</button>
+          </div>
+        </div>
 
-  <!-- FULLSCREEN SEARCH ITEM MODAL -->
-  <div id="itemDetailModal" class="modal">
-    <div class="item-detail-fullscreen">
-      <button class="close-detail-btn" id="closeDetailBtn">✕</button>
-      <button class="nav-arrow nav-left" id="prevItemBtn">◀</button>
-      <button class="nav-arrow nav-right" id="nextItemBtn">▶</button>
-      
-      <div class="detail-backdrop" id="detailBackdrop"></div>
-      <div class="detail-content">
-        <img id="detailPoster" class="detail-poster" src="" alt="">
-        <div class="detail-info">
-          <h2 id="detailTitle"></h2>
-          <div class="detail-meta">
-            <span id="detailRating">⭐ --</span>
-            <span id="detailYear">----</span>
-            <span id="detailRuntime">-- min</span>
-          </div>
-          <p id="detailOverview"></p>
-          
-          <div class="detail-section">
-            <h3 id="detailDirectorLabel">Director</h3>
-            <p id="detailDirector">--</p>
-          </div>
-          
-          <div class="detail-section">
-            <h3 id="detailCastLabel">Cast</h3>
-            <p id="detailCast">--</p>
-          </div>
-          
-          <div class="detail-section">
-            <h3 id="detailReviewsLabel">Recent Reviews</h3>
-            <div id="detailReviews"></div>
-          </div>
-          
-          <div class="detail-actions">
-            <button id="detailTrailerBtn">🎬 <span id="detailTrailerText">Trailer</span></button>
-            <button id="detailAddBtn">➕ <span id="detailAddText">Add to List</span></button>
-          </div>
+        <div class="tab-content" id="friendsTab">
+          <form id="addFriendForm" class="form">
+            <input type="text" id="friendUsername" class="input" data-i18n-placeholder="friendUsername" placeholder="Username" required>
+            <button type="submit" class="button" data-i18n="addFriend">Add friend</button>
+          </form>
+          <div id="friendsDisplay"></div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- CREATE LIST MODAL -->
-  <div id="createListModal" class="modal">
-    <div class="modal-content">
-      <h3 id="createListModalTitle">Create New List</h3>
-      <input type="text" id="newListName" placeholder="List name">
-      <textarea id="newListMessage" placeholder="Custom message (optional)" rows="3"></textarea>
-      <div class="modal-buttons">
-        <button id="confirmCreateBtn">Create</button>
-        <button id="cancelCreateBtn">Cancel</button>
+    <!-- LIST DETAIL SCREEN -->
+    <div class="screen" id="listDetailScreen">
+      <div class="container">
+        <button id="backBtn" class="button secondary" data-i18n="back">← Back</button>
+        <h2 id="listDetailTitle"></h2>
+        <div id="listDetailItems" class="detail-items"></div>
       </div>
     </div>
-  </div>
 
-  <!-- SELECT LIST MODAL -->
-  <div id="selectListModal" class="modal">
-    <div class="modal-content">
-      <h3 id="selectListModalTitle">Select List</h3>
-      <div id="selectListOptions"></div>
-      <button id="cancelSelectBtn">Cancel</button>
-    </div>
-  </div>
-
-  <!-- SHARE MODAL -->
-  <div id="shareModal" class="modal">
-    <div class="modal-content">
-      <h3 id="shareModalTitle">Share List</h3>
-      <p id="sharePinLabel">PIN:</p>
-      <input type="text" id="sharePinInput" readonly>
-      <button id="copyPinBtn">📋 Copy PIN</button>
-      <button id="closePinBtn">Close</button>
-    </div>
-  </div>
-
-  <!-- IMPORT LIST MODAL -->
-  <div id="importModal" class="modal">
-    <div class="modal-content">
-      <h3 id="importModalTitle">Import List</h3>
-      <input type="text" id="importPinInput" placeholder="Enter PIN">
-      <div class="modal-buttons">
-        <button id="confirmImportBtn">Import</button>
-        <button id="cancelImportBtn">Cancel</button>
+    <!-- FRIEND DETAIL SCREEN -->
+    <div class="screen" id="friendDetailScreen">
+      <div class="container">
+        <button id="backFromFriendBtn" class="button secondary" data-i18n="back">← Back</button>
+        <h2 id="friendDetailTitle"></h2>
+        <h3 data-i18n="friendLists">Lists</h3>
+        <div id="friendListsDisplay"></div>
+        <h3 data-i18n="friendRatings">Recent ratings</h3>
+        <div id="friendRatingsDisplay"></div>
       </div>
     </div>
-  </div>
 
-  <!-- FRIENDS MODAL -->
-  <div id="friendsModal" class="modal">
-    <div class="modal-content large">
-      <h3 id="friendsModalTitle">Friends</h3>
-      <div class="friends-tabs">
-        <button class="tab-btn active" data-tab="myFriends" id="myFriendsTab">My Friends</button>
-        <button class="tab-btn" data-tab="addFriend" id="addFriendTab">Add Friend</button>
+    <!-- LIST MODAL -->
+    <div class="modal" id="listModal">
+      <div class="modal-content">
+        <h3 data-i18n="selectListModal">Which list do you want to add this to?</h3>
+        <select id="modalListSelect" class="input"></select>
+        <div class="button-group">
+          <button id="modalAddBtn" class="button" data-i18n="add">Add</button>
+          <button id="modalCancelBtn" class="button secondary" data-i18n="cancel">Cancel</button>
+        </div>
       </div>
-      
-      <div class="tab-content active" id="myFriendsContent">
-        <div id="friendsList"></div>
-      </div>
-      
-      <div class="tab-content" id="addFriendContent">
-        <input type="text" id="friendUsernameInput" placeholder="Username">
-        <button id="addFriendBtn">Add Friend</button>
-      </div>
-      
-      <button id="closeFriendsBtn">Close</button>
     </div>
-  </div>
 
-  <!-- FRIEND PROFILE MODAL -->
-  <div id="friendProfileModal" class="modal">
-    <div class="modal-content large">
-      <h3 id="friendProfileName"></h3>
-      
-      <div class="profile-section">
-        <h4 id="friendRatingsLabel">Ratings</h4>
-        <div id="friendRatingsList"></div>
+    <!-- PIN MODAL -->
+    <div class="modal" id="pinModal">
+      <div class="modal-content">
+        <h3 data-i18n="importPinTitle">Enter the 6-digit PIN</h3>
+        <input type="text" id="pinInput" class="input" placeholder="123456" maxlength="6" pattern="[0-9]*" inputmode="numeric">
+        <div class="button-group">
+          <button id="pinImportBtn" class="button" data-i18n="import">Import</button>
+          <button id="pinCancelBtn" class="button secondary" data-i18n="cancel">Cancel</button>
+        </div>
       </div>
-      
-      <div class="profile-section">
-        <h4 id="friendListsLabel">Lists</h4>
-        <div id="friendListsContainer"></div>
-      </div>
-      
-      <button id="closeFriendProfileBtn">Close</button>
     </div>
-  </div>
 
-  <!-- RATINGS MODAL -->
-  <div id="ratingsModal" class="modal">
-    <div class="modal-content large">
-      <h3 id="ratingsModalTitle">Item Ratings</h3>
-      <div id="ratingsFilter">
-        <button class="filter-btn active" data-filter="all" id="allRatingsBtn">All Users</button>
-        <button class="filter-btn" data-filter="friends" id="friendsRatingsBtn">Friends Only</button>
+    <!-- SHOW PIN MODAL -->
+    <div class="modal" id="showPinModal">
+      <div class="modal-content">
+        <h3 data-i18n="sharePinTitle">List PIN</h3>
+        <p data-i18n="sharePinText">Share this PIN so others can import the list</p>
+        <div class="pin-display" id="pinDisplay"></div>
+        <div class="button-group">
+          <button id="copyPinBtn" class="button" data-i18n="copyPin">Copy PIN</button>
+          <button id="closePinBtn" class="button secondary" data-i18n="close">Close</button>
+        </div>
       </div>
-      <div id="ratingsList"></div>
-      <button id="closeRatingsBtn">Close</button>
     </div>
-  </div>
 
-  <!-- RATE ITEM MODAL -->
-  <div id="rateModal" class="modal">
-    <div class="modal-content">
-      <h3 id="rateModalTitle">Rate Item</h3>
-      <p id="rateItemName"></p>
-      <div class="star-rating">
-        <span class="star" data-value="1">★</span>
-        <span class="star" data-value="2">★</span>
-        <span class="star" data-value="3">★</span>
-        <span class="star" data-value="4">★</span>
-        <span class="star" data-value="5">★</span>
-        <span class="star" data-value="6">★</span>
-        <span class="star" data-value="7">★</span>
-        <span class="star" data-value="8">★</span>
-        <span class="star" data-value="9">★</span>
-        <span class="star" data-value="10">★</span>
+    <!-- RATING MODAL -->
+    <div class="modal" id="ratingModal">
+      <div class="modal-content">
+        <h3 data-i18n="rateTitle">Rate this item</h3>
+        <div class="stars">
+          <span class="star" data-rating="1">★</span>
+          <span class="star" data-rating="2">★</span>
+          <span class="star" data-rating="3">★</span>
+          <span class="star" data-rating="4">★</span>
+          <span class="star" data-rating="5">★</span>
+        </div>
+        <textarea id="reviewText" class="input" data-i18n-placeholder="reviewPlaceholder" placeholder="Write a review (optional)..." rows="4"></textarea>
+        <div class="button-group">
+          <button id="submitRatingBtn" class="button" data-i18n="submit">Submit</button>
+          <button id="cancelRatingBtn" class="button secondary" data-i18n="cancel">Cancel</button>
+        </div>
       </div>
-      <p id="ratingValue">0/10</p>
-      <div class="modal-buttons">
-        <button id="confirmRatingBtn">Confirm</button>
-        <button id="cancelRatingBtn">Cancel</button>
+    </div>
+
+    <!-- RATINGS MODAL (STABLE+) -->
+    <div class="modal" id="ratingsModal">
+      <div class="modal-content">
+        <h3 data-i18n="ratingsTitle">Ratings</h3>
+        <!-- ⭐ STABLE+ FILTRO DE RATINGS ⭐ -->
+        <div class="ratings-filter-buttons">
+          <button id="filterAllRatings" class="filter-btn active" data-i18n="filterAll">All</button>
+          <button id="filterFriendsRatings" class="filter-btn" data-i18n="filterFriends">Friends only</button>
+        </div>
+        <div id="ratingsDisplay" class="ratings-list"></div>
+        <button id="closeRatingsBtn" class="button" data-i18n="close">Close</button>
       </div>
     </div>
   </div>
 
   <script src="script.js"></script>
+  <script>
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        const targetTab = tab.dataset.tab;
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById(targetTab + 'Tab').classList.add('active');
+      });
+    });
+  </script>
 </body>
 </html>
