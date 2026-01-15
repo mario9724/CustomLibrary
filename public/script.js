@@ -54,43 +54,45 @@ const translations = {
     friendRatings: 'Recent ratings',
     noFriends: 'No friends yet',
     noLists: 'No lists created yet',
-    noItems: 'No items in this list'
+    noItems: 'No items in this list',
+    showingAll: '🌍 Showing: All',
+    showingFriends: '👥 Showing: Friends'
   },
   es: {
-    languageQuestionFirst: 'Ey, Â¿en quÃ© idioma podemos hablar?',
-    welcomeQuestion: 'Bienvenido, Â¿cÃ³mo puedo llamarte?',
+    languageQuestionFirst: 'Ey, ¿en qué idioma podemos hablar?',
+    welcomeQuestion: 'Bienvenido, ¿cómo puedo llamarte?',
     yourName: 'Tu nombre',
     continue: 'Continuar',
-    welcomeBack: 'Â¡Bienvenido de nuevo!',
-    enterPin: 'Introduce tu PIN de 4 dÃ­gitos',
-    login: 'Iniciar sesiÃ³n',
-    newUser: 'Â¡Nuevo usuario!',
-    addonNameQuestion: 'Â¿Y cÃ³mo me llamo yo?',
-    addonNameHelp: 'Este serÃ¡ el nombre del addon en tu reproductor',
+    welcomeBack: '¡Bienvenido de nuevo!',
+    enterPin: 'Introduce tu PIN de 4 dígitos',
+    login: 'Iniciar sesión',
+    newUser: '¡Nuevo usuario!',
+    addonNameQuestion: '¿Y cómo me llamo yo?',
+    addonNameHelp: 'Este será el nombre del addon en tu reproductor',
     tmdbQuestion: 'Voy a necesitar tu clave API de TMDB',
     tmdbKeyPlaceholder: 'API Key de TMDB',
     getTmdbKeyText: 'Esto lo consigues',
-    here: 'AQUÃ',
-    createPin: 'Crea un PIN de 4 dÃ­gitos',
-    pinHelp: 'Ãsalo para acceder a tu cuenta',
+    here: 'AQUÍ',
+    createPin: 'Crea un PIN de 4 dígitos',
+    pinHelp: 'Úsalo para acceder a tu cuenta',
     startButton: 'Pasemos a crear tus listas',
-    mainTitleTemplate: 'De acuerdo {{username}}, Â¿quÃ© fue eso que te gustÃ³?',
+    mainTitleTemplate: 'De acuerdo {{username}}, ¿qué fue eso que te gustó?',
     yourLists: 'Estas son tus listas',
     createList: 'Crear nueva lista',
     listName: 'Nombre de la lista',
-    listTypeTemplate: 'LibrerÃ­a de {{username}}',
+    listTypeTemplate: 'Librería de {{username}}',
     create: 'Crear',
-    searchPlaceholder: 'Buscar pelÃ­culas/series...',
-    importPin: 'AÃ±adir lista por PIN',
-    copyUrl: 'Copiar URL de instalaciÃ³n',
+    searchPlaceholder: 'Buscar películas/series...',
+    importPin: 'Añadir lista por PIN',
+    copyUrl: 'Copiar URL de instalación',
     install: 'Instalar en tu reproductor',
     share: 'Compartir',
     delete: 'Eliminar',
-    selectListModal: 'Â¿A quÃ© lista quieres agregar esto?',
+    selectListModal: '¿A qué lista quieres agregar esto?',
     add: 'Agregar',
     cancel: 'Cancelar',
     back: 'Volver',
-    importPinTitle: 'Introduce el PIN de 6 dÃ­gitos',
+    importPinTitle: 'Introduce el PIN de 6 dígitos',
     import: 'Importar',
     sharePinTitle: 'PIN de la lista',
     sharePinText: 'Comparte este PIN para que otros puedan importar la lista',
@@ -99,55 +101,57 @@ const translations = {
     deleteItem: 'Eliminar',
     rate: 'Calificar',
     rateTitle: 'Calificar este elemento',
-    reviewPlaceholder: 'Escribe una reseÃ±a (opcional)...',
+    reviewPlaceholder: 'Escribe una reseña (opcional)...',
     submit: 'Enviar',
     ratingsTitle: 'Calificaciones',
     viewRatings: 'Calificaciones',
     friends: 'Amigos',
     friendUsername: 'Nombre de usuario',
-    addFriend: 'AÃ±adir amigo',
+    addFriend: 'Añadir amigo',
     removeFriend: 'Eliminar',
     friendLists: 'Listas',
     friendRatings: 'Calificaciones recientes',
-    noFriends: 'AÃºn no tienes amigos',
-    noLists: 'No hay listas creadas aÃºn',
-    noItems: 'No hay elementos en esta lista'
+    noFriends: 'Aún no tienes amigos',
+    noLists: 'No hay listas creadas aún',
+    noItems: 'No hay elementos en esta lista',
+    showingAll: '🌍 Mostrando: Todos',
+    showingFriends: '👥 Mostrando: Amigos'
   },
   fr: {
-    languageQuestionFirst: 'HÃ©, quelle langue pouvons-nous parler?',
+    languageQuestionFirst: 'Hé, quelle langue pouvons-nous parler?',
     welcomeQuestion: 'Bienvenue, comment puis-je t\'appeler?',
     yourName: 'Ton nom',
     continue: 'Continuer',
     welcomeBack: 'Bon retour!',
-    enterPin: 'Entre ton PIN Ã  4 chiffres',
+    enterPin: 'Entre ton PIN à 4 chiffres',
     login: 'Connexion',
     newUser: 'Nouvel utilisateur!',
     addonNameQuestion: 'Et comment je m\'appelle?',
     addonNameHelp: 'Ce sera le nom de l\'addon dans ton lecteur',
-    tmdbQuestion: 'J\'aurai besoin de ta clÃ© API TMDB',
-    tmdbKeyPlaceholder: 'ClÃ© API TMDB',
+    tmdbQuestion: 'J\'aurai besoin de ta clé API TMDB',
+    tmdbKeyPlaceholder: 'Clé API TMDB',
     getTmdbKeyText: 'Obtiens-la',
     here: 'ICI',
-    createPin: 'CrÃ©e un PIN Ã  4 chiffres',
-    pinHelp: 'Utilise-le pour accÃ©der Ã  ton compte',
-    startButton: 'CrÃ©ons tes listes',
-    mainTitleTemplate: "D'accord {{username}}, qu'as-tu aimÃ©?",
+    createPin: 'Crée un PIN à 4 chiffres',
+    pinHelp: 'Utilise-le pour accéder à ton compte',
+    startButton: 'Créons tes listes',
+    mainTitleTemplate: "D'accord {{username}}, qu'as-tu aimé?",
     yourLists: 'Voici tes listes',
-    createList: 'CrÃ©er une nouvelle liste',
+    createList: 'Créer une nouvelle liste',
     listName: 'Nom de la liste',
-    listTypeTemplate: 'BibliothÃ¨que de {{username}}',
-    create: 'CrÃ©er',
-    searchPlaceholder: 'Rechercher films/sÃ©ries...',
+    listTypeTemplate: 'Bibliothèque de {{username}}',
+    create: 'Créer',
+    searchPlaceholder: 'Rechercher films/séries...',
     importPin: 'Ajouter une liste par PIN',
     copyUrl: 'Copier l\'URL d\'installation',
     install: 'Installer dans ton lecteur',
     share: 'Partager',
     delete: 'Supprimer',
-    selectListModal: 'Ã quelle liste veux-tu ajouter ceci?',
+    selectListModal: 'À quelle liste veux-tu ajouter ceci?',
     add: 'Ajouter',
     cancel: 'Annuler',
     back: 'Retour',
-    importPinTitle: 'Entre le PIN Ã  6 chiffres',
+    importPinTitle: 'Entre le PIN à 6 chiffres',
     import: 'Importer',
     sharePinTitle: 'PIN de la liste',
     sharePinText: 'Partage ce PIN pour que d\'autres puissent importer la liste',
@@ -155,8 +159,8 @@ const translations = {
     close: 'Fermer',
     deleteItem: 'Supprimer',
     rate: 'Noter',
-    rateTitle: 'Noter cet Ã©lÃ©ment',
-    reviewPlaceholder: 'Ãcris un avis (optionnel)...',
+    rateTitle: 'Noter cet élément',
+    reviewPlaceholder: 'Écris un avis (optionnel)...',
     submit: 'Envoyer',
     ratingsTitle: 'Notes',
     viewRatings: 'Notes',
@@ -165,28 +169,30 @@ const translations = {
     addFriend: 'Ajouter un ami',
     removeFriend: 'Supprimer',
     friendLists: 'Listes',
-    friendRatings: 'Notes rÃ©centes',
+    friendRatings: 'Notes récentes',
     noFriends: 'Pas encore d\'amis',
-    noLists: 'Aucune liste crÃ©Ã©e',
-    noItems: 'Aucun Ã©lÃ©ment dans cette liste'
+    noLists: 'Aucune liste créée',
+    noItems: 'Aucun élément dans cette liste',
+    showingAll: '🌍 Affichage: Tous',
+    showingFriends: '👥 Affichage: Amis'
   },
   de: {
-    languageQuestionFirst: 'Hey, welche Sprache kÃ¶nnen wir sprechen?',
+    languageQuestionFirst: 'Hey, welche Sprache können wir sprechen?',
     welcomeQuestion: 'Willkommen, wie kann ich dich nennen?',
     yourName: 'Dein Name',
     continue: 'Weiter',
-    welcomeBack: 'Willkommen zurÃ¼ck!',
+    welcomeBack: 'Willkommen zurück!',
     enterPin: 'Gib deine 4-stellige PIN ein',
     login: 'Anmelden',
     newUser: 'Neuer Benutzer!',
-    addonNameQuestion: 'Und wie soll ich heiÃen?',
+    addonNameQuestion: 'Und wie soll ich heißen?',
     addonNameHelp: 'Dies wird der Addon-Name in deinem Player sein',
-    tmdbQuestion: 'Ich brauche deinen TMDB API-SchlÃ¼ssel',
-    tmdbKeyPlaceholder: 'TMDB API-SchlÃ¼ssel',
+    tmdbQuestion: 'Ich brauche deinen TMDB API-Schlüssel',
+    tmdbKeyPlaceholder: 'TMDB API-Schlüssel',
     getTmdbKeyText: 'Hol ihn dir',
     here: 'HIER',
     createPin: 'Erstelle eine 4-stellige PIN',
-    pinHelp: 'Verwende sie fÃ¼r den Zugriff auf dein Konto',
+    pinHelp: 'Verwende sie für den Zugriff auf dein Konto',
     startButton: 'Lass uns deine Listen erstellen',
     mainTitleTemplate: 'Ok {{username}}, was hat dir gefallen?',
     yourLists: 'Das sind deine Listen',
@@ -195,22 +201,22 @@ const translations = {
     listTypeTemplate: '{{username}}s Bibliothek',
     create: 'Erstellen',
     searchPlaceholder: 'Filme/Serien suchen...',
-    importPin: 'Liste per PIN hinzufÃ¼gen',
+    importPin: 'Liste per PIN hinzufügen',
     copyUrl: 'Installations-URL kopieren',
     install: 'In deinem Player installieren',
     share: 'Teilen',
-    delete: 'LÃ¶schen',
-    selectListModal: 'Zu welcher Liste mÃ¶chtest du dies hinzufÃ¼gen?',
-    add: 'HinzufÃ¼gen',
+    delete: 'Löschen',
+    selectListModal: 'Zu welcher Liste möchtest du dies hinzufügen?',
+    add: 'Hinzufügen',
     cancel: 'Abbrechen',
-    back: 'ZurÃ¼ck',
+    back: 'Zurück',
     importPinTitle: 'Gib die 6-stellige PIN ein',
     import: 'Importieren',
     sharePinTitle: 'Listen-PIN',
-    sharePinText: 'Teile diese PIN, damit andere die Liste importieren kÃ¶nnen',
+    sharePinText: 'Teile diese PIN, damit andere die Liste importieren können',
     copyPin: 'PIN kopieren',
-    close: 'SchlieÃen',
-    deleteItem: 'LÃ¶schen',
+    close: 'Schließen',
+    deleteItem: 'Löschen',
     rate: 'Bewerten',
     rateTitle: 'Dieses Element bewerten',
     reviewPlaceholder: 'Schreibe eine Bewertung (optional)...',
@@ -219,13 +225,15 @@ const translations = {
     viewRatings: 'Bewertungen',
     friends: 'Freunde',
     friendUsername: 'Benutzername',
-    addFriend: 'Freund hinzufÃ¼gen',
+    addFriend: 'Freund hinzufügen',
     removeFriend: 'Entfernen',
     friendLists: 'Listen',
     friendRatings: 'Aktuelle Bewertungen',
     noFriends: 'Noch keine Freunde',
     noLists: 'Noch keine Listen erstellt',
-    noItems: 'Keine Elemente in dieser Liste'
+    noItems: 'Keine Elemente in dieser Liste',
+    showingAll: '🌍 Anzeige: Alle',
+    showingFriends: '👥 Anzeige: Freunde'
   },
   it: {
     languageQuestionFirst: 'Ehi, che lingua possiamo parlare?',
@@ -237,15 +245,15 @@ const translations = {
     login: 'Accedi',
     newUser: 'Nuovo utente!',
     addonNameQuestion: 'E come mi chiamo io?',
-    addonNameHelp: 'Questo sarÃ  il nome dell\'addon nel tuo lettore',
-    tmdbQuestion: 'AvrÃ² bisogno della tua chiave API TMDB',
+    addonNameHelp: 'Questo sarà il nome dell\'addon nel tuo lettore',
+    tmdbQuestion: 'Avrò bisogno della tua chiave API TMDB',
     tmdbKeyPlaceholder: 'Chiave API TMDB',
     getTmdbKeyText: 'Ottienila',
     here: 'QUI',
     createPin: 'Crea un PIN a 4 cifre',
     pinHelp: 'Usalo per accedere al tuo account',
     startButton: 'Creiamo le tue liste',
-    mainTitleTemplate: 'Va bene {{username}}, cosa ti Ã¨ piaciuto?',
+    mainTitleTemplate: 'Va bene {{username}}, cosa ti è piaciuto?',
     yourLists: 'Queste sono le tue liste',
     createList: 'Crea nuova lista',
     listName: 'Nome della lista',
@@ -264,7 +272,7 @@ const translations = {
     importPinTitle: 'Inserisci il PIN a 6 cifre',
     import: 'Importa',
     sharePinTitle: 'PIN della lista',
-    sharePinText: 'Condividi questo PIN affinchÃ© altri possano importare la lista',
+    sharePinText: 'Condividi questo PIN affinché altri possano importare la lista',
     copyPin: 'Copia PIN',
     close: 'Chiudi',
     deleteItem: 'Elimina',
@@ -282,7 +290,9 @@ const translations = {
     friendRatings: 'Valutazioni recenti',
     noFriends: 'Nessun amico ancora',
     noLists: 'Nessuna lista creata',
-    noItems: 'Nessun elemento in questa lista'
+    noItems: 'Nessun elemento in questa lista',
+    showingAll: '🌍 Visualizzazione: Tutti',
+    showingFriends: '👥 Visualizzazione: Amici'
   },
   pt: {
     languageQuestionFirst: 'Ei, que idioma podemos falar?',
@@ -290,35 +300,35 @@ const translations = {
     yourName: 'Seu nome',
     continue: 'Continuar',
     welcomeBack: 'Bem-vindo de volta!',
-    enterPin: 'Digite seu PIN de 4 dÃ­gitos',
+    enterPin: 'Digite seu PIN de 4 dígitos',
     login: 'Entrar',
-    newUser: 'Novo usuÃ¡rio!',
+    newUser: 'Novo usuário!',
     addonNameQuestion: 'E como eu me chamo?',
-    addonNameHelp: 'Este serÃ¡ o nome do addon no seu player',
+    addonNameHelp: 'Este será o nome do addon no seu player',
     tmdbQuestion: 'Vou precisar da sua chave API TMDB',
     tmdbKeyPlaceholder: 'Chave API TMDB',
     getTmdbKeyText: 'Consiga',
     here: 'AQUI',
-    createPin: 'Crie um PIN de 4 dÃ­gitos',
+    createPin: 'Crie um PIN de 4 dígitos',
     pinHelp: 'Use-o para acessar sua conta',
     startButton: 'Vamos criar suas listas',
-    mainTitleTemplate: 'Certo {{username}}, do que vocÃª gostou?',
-    yourLists: 'Estas sÃ£o suas listas',
+    mainTitleTemplate: 'Certo {{username}}, do que você gostou?',
+    yourLists: 'Estas são suas listas',
     createList: 'Criar nova lista',
     listName: 'Nome da lista',
     listTypeTemplate: 'Biblioteca de {{username}}',
     create: 'Criar',
-    searchPlaceholder: 'Pesquisar filmes/sÃ©ries...',
+    searchPlaceholder: 'Pesquisar filmes/séries...',
     importPin: 'Adicionar lista por PIN',
-    copyUrl: 'Copiar URL de instalaÃ§Ã£o',
+    copyUrl: 'Copiar URL de instalação',
     install: 'Instalar no seu player',
     share: 'Compartilhar',
     delete: 'Excluir',
-    selectListModal: 'A qual lista vocÃª quer adicionar isto?',
+    selectListModal: 'A qual lista você quer adicionar isto?',
     add: 'Adicionar',
     cancel: 'Cancelar',
     back: 'Voltar',
-    importPinTitle: 'Digite o PIN de 6 dÃ­gitos',
+    importPinTitle: 'Digite o PIN de 6 dígitos',
     import: 'Importar',
     sharePinTitle: 'PIN da lista',
     sharePinText: 'Compartilhe este PIN para que outros possam importar a lista',
@@ -327,190 +337,198 @@ const translations = {
     deleteItem: 'Excluir',
     rate: 'Avaliar',
     rateTitle: 'Avaliar este item',
-    reviewPlaceholder: 'Escreva uma avaliaÃ§Ã£o (opcional)...',
+    reviewPlaceholder: 'Escreva uma avaliação (opcional)...',
     submit: 'Enviar',
-    ratingsTitle: 'AvaliaÃ§Ãµes',
-    viewRatings: 'AvaliaÃ§Ãµes',
+    ratingsTitle: 'Avaliações',
+    viewRatings: 'Avaliações',
     friends: 'Amigos',
-    friendUsername: 'Nome de usuÃ¡rio',
+    friendUsername: 'Nome de usuário',
     addFriend: 'Adicionar amigo',
     removeFriend: 'Remover',
     friendLists: 'Listas',
-    friendRatings: 'AvaliaÃ§Ãµes recentes',
+    friendRatings: 'Avaliações recentes',
     noFriends: 'Ainda sem amigos',
     noLists: 'Nenhuma lista criada',
-    noItems: 'Nenhum item nesta lista'
+    noItems: 'Nenhum item nesta lista',
+    showingAll: '🌍 Exibindo: Todos',
+    showingFriends: '👥 Exibindo: Amigos'
   },
   ru: {
-    languageQuestionFirst: 'Ð­Ð¹, Ð½Ð° ÐºÐ°ÐºÐ¾Ð¼ ÑÐ·ÑÐºÐµ Ð¼Ñ Ð¼Ð¾Ð¶ÐµÐ¼ Ð³Ð¾Ð²Ð¾ÑÐ¸ÑÑ?',
-    welcomeQuestion: 'ÐÐ¾Ð±ÑÐ¾ Ð¿Ð¾Ð¶Ð°Ð»Ð¾Ð²Ð°ÑÑ, ÐºÐ°Ðº Ð¼Ð½Ðµ ÑÐµÐ±Ñ Ð½Ð°Ð·ÑÐ²Ð°ÑÑ?',
-    yourName: 'Ð¢Ð²Ð¾Ðµ Ð¸Ð¼Ñ',
-    continue: 'ÐÑÐ¾Ð´Ð¾Ð»Ð¶Ð¸ÑÑ',
-    welcomeBack: 'Ð¡ Ð²Ð¾Ð·Ð²ÑÐ°ÑÐµÐ½Ð¸ÐµÐ¼!',
-    enterPin: 'ÐÐ²ÐµÐ´Ð¸ ÑÐ²Ð¾Ð¹ 4-Ð·Ð½Ð°ÑÐ½ÑÐ¹ PIN',
-    login: 'ÐÐ¾Ð¹ÑÐ¸',
-    newUser: 'ÐÐ¾Ð²ÑÐ¹ Ð¿Ð¾Ð»ÑÐ·Ð¾Ð²Ð°ÑÐµÐ»Ñ!',
-    addonNameQuestion: 'Ð ÐºÐ°Ðº Ð¼ÐµÐ½Ñ Ð·Ð¾Ð²ÑÑ?',
-    addonNameHelp: 'Ð­ÑÐ¾ Ð±ÑÐ´ÐµÑ Ð¸Ð¼Ñ Ð°Ð´Ð´Ð¾Ð½Ð° Ð² ÑÐ²Ð¾ÐµÐ¼ Ð¿Ð»ÐµÐµÑÐµ',
-    tmdbQuestion: 'ÐÐ½Ðµ Ð¿Ð¾Ð½Ð°Ð´Ð¾Ð±Ð¸ÑÑÑ ÑÐ²Ð¾Ð¹ API ÐºÐ»ÑÑ TMDB',
-    tmdbKeyPlaceholder: 'API ÐºÐ»ÑÑ TMDB',
-    getTmdbKeyText: 'ÐÐ¾Ð»ÑÑÐ¸ ÐµÐ³Ð¾',
-    here: 'ÐÐÐÐ¡Ð¬',
-    createPin: 'Ð¡Ð¾Ð·Ð´Ð°Ð¹ 4-Ð·Ð½Ð°ÑÐ½ÑÐ¹ PIN',
-    pinHelp: 'ÐÑÐ¿Ð¾Ð»ÑÐ·ÑÐ¹ ÐµÐ³Ð¾ Ð´Ð»Ñ Ð´Ð¾ÑÑÑÐ¿Ð° Ðº Ð°ÐºÐºÐ°ÑÐ½ÑÑ',
-    startButton: 'ÐÐ°Ð²Ð°Ð¹ ÑÐ¾Ð·Ð´Ð°Ð´Ð¸Ð¼ ÑÐ²Ð¾Ð¸ ÑÐ¿Ð¸ÑÐºÐ¸',
-    mainTitleTemplate: 'Ð¥Ð¾ÑÐ¾ÑÐ¾ {{username}}, ÑÑÐ¾ ÑÐµÐ±Ðµ Ð¿Ð¾Ð½ÑÐ°Ð²Ð¸Ð»Ð¾ÑÑ?',
-    yourLists: 'ÐÐ¾Ñ ÑÐ²Ð¾Ð¸ ÑÐ¿Ð¸ÑÐºÐ¸',
-    createList: 'Ð¡Ð¾Ð·Ð´Ð°ÑÑ Ð½Ð¾Ð²ÑÐ¹ ÑÐ¿Ð¸ÑÐ¾Ðº',
-    listName: 'ÐÐ°Ð·Ð²Ð°Ð½Ð¸Ðµ ÑÐ¿Ð¸ÑÐºÐ°',
-    listTypeTemplate: 'ÐÐ¸Ð±Ð»Ð¸Ð¾ÑÐµÐºÐ° {{username}}',
-    create: 'Ð¡Ð¾Ð·Ð´Ð°ÑÑ',
-    searchPlaceholder: 'ÐÑÐºÐ°ÑÑ ÑÐ¸Ð»ÑÐ¼Ñ/ÑÐµÑÐ¸Ð°Ð»Ñ...',
-    importPin: 'ÐÐ¾Ð±Ð°Ð²Ð¸ÑÑ ÑÐ¿Ð¸ÑÐ¾Ðº Ð¿Ð¾ PIN',
-    copyUrl: 'ÐÐ¾Ð¿Ð¸ÑÐ¾Ð²Ð°ÑÑ URL ÑÑÑÐ°Ð½Ð¾Ð²ÐºÐ¸',
-    install: 'Ð£ÑÑÐ°Ð½Ð¾Ð²Ð¸ÑÑ Ð² ÑÐ²Ð¾Ð¹ Ð¿Ð»ÐµÐµÑ',
-    share: 'ÐÐ¾Ð´ÐµÐ»Ð¸ÑÑÑÑ',
-    delete: 'Ð£Ð´Ð°Ð»Ð¸ÑÑ',
-    selectListModal: 'Ð ÐºÐ°ÐºÐ¾Ð¹ ÑÐ¿Ð¸ÑÐ¾Ðº Ð´Ð¾Ð±Ð°Ð²Ð¸ÑÑ ÑÑÐ¾?',
-    add: 'ÐÐ¾Ð±Ð°Ð²Ð¸ÑÑ',
-    cancel: 'ÐÑÐ¼ÐµÐ½Ð¸ÑÑ',
-    back: 'ÐÐ°Ð·Ð°Ð´',
-    importPinTitle: 'ÐÐ²ÐµÐ´Ð¸ÑÐµ 6-Ð·Ð½Ð°ÑÐ½ÑÐ¹ PIN',
-    import: 'ÐÐ¼Ð¿Ð¾ÑÑÐ¸ÑÐ¾Ð²Ð°ÑÑ',
-    sharePinTitle: 'PIN ÑÐ¿Ð¸ÑÐºÐ°',
-    sharePinText: 'ÐÐ¾Ð´ÐµÐ»Ð¸ÑÐµÑÑ ÑÑÐ¸Ð¼ PIN, ÑÑÐ¾Ð±Ñ Ð´ÑÑÐ³Ð¸Ðµ Ð¼Ð¾Ð³Ð»Ð¸ Ð¸Ð¼Ð¿Ð¾ÑÑÐ¸ÑÐ¾Ð²Ð°ÑÑ ÑÐ¿Ð¸ÑÐ¾Ðº',
-    copyPin: 'ÐÐ¾Ð¿Ð¸ÑÐ¾Ð²Ð°ÑÑ PIN',
-    close: 'ÐÐ°ÐºÑÑÑÑ',
-    deleteItem: 'Ð£Ð´Ð°Ð»Ð¸ÑÑ',
-    rate: 'ÐÑÐµÐ½Ð¸ÑÑ',
-    rateTitle: 'ÐÑÐµÐ½Ð¸ÑÑ ÑÑÐ¾Ñ ÑÐ»ÐµÐ¼ÐµÐ½Ñ',
-    reviewPlaceholder: 'ÐÐ°Ð¿Ð¸ÑÐ¸ÑÐµ Ð¾ÑÐ·ÑÐ² (Ð½ÐµÐ¾Ð±ÑÐ·Ð°ÑÐµÐ»ÑÐ½Ð¾)...',
-    submit: 'ÐÑÐ¿ÑÐ°Ð²Ð¸ÑÑ',
-    ratingsTitle: 'ÐÑÐµÐ½ÐºÐ¸',
-    viewRatings: 'ÐÑÐµÐ½ÐºÐ¸',
-    friends: 'ÐÑÑÐ·ÑÑ',
-    friendUsername: 'ÐÐ¼Ñ Ð¿Ð¾Ð»ÑÐ·Ð¾Ð²Ð°ÑÐµÐ»Ñ',
-    addFriend: 'ÐÐ¾Ð±Ð°Ð²Ð¸ÑÑ Ð´ÑÑÐ³Ð°',
-    removeFriend: 'Ð£Ð´Ð°Ð»Ð¸ÑÑ',
-    friendLists: 'Ð¡Ð¿Ð¸ÑÐºÐ¸',
-    friendRatings: 'ÐÐµÐ´Ð°Ð²Ð½Ð¸Ðµ Ð¾ÑÐµÐ½ÐºÐ¸',
-    noFriends: 'ÐÐ¾ÐºÐ° Ð½ÐµÑ Ð´ÑÑÐ·ÐµÐ¹',
-    noLists: 'Ð¡Ð¿Ð¸ÑÐºÐ¾Ð² ÐµÑÐµ Ð½Ðµ ÑÐ¾Ð·Ð´Ð°Ð½Ð¾',
-    noItems: 'Ð ÑÑÐ¾Ð¼ ÑÐ¿Ð¸ÑÐºÐµ Ð½ÐµÑ ÑÐ»ÐµÐ¼ÐµÐ½ÑÐ¾Ð²'
+    languageQuestionFirst: 'Эй, на каком языке мы можем говорить?',
+    welcomeQuestion: 'Добро пожаловать, как мне тебя называть?',
+    yourName: 'Твое имя',
+    continue: 'Продолжить',
+    welcomeBack: 'С возвращением!',
+    enterPin: 'Введи свой 4-значный PIN',
+    login: 'Войти',
+    newUser: 'Новый пользователь!',
+    addonNameQuestion: 'А как меня зовут?',
+    addonNameHelp: 'Это будет имя аддона в твоем плеере',
+    tmdbQuestion: 'Мне понадобится твой API ключ TMDB',
+    tmdbKeyPlaceholder: 'API ключ TMDB',
+    getTmdbKeyText: 'Получи его',
+    here: 'ЗДЕСЬ',
+    createPin: 'Создай 4-значный PIN',
+    pinHelp: 'Используй его для доступа к аккаунту',
+    startButton: 'Давай создадим твои списки',
+    mainTitleTemplate: 'Хорошо {{username}}, что тебе понравилось?',
+    yourLists: 'Вот твои списки',
+    createList: 'Создать новый список',
+    listName: 'Название списка',
+    listTypeTemplate: 'Библиотека {{username}}',
+    create: 'Создать',
+    searchPlaceholder: 'Искать фильмы/сериалы...',
+    importPin: 'Добавить список по PIN',
+    copyUrl: 'Копировать URL установки',
+    install: 'Установить в твой плеер',
+    share: 'Поделиться',
+    delete: 'Удалить',
+    selectListModal: 'В какой список добавить это?',
+    add: 'Добавить',
+    cancel: 'Отменить',
+    back: 'Назад',
+    importPinTitle: 'Введите 6-значный PIN',
+    import: 'Импортировать',
+    sharePinTitle: 'PIN списка',
+    sharePinText: 'Поделитесь этим PIN, чтобы другие могли импортировать список',
+    copyPin: 'Копировать PIN',
+    close: 'Закрыть',
+    deleteItem: 'Удалить',
+    rate: 'Оценить',
+    rateTitle: 'Оценить этот элемент',
+    reviewPlaceholder: 'Напишите отзыв (необязательно)...',
+    submit: 'Отправить',
+    ratingsTitle: 'Оценки',
+    viewRatings: 'Оценки',
+    friends: 'Друзья',
+    friendUsername: 'Имя пользователя',
+    addFriend: 'Добавить друга',
+    removeFriend: 'Удалить',
+    friendLists: 'Списки',
+    friendRatings: 'Недавние оценки',
+    noFriends: 'Пока нет друзей',
+    noLists: 'Списков еще не создано',
+    noItems: 'В этом списке нет элементов',
+    showingAll: '🌍 Показано: Все',
+    showingFriends: '👥 Показано: Друзья'
   },
   ja: {
-    languageQuestionFirst: 'ãããä½èªã§è©±ãã¾ããï¼',
-    welcomeQuestion: 'ãããããä½ã¨å¼ã¹ã°ããã§ããï¼',
-    yourName: 'ããªãã®åå',
-    continue: 'ç¶ãã',
-    welcomeBack: 'ãããããªããï¼',
-    enterPin: '4æ¡ã®PINãå¥å',
-    login: 'ã­ã°ã¤ã³',
-    newUser: 'æ°ããã¦ã¼ã¶ã¼ï¼',
-    addonNameQuestion: 'ç§ã®ååã¯ï¼',
-    addonNameHelp: 'ãããããªãã®ãã¬ã¼ã¤ã¼ã®ã¢ããªã³åã«ãªãã¾ã',
-    tmdbQuestion: 'TMDB APIã­ã¼ãå¿è¦ã§ã',
-    tmdbKeyPlaceholder: 'TMDB APIã­ã¼',
-    getTmdbKeyText: 'ãã¡ãã§åå¾',
-    here: 'ãã',
-    createPin: '4æ¡ã®PINãä½æ',
-    pinHelp: 'ã¢ã«ã¦ã³ãã«ã¢ã¯ã»ã¹ããããã«ä½¿ç¨',
-    startButton: 'ãªã¹ããä½æãã¾ããã',
-    mainTitleTemplate: 'ãããã¾ãã{{username}}ãããä½ãå¥½ãã§ãããï¼',
-    yourLists: 'ããªãã®ãªã¹ã',
-    createList: 'æ°ãããªã¹ããä½æ',
-    listName: 'ãªã¹ãå',
-    listTypeTemplate: '{{username}}ã®ã©ã¤ãã©ãª',
-    create: 'ä½æ',
-    searchPlaceholder: 'æ ç»/ã·ãªã¼ãºãæ¤ç´¢...',
-    importPin: 'PINã§ãªã¹ããè¿½å ',
-    copyUrl: 'ã¤ã³ã¹ãã¼ã«URLãã³ãã¼',
-    install: 'ãã¬ã¼ã¤ã¼ã«ã¤ã³ã¹ãã¼ã«',
-    share: 'å±æ',
-    delete: 'åé¤',
-    selectListModal: 'ã©ã®ãªã¹ãã«è¿½å ãã¾ããï¼',
-    add: 'è¿½å ',
-    cancel: 'ã­ã£ã³ã»ã«',
-    back: 'æ»ã',
-    importPinTitle: '6æ¡ã®PINãå¥å',
-    import: 'ã¤ã³ãã¼ã',
-    sharePinTitle: 'ãªã¹ãã®PIN',
-    sharePinText: 'ãã®PINãå±æãã¦ä»ã®äººããªã¹ããã¤ã³ãã¼ãã§ããããã«ãã¾ã',
-    copyPin: 'PINãã³ãã¼',
-    close: 'éãã',
-    deleteItem: 'åé¤',
-    rate: 'è©ä¾¡',
-    rateTitle: 'ãã®ã¢ã¤ãã ãè©ä¾¡',
-    reviewPlaceholder: 'ã¬ãã¥ã¼ãæ¸ãï¼ãªãã·ã§ã³ï¼...',
-    submit: 'éä¿¡',
-    ratingsTitle: 'è©ä¾¡',
-    viewRatings: 'è©ä¾¡',
-    friends: 'åé',
-    friendUsername: 'ã¦ã¼ã¶ã¼å',
-    addFriend: 'åéãè¿½å ',
-    removeFriend: 'åé¤',
-    friendLists: 'ãªã¹ã',
-    friendRatings: 'æè¿ã®è©ä¾¡',
-    noFriends: 'ã¾ã åéããã¾ãã',
-    noLists: 'ãªã¹ããã¾ã ä½æããã¦ãã¾ãã',
-    noItems: 'ãã®ãªã¹ãã«ã¢ã¤ãã ãããã¾ãã'
+    languageQuestionFirst: 'やあ、何語で話せますか？',
+    welcomeQuestion: 'ようこそ、何と呼べばいいですか？',
+    yourName: 'あなたの名前',
+    continue: '続ける',
+    welcomeBack: 'おかえりなさい！',
+    enterPin: '4桁のPINを入力',
+    login: 'ログイン',
+    newUser: '新しいユーザー！',
+    addonNameQuestion: '私の名前は？',
+    addonNameHelp: 'これがあなたのプレーヤーのアドオン名になります',
+    tmdbQuestion: 'TMDB APIキーが必要です',
+    tmdbKeyPlaceholder: 'TMDB APIキー',
+    getTmdbKeyText: 'こちらで取得',
+    here: 'ここ',
+    createPin: '4桁のPINを作成',
+    pinHelp: 'アカウントにアクセスするために使用',
+    startButton: 'リストを作成しましょう',
+    mainTitleTemplate: 'わかりました{{username}}さん、何が好きでしたか？',
+    yourLists: 'あなたのリスト',
+    createList: '新しいリストを作成',
+    listName: 'リスト名',
+    listTypeTemplate: '{{username}}のライブラリ',
+    create: '作成',
+    searchPlaceholder: '映画/シリーズを検索...',
+    importPin: 'PINでリストを追加',
+    copyUrl: 'インストールURLをコピー',
+    install: 'プレーヤーにインストール',
+    share: '共有',
+    delete: '削除',
+    selectListModal: 'どのリストに追加しますか？',
+    add: '追加',
+    cancel: 'キャンセル',
+    back: '戻る',
+    importPinTitle: '6桁のPINを入力',
+    import: 'インポート',
+    sharePinTitle: 'リストのPIN',
+    sharePinText: 'このPINを共有して他の人がリストをインポートできるようにします',
+    copyPin: 'PINをコピー',
+    close: '閉じる',
+    deleteItem: '削除',
+    rate: '評価',
+    rateTitle: 'このアイテムを評価',
+    reviewPlaceholder: 'レビューを書く（オプション）...',
+    submit: '送信',
+    ratingsTitle: '評価',
+    viewRatings: '評価',
+    friends: '友達',
+    friendUsername: 'ユーザー名',
+    addFriend: '友達を追加',
+    removeFriend: '削除',
+    friendLists: 'リスト',
+    friendRatings: '最近の評価',
+    noFriends: 'まだ友達がいません',
+    noLists: 'リストがまだ作成されていません',
+    noItems: 'このリストにアイテムがありません',
+    showingAll: '🌍 表示: すべて',
+    showingFriends: '👥 表示: 友達'
   },
   zh: {
-    languageQuestionFirst: 'å¿ï¼æä»¬å¯ä»¥è¯´ä»ä¹è¯­è¨ï¼',
-    welcomeQuestion: 'æ¬¢è¿ï¼æè¯¥æä¹ç§°å¼ä½ ï¼',
-    yourName: 'ä½ çåå­',
-    continue: 'ç»§ç»­',
-    welcomeBack: 'æ¬¢è¿åæ¥ï¼',
-    enterPin: 'è¾å¥ä½ ç4ä½PIN',
-    login: 'ç»å½',
-    newUser: 'æ°ç¨æ·ï¼',
-    addonNameQuestion: 'æå«ä»ä¹åå­ï¼',
-    addonNameHelp: 'è¿å°æ¯ä½ æ­æ¾å¨ä¸­çæä»¶åç§°',
-    tmdbQuestion: 'æéè¦ä½ çTMDB APIå¯é¥',
-    tmdbKeyPlaceholder: 'TMDB APIå¯é¥',
-    getTmdbKeyText: 'å¨è¿éè·å',
-    here: 'è¿é',
-    createPin: 'åå»º4ä½PIN',
-    pinHelp: 'ç¨å®è®¿é®ä½ çè´¦æ·',
-    startButton: 'è®©æä»¬åå»ºä½ çåè¡¨',
-    mainTitleTemplate: 'å¥½ç{{username}}ï¼ä½ åæ¬¢ä»ä¹ï¼',
-    yourLists: 'è¿äºæ¯ä½ çåè¡¨',
-    createList: 'åå»ºæ°åè¡¨',
-    listName: 'åè¡¨åç§°',
-    listTypeTemplate: '{{username}}çå¾ä¹¦é¦',
-    create: 'åå»º',
-    searchPlaceholder: 'æç´¢çµå½±/ç³»å...',
-    importPin: 'éè¿PINæ·»å åè¡¨',
-    copyUrl: 'å¤å¶å®è£URL',
-    install: 'å®è£å°æ­æ¾å¨',
-    share: 'åäº«',
-    delete: 'å é¤',
-    selectListModal: 'ä½ æ³æ·»å å°åªä¸ªåè¡¨ï¼',
-    add: 'æ·»å ',
-    cancel: 'åæ¶',
-    back: 'è¿å',
-    importPinTitle: 'è¾å¥6ä½PIN',
-    import: 'å¯¼å¥',
-    sharePinTitle: 'åè¡¨PIN',
-    sharePinText: 'åäº«æ­¤PINä»¥ä¾¿å¶ä»äººå¯¼å¥åè¡¨',
-    copyPin: 'å¤å¶PIN',
-    close: 'å³é­',
-    deleteItem: 'å é¤',
-    rate: 'è¯å',
-    rateTitle: 'ä¸ºæ­¤é¡¹ç®è¯å',
-    reviewPlaceholder: 'åè¯è®ºï¼å¯éï¼...',
-    submit: 'æäº¤',
-    ratingsTitle: 'è¯å',
-    viewRatings: 'è¯å',
-    friends: 'æå',
-    friendUsername: 'ç¨æ·å',
-    addFriend: 'æ·»å æå',
-    removeFriend: 'å é¤',
-    friendLists: 'åè¡¨',
-    friendRatings: 'æè¿çè¯å',
-    noFriends: 'è¿æ²¡ææå',
-    noLists: 'è¿æ²¡æåå»ºåè¡¨',
-    noItems: 'æ­¤åè¡¨ä¸­æ²¡æé¡¹ç®'
+    languageQuestionFirst: '嘿，我们可以说什么语言？',
+    welcomeQuestion: '欢迎，我该怎么称呼你？',
+    yourName: '你的名字',
+    continue: '继续',
+    welcomeBack: '欢迎回来！',
+    enterPin: '输入你的4位PIN',
+    login: '登录',
+    newUser: '新用户！',
+    addonNameQuestion: '我叫什么名字？',
+    addonNameHelp: '这将是你播放器中的插件名称',
+    tmdbQuestion: '我需要你的TMDB API密钥',
+    tmdbKeyPlaceholder: 'TMDB API密钥',
+    getTmdbKeyText: '在这里获取',
+    here: '这里',
+    createPin: '创建4位PIN',
+    pinHelp: '用它访问你的账户',
+    startButton: '让我们创建你的列表',
+    mainTitleTemplate: '好的{{username}}，你喜欢什么？',
+    yourLists: '这些是你的列表',
+    createList: '创建新列表',
+    listName: '列表名称',
+    listTypeTemplate: '{{username}}的图书馆',
+    create: '创建',
+    searchPlaceholder: '搜索电影/系列...',
+    importPin: '通过PIN添加列表',
+    copyUrl: '复制安装URL',
+    install: '安装到播放器',
+    share: '分享',
+    delete: '删除',
+    selectListModal: '你想添加到哪个列表？',
+    add: '添加',
+    cancel: '取消',
+    back: '返回',
+    importPinTitle: '输入6位PIN',
+    import: '导入',
+    sharePinTitle: '列表PIN',
+    sharePinText: '分享此PIN以便其他人导入列表',
+    copyPin: '复制PIN',
+    close: '关闭',
+    deleteItem: '删除',
+    rate: '评分',
+    rateTitle: '为此项目评分',
+    reviewPlaceholder: '写评论（可选）...',
+    submit: '提交',
+    ratingsTitle: '评分',
+    viewRatings: '评分',
+    friends: '朋友',
+    friendUsername: '用户名',
+    addFriend: '添加朋友',
+    removeFriend: '删除',
+    friendLists: '列表',
+    friendRatings: '最近的评分',
+    noFriends: '还没有朋友',
+    noLists: '还没有创建列表',
+    noItems: '此列表中没有项目',
+    showingAll: '🌍 显示: 全部',
+    showingFriends: '👥 显示: 朋友'
   }
 };
 
@@ -523,6 +541,7 @@ let currentListId = null;
 let currentItemId = null;
 let selectedRating = 0;
 let tempUsername = '';
+let ratingsFilterFriendsOnly = false;
 
 const welcomeUsername = document.getElementById('welcomeUsername');
 const checkUserBtn = document.getElementById('checkUserBtn');
@@ -561,20 +580,18 @@ welcomeUsername.addEventListener('input', () => {
 checkUserBtn.addEventListener('click', async () => {
   tempUsername = welcomeUsername.value.trim();
   if (!tempUsername) return;
-  
+
   const res = await fetch('/api/auth/check-user', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ username: tempUsername })
   });
-  
   const data = await res.json();
-  
+
   if (data.exists) {
     currentLang = data.user.language || 'en';
     langSelect.value = currentLang;
     updateUI();
-    
     document.getElementById('welcomeScreen').classList.remove('active');
     document.getElementById('loginScreen').classList.add('active');
     document.getElementById('welcomeBackText').textContent = `${translations[currentLang].welcomeBack} ${tempUsername}!`;
@@ -599,30 +616,27 @@ loginPin.addEventListener('input', () => {
 loginBtn.addEventListener('click', async () => {
   const pin = loginPin.value.trim();
   if (pin.length !== 4) return;
-  
+
   const res = await fetch('/api/auth/login', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ username: tempUsername, pin })
   });
-  
   const data = await res.json();
-  
+
   if (data.success) {
     currentUsername = tempUsername;
     currentTmdbKey = data.user.tmdb_key;
     currentAddonName = data.user.addon_name;
     currentLang = data.user.language || 'en';
-    
     localStorage.setItem('username', currentUsername);
     localStorage.setItem('pin', pin);
-    
+
     const t = translations[currentLang] || translations.en;
     document.getElementById('mainTitle').textContent = t.mainTitleTemplate.replace('{{username}}', currentUsername);
-    
+
     document.getElementById('loginScreen').classList.remove('active');
     document.getElementById('mainScreen').classList.add('active');
-    
     loadLists(currentUsername);
     loadFriends(currentUsername);
     updateListTypePlaceholder();
@@ -658,37 +672,28 @@ registerBtn.addEventListener('click', async () => {
   const addonName = addonNameInput.value.trim();
   const tmdbKey = registerTmdbKey.value.trim();
   const pin = registerPin.value.trim();
-  
+
   if (!addonName || !tmdbKey || pin.length !== 4) return;
-  
+
   const res = await fetch('/api/auth/register', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ 
-      username: tempUsername, 
-      pin, 
-      addonName, 
-      tmdbKey,
-      language: currentLang
-    })
+    body: JSON.stringify({ username: tempUsername, pin, addonName, tmdbKey, language: currentLang })
   });
-  
   const data = await res.json();
-  
+
   if (data.success) {
     currentUsername = tempUsername;
     currentTmdbKey = tmdbKey;
     currentAddonName = addonName;
-    
     localStorage.setItem('username', currentUsername);
     localStorage.setItem('pin', pin);
-    
+
     const t = translations[currentLang] || translations.en;
     document.getElementById('mainTitle').textContent = t.mainTitleTemplate.replace('{{username}}', currentUsername);
-    
+
     document.getElementById('registerScreen').classList.remove('active');
     document.getElementById('mainScreen').classList.add('active');
-    
     loadLists(currentUsername);
     loadFriends(currentUsername);
     updateListTypePlaceholder();
@@ -698,21 +703,17 @@ registerBtn.addEventListener('click', async () => {
 });
 
 document.getElementById('changeUserBtn').addEventListener('click', () => {
-  if (!confirm('Â¿Cerrar sesiÃ³n?')) return;
-  
+  if (!confirm('¿Cerrar sesión?')) return;
   localStorage.removeItem('username');
   localStorage.removeItem('pin');
-  
   currentUsername = '';
   currentTmdbKey = '';
   currentAddonName = '';
   tempUsername = '';
-  
   welcomeUsername.value = '';
   loginPin.value = '';
   registerPin.value = '';
   registerTmdbKey.value = '';
-  
   document.getElementById('mainScreen').classList.remove('active');
   document.getElementById('welcomeScreen').classList.add('active');
 });
@@ -741,15 +742,14 @@ document.getElementById('newListForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   const name = document.getElementById('listName').value.trim();
   const type = document.getElementById('listType').value.trim();
-  
   if (!name || !type) return;
-  
+
   const res = await fetch('/api/lists', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ username: currentUsername, list: { name, type } })
   });
-  
+
   if (res.ok) {
     loadLists(currentUsername);
     e.target.reset();
@@ -760,11 +760,9 @@ document.getElementById('newListForm').addEventListener('submit', async (e) => {
 async function getOptimalId(tmdbId, mediaType) {
   try {
     if (!currentTmdbKey) return `tmdb:${tmdbId}`;
-    
     const url = `https://api.themoviedb.org/3/${mediaType === 'tv' ? 'tv' : 'movie'}/${tmdbId}/external_ids?api_key=${currentTmdbKey}`;
     const res = await fetch(url);
     const data = await res.json();
-    
     return data.imdb_id || `tmdb:${tmdbId}`;
   } catch (e) {
     return `tmdb:${tmdbId}`;
@@ -791,21 +789,21 @@ document.getElementById('modalAddBtn').addEventListener('click', async () => {
   await fetch(`/api/lists/${listId}/items`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ 
-      username: currentUsername, 
-      item: { 
-        tmdbId: pendingItem.tmdbId, 
-        imdbId: optimalId, 
-        mediaType: pendingItem.mediaType, 
-        title: pendingItem.title, 
-        poster: pendingItem.poster, 
-        overview: pendingItem.overview, 
-        rating: pendingItem.rating 
-      } 
+    body: JSON.stringify({
+      username: currentUsername,
+      item: {
+        tmdbId: pendingItem.tmdbId,
+        imdbId: optimalId,
+        mediaType: pendingItem.mediaType,
+        title: pendingItem.title,
+        poster: pendingItem.poster,
+        overview: pendingItem.overview,
+        rating: pendingItem.rating
+      }
     })
   });
-  
-  alert('Â¡AÃ±adido correctamente!');
+
+  alert('¡Añadido correctamente!');
   document.getElementById('listModal').classList.remove('active');
   pendingItem = null;
   loadLists(currentUsername);
@@ -814,35 +812,36 @@ document.getElementById('modalAddBtn').addEventListener('click', async () => {
 async function loadLists(username) {
   const res = await fetch(`/api/lists?username=${username}`);
   const lists = await res.json();
-  
   const t = translations[currentLang] || translations.en;
+  
   const display = document.getElementById('listDisplay');
   display.innerHTML = lists.length === 0 
-    ? `<p style="text-align:center; opacity:0.7;">${t.noLists}</p>`
+    ? `<p style="text-align:center; opacity:0.7">${t.noLists}</p>` 
     : lists.map((list, idx) => `
-    <div class="list-item" draggable="true" data-id="${list.id}" data-index="${idx}">
-      <div class="list-info" onclick="showListDetail('${list.id}')">
-        <strong>${escapeHtml(list.name)}</strong> <span style="opacity:0.8">(${escapeHtml(list.type)})</span><br>
-        <small>${list.items?.length || 0} elementos</small>
-      </div>
-      <div class="list-actions">
-        <button onclick="shareList('${list.id}', '${escapeHtml(list.name)}', '${list.pin}')">${t.share}</button>
-        <button onclick="deleteList('${list.id}')" ${!list.isOwner ? 'disabled style="opacity:0.3"' : ''}>${t.delete}</button>
-        <div class="arrows">
-          <button onclick="moveList('${list.id}', ${idx}, -1)" ${idx === 0 ? 'disabled' : ''}>â²</button>
-          <button onclick="moveList('${list.id}', ${idx}, 1)" ${idx === lists.length - 1 ? 'disabled' : ''}>â¼</button>
+      <div class="list-item" draggable="true" data-id="${list.id}" data-index="${idx}">
+        <div class="list-info" onclick="showListDetail('${list.id}')">
+          <strong>${escapeHtml(list.name)}</strong>
+          <span style="opacity:0.8">${escapeHtml(list.type)}</span><br>
+          <small>${list.items?.length || 0} elementos</small>
+        </div>
+        <div class="list-actions">
+          <button onclick="shareList('${list.id}', '${escapeHtml(list.name)}', '${list.pin}')">${t.share}</button>
+          <button onclick="deleteList('${list.id}')" ${!list.isOwner ? 'disabled style="opacity:0.3"' : ''}>${t.delete}</button>
+          <div class="arrows">
+            <button onclick="moveList('${list.id}', ${idx}, -1)" ${idx === 0 ? 'disabled' : ''}>↑</button>
+            <button onclick="moveList('${list.id}', ${idx}, 1)" ${idx === lists.length - 1 ? 'disabled' : ''}>↓</button>
+          </div>
         </div>
       </div>
-    </div>
-  `).join('');
-  
+    `).join('');
+
   document.querySelectorAll('.list-item').forEach(item => {
     item.addEventListener('dragstart', handleDragStart);
     item.addEventListener('dragover', handleDragOver);
     item.addEventListener('drop', handleDrop);
     item.addEventListener('dragend', handleDragEnd);
   });
-  
+
   const modalListSelect = document.getElementById('modalListSelect');
   modalListSelect.innerHTML = lists.map(l => `<option value="${l.id}">${escapeHtml(l.name)}</option>`).join('');
 }
@@ -850,12 +849,11 @@ async function loadLists(username) {
 async function loadFriends(username) {
   const res = await fetch(`/api/friends?username=${username}`);
   const friends = await res.json();
-  
   const t = translations[currentLang] || translations.en;
-  const display = document.getElementById('friendsDisplay');
   
+  const display = document.getElementById('friendsDisplay');
   if (friends.length === 0) {
-    display.innerHTML = `<p style="text-align:center; opacity:0.7;">${t.noFriends}</p>`;
+    display.innerHTML = `<p style="text-align:center; opacity:0.7">${t.noFriends}</p>`;
   } else {
     display.innerHTML = friends.map(f => `
       <div class="friend-item">
@@ -871,30 +869,28 @@ async function loadFriends(username) {
 document.getElementById('addFriendForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   const friendUsername = document.getElementById('friendUsername').value.trim();
-  
   if (!friendUsername || friendUsername === currentUsername) {
-    alert('Usuario invÃ¡lido');
+    alert('Usuario inválido');
     return;
   }
-  
+
   const res = await fetch('/api/friends/add', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ username: currentUsername, friendUsername })
   });
-  
+
   if (res.ok) {
     loadFriends(currentUsername);
     e.target.reset();
   } else {
     const data = await res.json();
-    alert(data.error || 'Error al aÃ±adir amigo');
+    alert(data.error || 'Error al añadir amigo');
   }
 });
 
 async function removeFriend(friendUsername) {
-  if (!confirm(`Â¿Eliminar a ${friendUsername}?`)) return;
-  
+  if (!confirm(`¿Eliminar a ${friendUsername}?`)) return;
   await fetch(`/api/friends/${friendUsername}?username=${currentUsername}`, { method: 'DELETE' });
   loadFriends(currentUsername);
 }
@@ -904,23 +900,22 @@ async function showFriendDetail(friendUsername) {
   
   const listsRes = await fetch(`/api/lists?username=${friendUsername}`);
   const lists = await listsRes.json();
-  
   const t = translations[currentLang] || translations.en;
-  const listsDisplay = document.getElementById('friendListsDisplay');
   
-  listsDisplay.innerHTML = lists.length === 0
-    ? `<p style="opacity:0.7;">${t.noLists}</p>`
+  const listsDisplay = document.getElementById('friendListsDisplay');
+  listsDisplay.innerHTML = lists.length === 0 
+    ? `<p style="opacity:0.7">${t.noLists}</p>` 
     : lists.map(list => `
       <div class="list-item">
         <div class="list-info">
-          <strong>${escapeHtml(list.name)}</strong> <span style="opacity:0.8">(${escapeHtml(list.type)})</span><br>
+          <strong>${escapeHtml(list.name)}</strong>
+          <span style="opacity:0.8">${escapeHtml(list.type)}</span><br>
           <small>${list.items?.length || 0} elementos</small>
         </div>
       </div>
     `).join('');
-  
-  document.getElementById('friendRatingsDisplay').innerHTML = '<p style="opacity:0.7;">PrÃ³ximamente...</p>';
-  
+
+  document.getElementById('friendRatingsDisplay').innerHTML = '<p style="opacity:0.7">Próximamente...</p>';
   document.getElementById('mainScreen').classList.remove('active');
   document.getElementById('friendDetailScreen').classList.add('active');
 }
@@ -953,14 +948,11 @@ function handleDragOver(e) {
 
 function handleDrop(e) {
   if (e.stopPropagation) e.stopPropagation();
-  
   if (draggedElement !== this) {
     const fromIndex = parseInt(draggedElement.dataset.index);
     const toIndex = parseInt(this.dataset.index);
-    
     moveList(draggedElement.dataset.id, fromIndex, toIndex - fromIndex);
   }
-  
   return false;
 }
 
@@ -978,7 +970,7 @@ async function shareList(id, name, pin) {
 document.getElementById('copyPinBtn').addEventListener('click', () => {
   const pin = document.getElementById('pinDisplay').textContent;
   navigator.clipboard.writeText(pin);
-  alert('Â¡PIN copiado!');
+  alert('¡PIN copiado!');
 });
 
 document.getElementById('closePinBtn').addEventListener('click', () => {
@@ -986,7 +978,7 @@ document.getElementById('closePinBtn').addEventListener('click', () => {
 });
 
 async function deleteList(id) {
-  if (!confirm('Â¿Eliminar esta lista?')) return;
+  if (!confirm('¿Eliminar esta lista?')) return;
   await fetch(`/api/lists/${id}?username=${currentUsername}`, { method: 'DELETE' });
   loadLists(currentUsername);
 }
@@ -1013,31 +1005,31 @@ document.getElementById('pinCancelBtn').addEventListener('click', () => {
 document.getElementById('pinImportBtn').addEventListener('click', async () => {
   const pin = document.getElementById('pinInput').value.trim();
   if (pin.length !== 6) {
-    alert('El PIN debe tener 6 dÃ­gitos');
+    alert('El PIN debe tener 6 dígitos');
     return;
   }
-  
+
   const res = await fetch('/api/lists/import-pin', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ username: currentUsername, pin })
   });
-  
+
   if (res.ok) {
-    alert('Â¡Lista importada correctamente!');
+    alert('¡Lista importada correctamente!');
     document.getElementById('pinModal').classList.remove('active');
     document.getElementById('pinInput').value = '';
     loadLists(currentUsername);
   } else {
     const data = await res.json();
-    alert(data.error || 'PIN no vÃ¡lido');
+    alert(data.error || 'PIN no válido');
   }
 });
 
 document.getElementById('copyInstallBtn').addEventListener('click', () => {
   const url = `${window.location.origin}/manifest.json?username=${currentUsername}&addonName=${encodeURIComponent(currentAddonName)}`;
   navigator.clipboard.writeText(url);
-  alert('Â¡URL copiada!');
+  alert('¡URL copiada!');
 });
 
 document.getElementById('installBtn').addEventListener('click', () => {
@@ -1049,33 +1041,32 @@ async function showListDetail(listId) {
   currentListId = listId;
   const res = await fetch(`/api/lists/${listId}?username=${currentUsername}`);
   const list = await res.json();
-  
   document.getElementById('listDetailTitle').textContent = list.name;
-  
   const t = translations[currentLang] || translations.en;
+  
   const itemsContainer = document.getElementById('listDetailItems');
-  itemsContainer.innerHTML = list.items.length === 0
-    ? `<p style="text-align:center; opacity:0.7;">${t.noItems}</p>`
+  itemsContainer.innerHTML = list.items.length === 0 
+    ? `<p style="text-align:center; opacity:0.7">${t.noItems}</p>` 
     : list.items.map(item => `
       <div class="detail-item">
         <div class="detail-item-content">
-          <img src="${item.poster ? `https://image.tmdb.org/t/p/w200${item.poster}` : 'image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'80\' height=\'120\'%3E%3Crect fill=\'%23333\' width=\'80\' height=\'120\'/%3E%3C/svg%3E'}" alt="${escapeHtml(item.title)}">
+          <img src="${item.poster ? `https://image.tmdb.org/t/p/w200${item.poster}` : `image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='120'%3E%3Crect fill='%23333' width='80' height='120'%3E%3C/svg%3E`}" alt="${escapeHtml(item.title)}">
           <div class="detail-item-info">
             <div class="detail-item-title">
               <strong>${escapeHtml(item.title)}</strong>
               ${item.rating ? `<span class="rating">${escapeHtml(item.rating)}</span>` : ''}
             </div>
-            <div class="overview">${escapeHtml(item.overview) || 'Sin sinopsis'}</div>
+            <div class="overview">${escapeHtml(item.overview || 'Sin sinopsis')}</div>
           </div>
         </div>
         <div class="detail-item-actions">
           <button onclick="openRatingModal('${item.id}')">${t.rate}</button>
-          <button onclick="viewRatings('${item.id}')">${item.avgRating ? 'â­ ' + item.avgRating : t.viewRatings}</button>
+          <button onclick="viewRatings('${item.id}')">${item.avgRating ? item.avgRating : t.viewRatings}</button>
           ${list.isOwner ? `<button class="delete-btn" onclick="deleteItem('${listId}', '${item.id}')">${t.deleteItem}</button>` : ''}
         </div>
       </div>
     `).join('');
-  
+
   document.getElementById('mainScreen').classList.remove('active');
   document.getElementById('listDetailScreen').classList.add('active');
 }
@@ -1087,8 +1078,7 @@ document.getElementById('backBtn').addEventListener('click', () => {
 });
 
 async function deleteItem(listId, itemId) {
-  if (!confirm('Â¿Eliminar este elemento?')) return;
-  
+  if (!confirm('¿Eliminar este elemento?')) return;
   await fetch(`/api/lists/${listId}/items/${itemId}?username=${currentUsername}`, { method: 'DELETE' });
   showListDetail(listId);
 }
@@ -1096,69 +1086,112 @@ async function deleteItem(listId, itemId) {
 function openRatingModal(itemId) {
   currentItemId = itemId;
   selectedRating = 0;
-  document.querySelectorAll('.star').forEach(star => star.classList.remove('active'));
-  document.getElementById('reviewText').value = '';
+  const t = translations[currentLang] || translations.en;
+  
   document.getElementById('ratingModal').classList.add('active');
+  
+  // AQUÍ ES DONDE CAMBIÓ A 10 ESTRELLAS
+  const modalContent = document.getElementById('ratingModal').querySelector('.modal-content');
+  modalContent.innerHTML = `
+    <h3>${t.rateTitle}</h3>
+    <div class="star-rating">
+      ${[1,2,3,4,5,6,7,8,9,10].map(i => `
+        <span class="star ${i <= selectedRating ? 'active' : ''}" onclick="selectRating(${i})">⭐</span>
+      `).join('')}
+    </div>
+    <div style="text-align: center; margin: 10px 0; color: #ffd700; font-size: 18px; font-weight: 600;">
+      <span id="ratingDisplay">${selectedRating}/10</span>
+    </div>
+    <textarea id="reviewText" placeholder="${t.reviewPlaceholder}" rows="4" style="width: 100%; margin: 15px 0; padding: 10px; background: #2a2a2a; color: white; border: 1px solid #444; border-radius: 8px;"></textarea>
+    <div class="modal-buttons">
+      <button id="cancelRatingBtn">${t.cancel}</button>
+      <button id="submitRatingBtn" ${selectedRating === 0 ? 'disabled' : ''}>${t.submit}</button>
+    </div>
+  `;
+  
+  document.getElementById('cancelRatingBtn').addEventListener('click', closeRateModal);
+  document.getElementById('submitRatingBtn').addEventListener('click', submitRating);
 }
 
-document.querySelectorAll('.star').forEach(star => {
-  star.addEventListener('click', function() {
-    selectedRating = parseInt(this.dataset.rating);
-    document.querySelectorAll('.star').forEach((s, idx) => {
-      if (idx < selectedRating) {
-        s.classList.add('active');
-      } else {
-        s.classList.remove('active');
-      }
-    });
+function selectRating(rating) {
+  selectedRating = rating;
+  document.querySelectorAll('.star').forEach((star, idx) => {
+    if (idx < rating) {
+      star.classList.add('active');
+    } else {
+      star.classList.remove('active');
+    }
   });
-});
+  document.getElementById('ratingDisplay').textContent = `${rating}/10`;
+  document.getElementById('submitRatingBtn').disabled = false;
+}
 
-document.getElementById('submitRatingBtn').addEventListener('click', async () => {
+function closeRateModal() {
+  document.getElementById('ratingModal').classList.remove('active');
+  selectedRating = 0;
+}
+
+async function submitRating() {
   if (selectedRating === 0) {
-    alert('Por favor selecciona una calificaciÃ³n');
+    alert('Por favor selecciona una calificación');
     return;
   }
-  
+
   const review = document.getElementById('reviewText').value.trim();
-  
+
   await fetch(`/api/items/${currentItemId}/rate`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ username: currentUsername, stars: selectedRating, review })
   });
-  
-  alert('Â¡CalificaciÃ³n guardada!');
+
+  alert('¡Calificación guardada!');
   document.getElementById('ratingModal').classList.remove('active');
   showListDetail(currentListId);
-});
+}
 
-document.getElementById('cancelRatingBtn').addEventListener('click', () => {
-  document.getElementById('ratingModal').classList.remove('active');
-});
-
+// FUNCIÓN MODIFICADA PARA MOSTRAR TODAS LAS CALIFICACIONES CON FILTRO
 async function viewRatings(itemId) {
-  const res = await fetch(`/api/items/${itemId}/ratings`);
+  ratingsFilterFriendsOnly = false;
+  await loadRatings(itemId);
+}
+
+async function loadRatings(itemId) {
+  const t = translations[currentLang] || translations.en;
+  const filterParam = ratingsFilterFriendsOnly ? `&friendsOnly=true` : '';
+  const res = await fetch(`/api/items/${itemId}/ratings?username=${currentUsername}${filterParam}`);
   const ratings = await res.json();
   
-  const t = translations[currentLang] || translations.en;
   const display = document.getElementById('ratingsDisplay');
   
   if (ratings.length === 0) {
-    display.innerHTML = '<p style="text-align:center; opacity:0.7;">No hay calificaciones aÃºn</p>';
+    display.innerHTML = '<p style="text-align: center; padding: 20px; opacity: 0.7;">No hay calificaciones aún</p>';
   } else {
-    display.innerHTML = ratings.map(r => `
-      <div class="rating-item">
-        <div class="rating-item-header">
-          <span class="rating-item-user">${escapeHtml(r.username)}</span>
-          <span class="rating-item-stars">${'â'.repeat(r.stars)}${'â'.repeat(5 - r.stars)}</span>
-        </div>
-        ${r.review ? `<div class="rating-item-review">${escapeHtml(r.review)}</div>` : ''}
+    display.innerHTML = `
+      <div style="margin-bottom: 15px; text-align: right;">
+        <button onclick="toggleRatingsFilter('${itemId}')" class="filter-btn">
+          ${ratingsFilterFriendsOnly ? t.showingFriends : t.showingAll}
+        </button>
       </div>
-    `).join('');
+      ${ratings.map(r => `
+        <div class="rating-item" style="border-bottom: 1px solid #444; padding: 15px 0;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <strong style="color: #ffd700;">${escapeHtml(r.username)}</strong>
+            <span style="color: #ffd700; font-size: 18px;">${'⭐'.repeat(r.stars)} (${r.stars}/10)</span>
+          </div>
+          ${r.review ? `<p style="color: #ccc; margin: 8px 0;">${escapeHtml(r.review)}</p>` : ''}
+          <small style="color: #999;">${new Date(r.created_at).toLocaleDateString()}</small>
+        </div>
+      `).join('')}
+    `;
   }
   
   document.getElementById('viewRatingsModal').classList.add('active');
+}
+
+function toggleRatingsFilter(itemId) {
+  ratingsFilterFriendsOnly = !ratingsFilterFriendsOnly;
+  loadRatings(itemId);
 }
 
 document.getElementById('closeRatingsBtn').addEventListener('click', () => {
@@ -1169,32 +1202,39 @@ let searchTimeout;
 document.getElementById('searchInput').addEventListener('input', (e) => {
   clearTimeout(searchTimeout);
   const q = e.target.value.trim();
-  
   if (q.length === 0) {
     document.getElementById('searchResults').innerHTML = '';
     return;
   }
-  
   if (q.length < 3 || !currentTmdbKey) return;
-  
+
   searchTimeout = setTimeout(async () => {
-    const langMap = { es: 'es-ES', en: 'en-US', fr: 'fr-FR', de: 'de-DE', it: 'it-IT', pt: 'pt-PT', ru: 'ru-RU', ja: 'ja-JP', zh: 'zh-CN' };
+    const langMap = {
+      es: 'es-ES',
+      en: 'en-US',
+      fr: 'fr-FR',
+      de: 'de-DE',
+      it: 'it-IT',
+      pt: 'pt-PT',
+      ru: 'ru-RU',
+      ja: 'ja-JP',
+      zh: 'zh-CN'
+    };
+
     const res = await fetch(`/api/tmdb/search?q=${encodeURIComponent(q)}&key=${currentTmdbKey}&lang=${langMap[currentLang] || 'en-US'}`);
     const data = await res.json();
-    
     const results = (data.results || [])
       .filter(item => item.media_type === 'movie' || item.media_type === 'tv')
       .sort((a, b) => (b.vote_count || 0) - (a.vote_count || 0))
       .slice(0, 12);
-    
+
     document.getElementById('searchResults').innerHTML = results
       .map(item => {
         const title = item.title || item.name;
         const mediaType = item.media_type;
         const overview = item.overview || 'No hay sinopsis disponible';
-        const rating = item.vote_average ? `â­ ${item.vote_average.toFixed(1)}` : '';
+        const rating = item.vote_average ? `⭐ ${item.vote_average.toFixed(1)}` : '';
         const poster = item.poster_path || '';
-        
         const itemData = {
           tmdbId: item.id,
           mediaType: mediaType,
@@ -1203,12 +1243,10 @@ document.getElementById('searchInput').addEventListener('input', (e) => {
           overview: overview,
           rating: rating
         };
-        
         const itemDataStr = JSON.stringify(itemData).replace(/"/g, '&quot;');
-        
         return `
           <div class="search-item" onclick='showListModal(${itemDataStr})'>
-            <img src="https://image.tmdb.org/t/p/w200${poster}" alt="${escapeHtml(title)}" onerror="this.src='image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'80\\' height=\\'120\\'%3E%3Crect fill=\\'%23333\\' width=\\'80\\' height=\\'120\\'/%3E%3C/svg%3E'">
+            <img src="https://image.tmdb.org/t/p/w200${poster}" alt="${escapeHtml(title)}" onerror="this.src='image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'80\\' height=\\'120\\'%3E%3Crect fill=\\'%23333\\' width=\\'80\\' height=\\'120\\'%3E%3C/svg%3E'">
             <div class="search-item-info">
               <strong>${escapeHtml(title)}</strong>
               <small>${mediaType.toUpperCase()}</small>
@@ -1217,42 +1255,41 @@ document.getElementById('searchInput').addEventListener('input', (e) => {
             </div>
           </div>
         `;
-      }).join('');
+      })
+      .join('');
   }, 600);
 });
 
 window.addEventListener('DOMContentLoaded', () => {
   const savedUsername = localStorage.getItem('username');
   const savedPin = localStorage.getItem('pin');
-  
+
   if (savedUsername && savedPin) {
     fetch('/api/auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username: savedUsername, pin: savedPin })
     })
-    .then(res => res.json())
-    .then(data => {
-      if (data.success) {
-        currentUsername = savedUsername;
-        currentTmdbKey = data.user.tmdb_key;
-        currentAddonName = data.user.addon_name;
-        currentLang = data.user.language || 'en';
-        langSelect.value = currentLang;
-        
-        const t = translations[currentLang] || translations.en;
-        document.getElementById('mainTitle').textContent = t.mainTitleTemplate.replace('{{username}}', currentUsername);
-        
-        document.getElementById('welcomeScreen').classList.remove('active');
-        document.getElementById('mainScreen').classList.add('active');
-        
-        loadLists(currentUsername);
-        loadFriends(currentUsername);
-        updateListTypePlaceholder();
-        updateUI();
-      }
-    });
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          currentUsername = savedUsername;
+          currentTmdbKey = data.user.tmdb_key;
+          currentAddonName = data.user.addon_name;
+          currentLang = data.user.language || 'en';
+          langSelect.value = currentLang;
+
+          const t = translations[currentLang] || translations.en;
+          document.getElementById('mainTitle').textContent = t.mainTitleTemplate.replace('{{username}}', currentUsername);
+          document.getElementById('welcomeScreen').classList.remove('active');
+          document.getElementById('mainScreen').classList.add('active');
+          loadLists(currentUsername);
+          loadFriends(currentUsername);
+          updateListTypePlaceholder();
+          updateUI();
+        }
+      });
   }
-  
+
   updateUI();
 });
