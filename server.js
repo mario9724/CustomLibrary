@@ -4,19 +4,30 @@ const { v4: uuidv4 } = require('uuid');
 const { Pool } = require('pg');
 
 const app = express();
-app.use(cors());
-app.use(express.json());
-app.use(express.static('public'));
+
+// CORS COMPLETO - COPIA ESTO EXACTAMENTE
+app.options('*', cors()); // Maneja preflight OPTIONS
+
+app.use(cors({
+  origin: true,  // Permite todos los orígenes (incluyendo stremio.com)
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
+// Headers adicionales para Stremio/Render
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-  if (req.method === 'OPTIONS') {
-    res.sendStatus(200);
-  } else {
-    next();
-  }
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  if (req.method === 'OPTIONS') return res.status(200).end();
+  next();
 });
+
+app.use(express.json({ limit: '10mb' }));
+app.use(express.static('public'));
+
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
