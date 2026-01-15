@@ -578,6 +578,22 @@ const res = await fetch('/api/auth/check-user',
     document.getElementById('welcomeScreen').classList.remove('active');
     document.getElementById('loginScreen').classList.add('active');
     document.getElementById('welcomeBackText').textContent = `${translations[currentLang].welcomeBack} ${tempUsername}!`;
+    document.getElementById('searchResults').innerHTML = results
+  .map(item => {
+    const title = item.title || item.name;
+    const mediaType = item.media_type;
+    const overview = item.overview || 'No hay sinopsis disponible';
+    const rating = item.vote_average ? item.vote_average.toFixed(1) : '';
+    const poster = item.poster_path;
+    
+    const itemData = {
+      tmdbId: item.id,
+      mediaType: mediaType,
+      title: title,
+      poster: poster,
+      overview: overview,
+      rating: rating
+    };
   } else {
     updateAddonName();
     document.getElementById('welcomeScreen').classList.remove('active');
@@ -771,16 +787,17 @@ async function getOptimalId(tmdbId, mediaType) {
   }
 }
 
-function showListModal(item) {
-  pendingItem = item;
-  const modal = document.getElementById('listModal');
-  modal.classList.add('active');
+function showListModal(itemDataStr) {
+  try {
+    // Decodificar el objeto desde el string HTML-encoded
+    const item = JSON.parse(itemDataStr.replace(/&quot;/g, '"'));
+    pendingItem = item;
+    const modal = document.getElementById('listModal');
+    modal.classList.add('active');
+  } catch(e) {
+    console.error('Error parsing item:', e);
+  }
 }
-
-document.getElementById('modalCancelBtn').addEventListener('click', () => {
-  document.getElementById('listModal').classList.remove('active');
-  pendingItem = null;
-});
 
 document.getElementById('modalAddBtn').addEventListener('click', async () => {
   const listId = document.getElementById('modalListSelect').value;
