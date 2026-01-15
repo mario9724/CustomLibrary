@@ -654,18 +654,37 @@ app.post('/api/items/:itemId/rate', async (req, res) => {
 
 app.get('/api/items/:itemId/ratings', async (req, res) => {
   const { itemId } = req.params;
+  const { username, friendsOnly } = req.query;
   
   try {
-    const result = await pool.query(
-      'SELECT * FROM item_ratings WHERE item_id = $1 ORDER BY created_at DESC',
-      [itemId]
-    );
+    let query;
+    let params;
+    
+    if (friendsOnly === 'true') {
+      // Solo calificaciones de amigos
+      query = `
+        SELECT ir.* FROM item_ratings ir
+        WHERE ir.item_id = $1 
+        AND ir.username IN (
+          SELECT friend_username FROM user_friends WHERE username = $2
+        )
+        ORDER BY ir.created_at DESC
+      `;
+      params = [itemId, username];
+    } else {
+      // Todas las calificaciones de todos los usuarios
+      query = 'SELECT * FROM item_ratings WHERE item_id = $1 ORDER BY created_at DESC';
+      params = [itemId];
+    }
+    
+    const result = await pool.query(query, params);
     res.json(result.rows);
   } catch (err) {
     console.error('Error getting ratings:', err);
     res.status(500).json({ error: err.message });
   }
 });
+
 
 // ============ VOTES ============
 app.post('/api/lists/:listId/items/:itemId/vote', async (req, res) => {
