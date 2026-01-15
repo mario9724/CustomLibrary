@@ -542,6 +542,7 @@ let currentItemId = null;
 let selectedRating = 0;
 let tempUsername = '';
 let ratingsFilterFriendsOnly = false;
+let currentRatingsItemId = null;
 
 const welcomeUsername = document.getElementById('welcomeUsername');
 const checkUserBtn = document.getElementById('checkUserBtn');
@@ -1090,7 +1091,6 @@ function openRatingModal(itemId) {
   
   document.getElementById('ratingModal').classList.add('active');
   
-  // AQUÍ ES DONDE CAMBIÓ A 10 ESTRELLAS
   const modalContent = document.getElementById('ratingModal').querySelector('.modal-content');
   modalContent.innerHTML = `
     <h3>${t.rateTitle}</h3>
@@ -1150,17 +1150,27 @@ async function submitRating() {
   showListDetail(currentListId);
 }
 
-// FUNCIÓN MODIFICADA PARA MOSTRAR TODAS LAS CALIFICACIONES CON FILTRO
+// *** FUNCIONES MODIFICADAS PARA MOSTRAR TODAS LAS CALIFICACIONES ***
 async function viewRatings(itemId) {
+  currentRatingsItemId = itemId;
   ratingsFilterFriendsOnly = false;
   await loadRatings(itemId);
 }
 
 async function loadRatings(itemId) {
   const t = translations[currentLang] || translations.en;
-  const filterParam = ratingsFilterFriendsOnly ? `&friendsOnly=true` : '';
+  const filterParam = ratingsFilterFriendsOnly ? '&friendsOnly=true' : '';
+  
+  console.log('🔍 Cargando calificaciones para item:', itemId);
+  console.log('🔍 Usuario actual:', currentUsername);
+  console.log('🔍 Filtro amigos:', ratingsFilterFriendsOnly);
+  console.log('🔍 URL:', `/api/items/${itemId}/ratings?username=${currentUsername}${filterParam}`);
+  
   const res = await fetch(`/api/items/${itemId}/ratings?username=${currentUsername}${filterParam}`);
   const ratings = await res.json();
+  
+  console.log('📊 Calificaciones recibidas:', ratings);
+  console.log('📊 Total de calificaciones:', ratings.length);
   
   const display = document.getElementById('ratingsDisplay');
   
@@ -1169,8 +1179,8 @@ async function loadRatings(itemId) {
   } else {
     display.innerHTML = `
       <div style="margin-bottom: 15px; text-align: right;">
-        <button onclick="toggleRatingsFilter('${itemId}')" class="filter-btn">
-          ${ratingsFilterFriendsOnly ? t.showingFriends : t.showingAll}
+        <button onclick="toggleRatingsFilter()" class="filter-btn">
+          ${ratingsFilterFriendsOnly ? t.showingFriends || '👥 Mostrando: Amigos' : t.showingAll || '🌍 Mostrando: Todos'}
         </button>
       </div>
       ${ratings.map(r => `
@@ -1189,9 +1199,11 @@ async function loadRatings(itemId) {
   document.getElementById('viewRatingsModal').classList.add('active');
 }
 
-function toggleRatingsFilter(itemId) {
+function toggleRatingsFilter() {
+  console.log('🔄 Alternando filtro. Antes:', ratingsFilterFriendsOnly);
   ratingsFilterFriendsOnly = !ratingsFilterFriendsOnly;
-  loadRatings(itemId);
+  console.log('🔄 Después:', ratingsFilterFriendsOnly);
+  loadRatings(currentRatingsItemId);
 }
 
 document.getElementById('closeRatingsBtn').addEventListener('click', () => {
