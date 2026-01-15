@@ -652,8 +652,7 @@ app.post('/api/items/:itemId/rate', async (req, res) => {
   }
 });
 
-javascript
-// GET ratings with optional filter (all or friends only)
+
 app.get('/api/items/:itemId/ratings', async (req, res) => {
   const { itemId } = req.params;
   const { filter, username } = req.query;
