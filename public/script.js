@@ -562,7 +562,7 @@ checkUserBtn.addEventListener('click', async () => {
   tempUsername = welcomeUsername.value.trim();
   if (!tempUsername) return;
   
-  const res = await fetch('/api/auth/check-user', {
+const res = await fetch('/api/auth/check-user',
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ username: tempUsername })
